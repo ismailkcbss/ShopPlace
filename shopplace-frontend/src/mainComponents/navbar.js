@@ -18,6 +18,20 @@ export default function Navbar() {
     history.push('/Login');
   }
 
+  const MyFavoritesPage = () => {
+    if (user.isAuth) {
+      history.push('/MyFavorites')
+    } else {
+      history.push('/Login')
+    }
+  }
+  const MyCartPage = () => {
+    if (user.isAuth) {
+      history.push('/MyCart')
+    } else {
+      history.push('/Login')
+    }
+  }
   return (
     <div className='Navbar'>
       <div className='HeaderDiv'>
@@ -25,8 +39,8 @@ export default function Navbar() {
       </div>
       <div className='InteractDiv'>
         <button className='NavbarButton' onClick={() => history.push('/ContactUs')}>Contact</button>
-        <button className='NavbarButton' onClick={() => history.push('/MyFavorites')}>Favorites</button>
-        <button className='NavbarButton' onClick={() => history.push('/MyCart')}>My Cart</button>
+        <button className='NavbarButton' onClick={MyFavoritesPage}>Favorites</button>
+        <button className='NavbarButton' onClick={MyCartPage}>My Cart</button>
       </div>
       <div className='InoutDiv'>
         {

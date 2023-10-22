@@ -41,8 +41,7 @@ export default function Login() {
             dispatch(userActions.login(data));
             history.push('/');
         } catch (error) {
-            console.log("login= ", error);
-            alert(error)
+            alert(error.response.data.error)
         }
     }
 

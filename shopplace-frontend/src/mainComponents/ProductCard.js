@@ -3,39 +3,22 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default function ProductCard(props) {
-  
+
     const { item } = props;
     const userRole = useSelector((state) => state.user.user)
 
-    console.log("redux userid = ",userRole._id);
-    console.log("ürün userid = ",item.productOwner);
-
     const history = useHistory()
+
 
     const ClickProduct = () => {
         if (userRole.seller) {
-            if(userRole._id === item.productOwner){
-                if (item.productType === "Clothes") {
-                    history.push(`/ClothesProductViewer/${item._id}`)
-                }
-                else if(item.productType === "Shoes") {
-                    history.push(`/ShoesProductViewer/${item._id}`)
-                }
-            }else{
-                if (item.productType === "Clothes") {
-                    history.push(`/ClothesProductCardItem/${item._id}`)
-                }
-                else if(item.productType === "Shoes") {
-                    history.push(`/ShoesProductCardItem/${item._id}`)
-                }
+            if (userRole._id === item.productOwner) {
+                history.push(`/${item.productType}` + `ProductViewer/${item._id}`)
+            } else {
+                history.push(`/${item.productType}` + `ProductCardItem/${item._id}`)
             }
         } else {
-            if (item.productType === "Clothes") {
-                history.push(`/ClothesProductCardItem/${item._id}`)
-            }
-            else if(item.productType === "Shoes") {
-                history.push(`/ShoesProductCardItem/${item._id}`)
-            }
+            history.push(`/${item.productType}` + `ProductCardItem/${item._id}`)
         }
     }
 

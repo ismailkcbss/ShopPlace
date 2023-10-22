@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { axiosInstance } from '../axios.util'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default function ContactUs() {
     const initialForm = {
@@ -10,6 +11,7 @@ export default function ContactUs() {
     }
 
     const [form, setForm] = useState({ ...initialForm })
+    const history = useHistory();
 
     const handleTextChange = (value, key) => {
         setForm({
@@ -18,13 +20,14 @@ export default function ContactUs() {
         })
     }
 
-    const ClickContactUs = async () => {
+    const ClickContactUs = async (e) => {
+        e.preventDefault();
         if (form.userName.trim() === "" || form.email.trim() === "" || form.phone.trim() === "" || form.description.trim() === "") {
             alert("Please fill in the form")
             return;
         }
         try {
-            const { data } = await axiosInstance.post(`/User/ContactUs`, {
+            const { data } = await axiosInstance.post(`/Main/ContactUs`, {
                 username: form.userName,
                 email: form.email,
                 phone: form.phone,
@@ -33,6 +36,7 @@ export default function ContactUs() {
             setTimeout(() => {
                 alert("Sent successfully")
                 setForm({ ...initialForm })
+                history.push('/Login')
             }, 5000);
         } catch (error) {
             alert("Try again")

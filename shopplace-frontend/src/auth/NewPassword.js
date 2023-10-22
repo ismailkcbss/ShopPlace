@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { axiosInstance } from '../axios.util';
+import * as storage from '../storage.helper'
 
 export default function NewPassword() {
 
@@ -9,8 +10,10 @@ export default function NewPassword() {
         newPassword1: "",
     }
     const history = useHistory();
-
     const [form, setForm] = useState({ ...initialForm });
+
+
+    const email = storage.GetCookie('passPres')
 
     const handleTextChange = (value, key) => {
         setForm({
@@ -19,19 +22,24 @@ export default function NewPassword() {
         })
     }
 
+
     const ClickNewPassword = async (e) => {
+        e.preventDefault();
         if (form.newPassword.trim() === "" || form.newPassword1.trim() === "") {
             alert("Please enter a new password");
             return;
         }
         if (form.newPassword === form.newPassword1) {
             try {
-                const { data } = await axiosInstance.post(`/User/NewPassword`, {
-                    password: form.newPassword,
+                const { data } = await axiosInstance.post(`/User/NewPasswordReset/${email}`, {
+                    newPassword: form.newPassword,
                 })
+                alert('The old password was successfully reset')
+                storage.RemoveCookie('passPres')
                 history.push('/Login')
             } catch (error) {
                 alert("Try again");
+                console.log(error);
             }
         }
     }
@@ -49,7 +57,7 @@ export default function NewPassword() {
                         value={form.newPassword}
                         onChange={(e) => handleTextChange(e.target.value, "newPassword")}
                     />
-                    <span className='FormHeader'>Re-enter password</span>
+                    <span className='FormHeader'>Re-enter new password</span>
                     <input
                         type='password'
                         className='NewPasswordInput'

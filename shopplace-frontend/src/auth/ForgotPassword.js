@@ -24,7 +24,7 @@ export default function ForgotPassword() {
             return;
         }
         try {
-            const { data } = await axiosInstance.post(`/User/ForgotPassword`, {
+            const { data } = await axiosInstance.post(`/User/ForgotPasswordSendMail`, {
                 email: form.email
             })
             history.push('/Login');
