@@ -1,42 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import MyCartsItem from '../mainComponentsItem/MyCartsItem'
 import Navbar from './navbar'
-import { useDispatch, useSelector } from 'react-redux'
-import Loading from '../Loading';
-import { store } from '../redux/store';
+import * as storage from '../storage.helper'
 
 
 export default function MyCart() {
 
-    const [loading, setLoading] = useState(false);
     const [cartProducts, setCartProduct] = useState([])
 
+    function getCart() {
+        const cartJSON = storage.getValueByKey('cart');
+        if (cartJSON) {
+            setCartProduct(JSON.parse(cartJSON))
+        } else {
+            setCartProduct([])
+        }
+    }
 
     useEffect(() => {
-        const savedProducts = JSON.parse(
-            localStorage.getItem('MyCart'))
-        if (savedProducts) {
-            setCartProduct(savedProducts);
-        }
+        getCart();
     }, [])
 
-    console.log(cartProducts);
 
     return (
         <div className='MyCartDiv'>
             <Navbar />
             <div className='MyCartPage'>
                 <div className='MyCartList'>
-                    {/* {cartProducts[0] ? (
-                        cartProducts?.map((item) => (
-                            <MyCartsItem key={item._id} item={item} />
+                    {cartProducts[0] ? (
+                        cartProducts?.map((Pitem) => (
+                            <MyCartsItem key={Pitem.product._id} Pitem={Pitem} setCartProduct={setCartProduct}/>
                         ))
                     ) : (
-
                         <p>Sepet boş</p>
                     )
 
-                    } */}
+                    }
 
                 </div>
             </div>

@@ -1,52 +1,76 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { DeleteOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import * as storage from '../storage.helper'
 
 
 export default function MyCartsItem(props) {
-    const [productCartPiece, setProductCartPiece] = useState(1);
 
-    const { item } = props;
+    const { Pitem, setCartProduct } = props;
 
-    const dispatch = useDispatch();
+    const product = Pitem.product;
+    const quantity = Pitem.quantity;
 
-    const handleDeleteClick = (id) => {
-        //dispatch(productActions.remove({ id }))
+
+    const [productCartQuentity, setProductCartQuentity] = useState(quantity);
+
+    function getCart() {
+        const cartJSON = storage.getValueByKey('cart');
+        return cartJSON ? JSON.parse(cartJSON) : [];
     }
 
-    const handleAdetSayacClick = (count) => {
-        if (count.id === 'plus' && productCartPiece > 0 && productCartPiece < item.productPiece) {
-            setProductCartPiece(productCartPiece + 1)
-        }
-        else if (count.id === 'minus' && productCartPiece > 1) {
-            setProductCartPiece(productCartPiece - 1)
-        }
+    const handleDeleteClick = (productID) => {
+        const cart = getCart() || [];
+        const updatedCart = cart.filter(item => item.product._id !== productID);
+        storage.setKeyWithValue('cart', JSON.stringify(updatedCart));
+        setCartProduct(updatedCart)
     }
 
 
+    const handleAdetSayacClick = (pID, action) => {
+        console.log("PID = ",pID);
+        if (action === 'plus' && productCartQuentity > 0 && productCartQuentity < product.productPiece) {
+            setProductCartQuentity(productCartQuentity + 1)
+            updateQuantityInCartByProductID(pID, productCartQuentity + 1)
+        }
+        else if (action === 'minus' && productCartQuentity > 1) {
+            setProductCartQuentity(productCartQuentity - 1)
+            updateQuantityInCartByProductID(pID, productCartQuentity - 1)
+        }
+    }
 
+    function updateQuantityInCartByProductID(pID, setProductCartQuentity) {
+        const cart = getCart() || [];
+        const updatedCart = cart.map(item => {
+            if (item.product._id === pID) {
+                item.quantity = setProductCartQuentity;
+            }
+            return item;
+
+        });
+        storage.setKeyWithValue('cart', JSON.stringify(updatedCart));
+    }
 
     return (
         <div className='MyCartCard'>
             <div className='MyCartCardImage'>
-                <img src={item.productImage[0]} alt='MyCartImage' />
+                <img src={product.productImage[0]} alt='MyCartImage' />
             </div>
             <div className='MyCartCardInfo'>
                 <div className='MyCartCardInfoData'>
                     <p>
-                        <span>Ürün Adı:</span> {item.productName}
+                        <span>Ürün Adı:</span> {product.productName}
                     </p>
                     <p>
-                        <span> Maximum Alınabilecek Adet:</span> {item.productPiece}
+                        <span> Maximum Alınabilecek Adet:</span> {product.productPiece}
                     </p>
                     <p>
-                        <span> Ürün Toplam Fiyat:</span> {item.productPrice * productCartPiece}
+                        <span> Ürün Toplam Fiyat:</span> {product.productPrice * productCartQuentity}
                     </p>
                 </div>
                 <div className='MyCartCardButton'>
                     <div>
                         <button
-                            onClick={() => handleDeleteClick(item._id)}
+                            onClick={() => handleDeleteClick(product._id)}
                             className='MyCartCardButtonDeleteIcon'
                         >
                             <DeleteOutlined />
@@ -58,16 +82,16 @@ export default function MyCartsItem(props) {
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <button
                             id='plus'
-                            name={item._id}
+                            name={product._id}
                             className='MyCartCardButtonPlusMinIcon'
-                            onClick={() => handleAdetSayacClick(document.getElementById('plus'))}
+                            onClick={() => handleAdetSayacClick(product._id,'plus')}
                         ><PlusCircleOutlined /></button>
-                        <span style={{ fontSize: "1.2rem", color: "rgba(82, 82, 82, 0.664)" }}>{productCartPiece}</span>
+                        <span style={{ fontSize: "1.2rem", color: "rgba(82, 82, 82, 0.664)" }}>{productCartQuentity}</span>
                         <button
                             id='minus'
-                            name={item._id}
+                            name={product._id}
                             className='MyCartCardButtonPlusMinIcon'
-                            onClick={() => handleAdetSayacClick(document.getElementById('minus'))}
+                            onClick={() => handleAdetSayacClick(product._id,'minus')}
                         ><MinusCircleOutlined /></button>
                     </div>
                 </div>

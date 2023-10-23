@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min'
 import { axiosInstance } from '../../axios.util';
 import Navbar from '../../mainComponents/navbar';
 import ProductItemPageImageList from './ClothesProductItemPageImageList';
 import { Radio } from 'antd';
 import Loading from '../../Loading';
+import * as storage from '../../storage.helper'
+import { useSelector } from 'react-redux';
+import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+
 
 export default function ClothesProductCardItem() {
 
-    
+
     const { id } = useParams();
-    const initialSize = {
-        productSize: ""
+    const initialForm = {
+        productSize: "",
     }
 
+    const history = useHistory();
 
-    const [productSizeState, setProductSizeState] = useState({ ...initialSize })
+    const isAuthUser = useSelector((state) => state.user)
+
+    const [form, setForm] = useState({ ...initialForm })
     const [productData, setProductData] = useState([])
-    const [sepet, setSepet] = useState([])
     const [loading, setLoading] = useState(false)
+    const [quantity, setQuantity] = useState(1);
 
     const GetProductItem = async () => {
         if (id) {
@@ -32,30 +39,42 @@ export default function ClothesProductCardItem() {
         }
     }
 
-    const handleClickSepet = (id) => {
-        const newCartProduct = {
-            id: id,
-            productName: productData.clothesProduct.productName,
-            productPrice:productData.clothesProduct.productPrice,
-            maximumPurchasableQuantity: productData.clothesProduct.clothesPiece,
+    const handleClickCart = (product) => {
+        if (isAuthUser.isAuth) {
+            const cart = getCart() || [];
+            const existingProductIndex = cart.findIndex(item => item.productID === product);
+            if (existingProductIndex !== -1) {
+                cart[existingProductIndex].quantity = quantity;
+            } else {
+                cart.push({ product, quantity });
+            }
+            storage.setKeyWithValue('cart', JSON.stringify(cart));
+        } else {
+            history.push('/Login');
         }
-        const newCartProducts = [...sepet, newCartProduct];
-        
-        setSepet(newCartProducts)
     }
 
+    function getCart() {
+        const cartJSON = storage.getValueByKey('cart');
+        return cartJSON ? JSON.parse(cartJSON) : [];
+    }
+
+    const handleAdetSayacClick = (count) => {
+        if (count.id === 'plus' && quantity > 0 && quantity < productData.clothesProduct.productPiece) {
+            setQuantity(quantity + 1)
+        }
+        else if (count.id === 'minus' && quantity > 1) {
+            setQuantity(quantity - 1)
+        }
+    }
 
     const handleProductSizeTextChange = (value, key) => {
-        setProductSizeState({
-            ...productSizeState,
+        setForm({
+            ...form,
             [key]: value
         })
     }
 
-    //Add to cart
-    useEffect(() => {
-        localStorage.setItem('MyCart', JSON.stringify(sepet))
-    }, [sepet])
 
     useEffect(() => {
         GetProductItem();
@@ -102,7 +121,7 @@ export default function ClothesProductCardItem() {
                                 <span style={{ fontSize: "1.4rem", fontWeight: "bold", marginRight: "2rem" }}>
                                     Beden:
                                 </span>
-                                <Radio.Group value={productSizeState.productSize} buttonStyle="solid" onChange={(e) => handleProductSizeTextChange(e.target.value, "productSize")} style={{ width: "100%", display: "flex", justifyContent: "space-around" }}>
+                                <Radio.Group value={form.productSize} buttonStyle="solid" onChange={(e) => handleProductSizeTextChange(e.target.value, "productSize")} style={{ width: "100%", display: "flex", justifyContent: "space-around" }}>
                                     <Radio.Button value="XXL">XXL</Radio.Button>
                                     <Radio.Button value="XL">XL</Radio.Button>
                                     <Radio.Button value="L">L</Radio.Button>
@@ -111,9 +130,25 @@ export default function ClothesProductCardItem() {
                                     <Radio.Button value="XS">XS</Radio.Button>
                                 </Radio.Group>
                             </div>
+                            <span>Adet</span>
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <button
+                                    id='plus'
+                                    name={productData.clothesProduct._id}
+                                    className='MyCartCardButtonPlusMinIcon'
+                                    onClick={() => handleAdetSayacClick(document.getElementById('plus'))}
+                                ><PlusCircleOutlined /></button>
+                                <span style={{ fontSize: "1.2rem", color: "rgba(82, 82, 82, 0.664)" }}>{quantity}</span>
+                                <button
+                                    id='minus'
+                                    name={productData.clothesProduct._id}
+                                    className='MyCartCardButtonPlusMinIcon'
+                                    onClick={() => handleAdetSayacClick(document.getElementById('minus'))}
+                                ><MinusCircleOutlined /></button>
+                            </div>
                             <button
                                 className='ClothesItemFeatureButton'
-                                onClick={() => handleClickSepet(productData.clothesProduct._id)}
+                                onClick={() => handleClickCart(productData.clothesProduct)}
                             >Add to cart</button>
                         </div>
 

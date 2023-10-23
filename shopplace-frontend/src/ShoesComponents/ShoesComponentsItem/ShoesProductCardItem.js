@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Loading from '../../Loading'
 import ShoesProductItemPageImageList from './ShoesProductItemPageImageList'
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { axiosInstance } from '../../axios.util';
 import Navbar from '../../mainComponents/navbar';
 import { Radio } from 'antd';
+import * as storage from '../../storage.helper'
 
 export default function ShoesProductCardItem() {
 
@@ -14,7 +15,8 @@ export default function ShoesProductCardItem() {
     productSize: ""
   }
   const history = useHistory();
-  const dispatch = useDispatch();
+
+  const isAuthUser = useSelector((state) => state.user)
 
   const [productSizeState, setProductSizeState] = useState({ ...initialSize })
   const [productData, setProductData] = useState([])
@@ -33,8 +35,22 @@ export default function ShoesProductCardItem() {
     }
   }
 
-  const handleClickSepet = (id) => {
+  const handleClickCart = (productID) => {
+    console.log(productID);
+    if (isAuthUser.isAuth) {
+      const cart = getCart() || [];
+      if (!cart.includes(productID)) {
+        cart.push(productID);
+      }
+      storage.setKeyWithValue('cart', JSON.stringify(cart));
+    } else {
+      history.push('/Login');
+    }
+  }
 
+  function getCart() {
+    const cartJSON = storage.getValueByKey('cart');
+    return cartJSON ? JSON.parse(cartJSON) : [];
   }
 
   const handleProductSizeTextChange = (value, key) => {
@@ -98,7 +114,7 @@ export default function ShoesProductCardItem() {
               </div>
               <button
                 className='ShoesItemFeatureButton'
-                onClick={() => handleClickSepet(productData.shoesProduct._id)}
+                onClick={() => handleClickCart(productData.shoesProduct)}
               >Add to cart</button>
             </div>
 
