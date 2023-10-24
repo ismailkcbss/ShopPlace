@@ -7,6 +7,9 @@ import { axiosInstance } from '../../axios.util';
 import Navbar from '../../mainComponents/navbar';
 import { Radio } from 'antd';
 import * as storage from '../../storage.helper'
+import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+
+
 
 export default function ShoesProductCardItem() {
 
@@ -22,6 +25,7 @@ export default function ShoesProductCardItem() {
   const [productSizeState, setProductSizeState] = useState({ ...initialSize })
   const [productData, setProductData] = useState([])
   const [loading, setLoading] = useState(false)
+  const [quantity, setQuantity] = useState(1);
 
   const GetProductItem = async () => {
     if (id) {
@@ -35,11 +39,16 @@ export default function ShoesProductCardItem() {
     }
   }
 
-  const handleClickCart = (productID) => {
+  const handleClickCart = (product) => {
     if (isAuthUser.isAuth) {
       const cart = getCart() || [];
-      if (!cart.includes(productID)) {
-        cart.push(productID);
+      let sumCartPrice = (product.productPrice * quantity)
+      const existingProductIndex = cart.findIndex(item => item.product._id === product._id);
+      if (existingProductIndex !== -1) {
+        cart[existingProductIndex].quantity = quantity;
+        cart[existingProductIndex].sumCartPrice = sumCartPrice;
+      } else {
+        cart.push({ product, quantity, sumCartPrice });
       }
       storage.setKeyWithValue(`${isAuthUser.user.username}` + `cart`, JSON.stringify(cart));
     } else {
@@ -50,6 +59,15 @@ export default function ShoesProductCardItem() {
   function getCart() {
     const cartJSON = storage.getValueByKey(`${isAuthUser.user.username}` + `cart`);
     return cartJSON ? JSON.parse(cartJSON) : [];
+  }
+
+  const handleAdetSayacClick = (count) => {
+    if (count.id === 'plus' && quantity > 0 && quantity < productData.shoesProduct.productPiece) {
+      setQuantity(quantity + 1)
+    }
+    else if (count.id === 'minus' && quantity > 1) {
+      setQuantity(quantity - 1)
+    }
   }
 
   const handleProductSizeTextChange = (value, key) => {
@@ -111,12 +129,27 @@ export default function ShoesProductCardItem() {
                   <Radio.Button value="45">45</Radio.Button>
                 </Radio.Group>
               </div>
+              <span>Adet</span>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <button
+                  id='plus'
+                  name={productData.shoesProduct._id}
+                  className='MyCartCardButtonPlusMinIcon'
+                  onClick={() => handleAdetSayacClick(document.getElementById('plus'))}
+                ><PlusCircleOutlined /></button>
+                <span style={{ fontSize: "1.2rem", color: "rgba(82, 82, 82, 0.664)" }}>{quantity}</span>
+                <button
+                  id='minus'
+                  name={productData.shoesProduct._id}
+                  className='MyCartCardButtonPlusMinIcon'
+                  onClick={() => handleAdetSayacClick(document.getElementById('minus'))}
+                ><MinusCircleOutlined /></button>
+              </div>
               <button
                 className='ShoesItemFeatureButton'
                 onClick={() => handleClickCart(productData.shoesProduct)}
               >Add to cart</button>
             </div>
-
           </div>
         </div>
       ) : (

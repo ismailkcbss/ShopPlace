@@ -44,7 +44,7 @@ export default function MyCartsItem(props) {
         const updatedCart = cart.map(item => {
             if (item.product._id === pID) {
                 item.quantity = setProductCartQuentity;
-                item.total = (setProductCartQuentity * product.productPrice)
+                item.sumCartPrice = (setProductCartQuentity * product.productPrice)
             }
             return item;
         });

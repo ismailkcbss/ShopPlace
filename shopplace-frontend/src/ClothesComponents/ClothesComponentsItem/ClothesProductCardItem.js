@@ -43,11 +43,13 @@ export default function ClothesProductCardItem() {
     const handleClickCart = (product) => {
         if (isAuthUser.isAuth) {
             const cart = getCart() || [];
+            let sumCartPrice = (product.productPrice * quantity)
             const existingProductIndex = cart.findIndex(item => item.product._id === product._id);
             if (existingProductIndex !== -1) {
                 cart[existingProductIndex].quantity = quantity;
+                cart[existingProductIndex].sumCartPrice = sumCartPrice;
             } else {
-                cart.push({ product, quantity });
+                cart.push({ product, quantity, sumCartPrice });
             }
             storage.setKeyWithValue(`${isAuthUser.user.username}` + `cart`, JSON.stringify(cart));
         } else {
