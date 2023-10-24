@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Loading from '../../Loading'
 import ShoesProductItemPageImageList from './ShoesProductItemPageImageList'
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { axiosInstance } from '../../axios.util';
 import Navbar from '../../mainComponents/navbar';
 import { Radio } from 'antd';
@@ -14,13 +14,13 @@ export default function ShoesProductCardItem() {
   const initialSize = {
     productSize: ""
   }
+
   const history = useHistory();
 
   const isAuthUser = useSelector((state) => state.user)
 
   const [productSizeState, setProductSizeState] = useState({ ...initialSize })
   const [productData, setProductData] = useState([])
-  const [sepet, setSepet] = useState([])
   const [loading, setLoading] = useState(false)
 
   const GetProductItem = async () => {
@@ -36,20 +36,19 @@ export default function ShoesProductCardItem() {
   }
 
   const handleClickCart = (productID) => {
-    console.log(productID);
     if (isAuthUser.isAuth) {
       const cart = getCart() || [];
       if (!cart.includes(productID)) {
         cart.push(productID);
       }
-      storage.setKeyWithValue('cart', JSON.stringify(cart));
+      storage.setKeyWithValue(`${isAuthUser.user.username}` + `cart`, JSON.stringify(cart));
     } else {
       history.push('/Login');
     }
   }
 
   function getCart() {
-    const cartJSON = storage.getValueByKey('cart');
+    const cartJSON = storage.getValueByKey(`${isAuthUser.user.username}` + `cart`);
     return cartJSON ? JSON.parse(cartJSON) : [];
   }
 

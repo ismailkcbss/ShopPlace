@@ -22,6 +22,7 @@ import CategoryList from './mainComponents/CategoryList';
 import ShoesAddProduct from './ShoesComponents/ShoesAddProduct';
 import ShoesProductCardItem from './ShoesComponents/ShoesComponentsItem/ShoesProductCardItem';
 import ShoesProductViewer from './ShoesComponents/ShoesProductViewer';
+import PayPage from './mainComponents/PayPage';
 
 
 
@@ -60,6 +61,7 @@ function App() {
           <Route exact path='/MyProfile' component={MyProfile} />
           <Route exact path='/MyCart' component={MyCart} />
           <Route exact path='/MyFavorites' component={MyFavorites} />
+          <Route exact path='/PayPage' component={PayPage} />
 
 
           <Route exact path='/ClothesProductCardItem/:id' component={ClothesProductCardItem} />

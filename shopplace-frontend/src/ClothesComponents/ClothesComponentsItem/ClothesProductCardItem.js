@@ -27,6 +27,7 @@ export default function ClothesProductCardItem() {
     const [loading, setLoading] = useState(false)
     const [quantity, setQuantity] = useState(1);
 
+
     const GetProductItem = async () => {
         if (id) {
             try {
@@ -42,20 +43,20 @@ export default function ClothesProductCardItem() {
     const handleClickCart = (product) => {
         if (isAuthUser.isAuth) {
             const cart = getCart() || [];
-            const existingProductIndex = cart.findIndex(item => item.productID === product);
+            const existingProductIndex = cart.findIndex(item => item.product._id === product._id);
             if (existingProductIndex !== -1) {
                 cart[existingProductIndex].quantity = quantity;
             } else {
                 cart.push({ product, quantity });
             }
-            storage.setKeyWithValue('cart', JSON.stringify(cart));
+            storage.setKeyWithValue(`${isAuthUser.user.username}` + `cart`, JSON.stringify(cart));
         } else {
             history.push('/Login');
         }
     }
 
     function getCart() {
-        const cartJSON = storage.getValueByKey('cart');
+        const cartJSON = storage.getValueByKey(`${isAuthUser.user.username}` + `cart`);
         return cartJSON ? JSON.parse(cartJSON) : [];
     }
 
@@ -150,6 +151,7 @@ export default function ClothesProductCardItem() {
                                 className='ClothesItemFeatureButton'
                                 onClick={() => handleClickCart(productData.clothesProduct)}
                             >Add to cart</button>
+
                         </div>
 
                     </div>

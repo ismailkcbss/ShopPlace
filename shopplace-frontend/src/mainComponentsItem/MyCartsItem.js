@@ -1,33 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DeleteOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import * as storage from '../storage.helper'
+import { useSelector } from 'react-redux';
 
 
 export default function MyCartsItem(props) {
 
     const { Pitem, setCartProduct } = props;
 
+    const userCart = useSelector((state) => state.user.user)
+
     const product = Pitem.product;
     const quantity = Pitem.quantity;
-
 
     const [productCartQuentity, setProductCartQuentity] = useState(quantity);
 
     function getCart() {
-        const cartJSON = storage.getValueByKey('cart');
+        const cartJSON = storage.getValueByKey(`${userCart.username}` + `cart`);
         return cartJSON ? JSON.parse(cartJSON) : [];
     }
 
     const handleDeleteClick = (productID) => {
         const cart = getCart() || [];
         const updatedCart = cart.filter(item => item.product._id !== productID);
-        storage.setKeyWithValue('cart', JSON.stringify(updatedCart));
+        storage.setKeyWithValue(`${userCart.username}` + `cart`, JSON.stringify(updatedCart));
         setCartProduct(updatedCart)
     }
 
 
     const handleAdetSayacClick = (pID, action) => {
-        console.log("PID = ",pID);
         if (action === 'plus' && productCartQuentity > 0 && productCartQuentity < product.productPiece) {
             setProductCartQuentity(productCartQuentity + 1)
             updateQuantityInCartByProductID(pID, productCartQuentity + 1)
@@ -43,11 +44,11 @@ export default function MyCartsItem(props) {
         const updatedCart = cart.map(item => {
             if (item.product._id === pID) {
                 item.quantity = setProductCartQuentity;
+                item.total = (setProductCartQuentity * product.productPrice)
             }
             return item;
-
         });
-        storage.setKeyWithValue('cart', JSON.stringify(updatedCart));
+        storage.setKeyWithValue(`${userCart.username}` + `cart`, JSON.stringify(updatedCart));
     }
 
     return (
@@ -84,14 +85,14 @@ export default function MyCartsItem(props) {
                             id='plus'
                             name={product._id}
                             className='MyCartCardButtonPlusMinIcon'
-                            onClick={() => handleAdetSayacClick(product._id,'plus')}
+                            onClick={() => handleAdetSayacClick(product._id, 'plus')}
                         ><PlusCircleOutlined /></button>
                         <span style={{ fontSize: "1.2rem", color: "rgba(82, 82, 82, 0.664)" }}>{productCartQuentity}</span>
                         <button
                             id='minus'
                             name={product._id}
                             className='MyCartCardButtonPlusMinIcon'
-                            onClick={() => handleAdetSayacClick(product._id,'minus')}
+                            onClick={() => handleAdetSayacClick(product._id, 'minus')}
                         ><MinusCircleOutlined /></button>
                     </div>
                 </div>
