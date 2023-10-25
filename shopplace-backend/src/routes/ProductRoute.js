@@ -11,6 +11,8 @@ router.route('/Clothes')
     .get(ClothesProductController.GetEveryoneAllProducts)
 router.route('/Single/Clothes/:id').get(ClothesProductController.GetEveryoneProduct)
 
+
+
 //Seller Route Clothes
 router.route('/Seller/Clothes')
     .get(ClothesProductController.GetSellerAllProducts)

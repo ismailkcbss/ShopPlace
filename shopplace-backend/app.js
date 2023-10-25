@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import conn from './db.js';
 import mainRoute from './src/routes/mainRoute.js'
 import userRoute from './src/routes/userRoute.js';
-import productRoute from './src/routes/productRoute.js';
+import productRoute from './src/routes/ProductRoute.js';
 import session from "express-session";
 import { CheckUser } from "./src/middlewares/authMiddleWare.js";
 import cors from 'cors';

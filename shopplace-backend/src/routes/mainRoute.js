@@ -10,4 +10,8 @@ router.route('/ContactUs').post(MainController.WebsiteSendMail)
 router.route('/Home').get(MainController.GetHomeAllProducts)
 
 
+router.route('/Favorite/Add').post(MainController.FavoriteAdd);
+router.route('/Favorite/Products').get(MainController.GetAllFavoriteProducts);
+
+
 export default router;

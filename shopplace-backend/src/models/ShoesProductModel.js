@@ -56,6 +56,6 @@ const ShoesProductSchema = new Schema({
     timestamps: true,
 })
 
-const ShoesProduct = mongoose.model('ShoesProduct', ShoesProductSchema);
+const ShoesProduct = mongoose.model('shoesproduct', ShoesProductSchema);
 
 export default ShoesProduct;

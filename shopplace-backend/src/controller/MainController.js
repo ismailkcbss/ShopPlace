@@ -1,8 +1,8 @@
 import ClothesProduct from "../models/ClothesProductModel.js";
 import ShoesProduct from "../models/ShoesProductModel.js";
-import User from "../models/userModel.js";
+import FavoriteProduct from "../models/FavoritesModal.js"
 import nodemailer from "nodemailer";
-
+import mongoose from "mongoose";
 
 const GetHomeAllProducts = async (req, res) => {
     try {
@@ -237,4 +237,58 @@ const WebsiteSendMail = async (req, res) => {
 }
 
 
-export { GetHomeAllProducts, WebsiteSendMail }
+const FavoriteAdd = async (req, res) => {
+    try {
+        const favoriteProduct = await FavoriteProduct.create({
+            userId: res.locals.user._id,
+            productId: req.body.productId,
+            productType: req.body.productType
+        })
+        res.status(200).json({
+            succeded: true,
+            favoriteProduct,
+        })
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error: error
+        })
+    }
+}
+
+const GetAllFavoriteProducts = async (req, res) => {
+    try {
+        const userId = res.locals.user._id;
+        const userFavorites = await FavoriteProduct.find({ userId });
+        const favoriteProducts = [];
+
+        for (const favorite of userFavorites) {
+            const productType = favorite.productType;
+            console.log("type = ",productType);
+            const productModel = mongoose.model(`${productType.toLowerCase()}product`);
+            if (productModel) {
+                const product = await productModel.findById(favorite.productId);
+                if (product) {
+                    favoriteProducts.push(product);
+                }
+            } else {
+                res.status(404).json({
+                    succeded: false,
+                    error: error
+                })
+            }
+        }
+
+        res.status(200).json({
+            succeded: true,
+            favoriteProducts
+        })
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error: error.message
+        })
+    }
+}
+
+export { GetHomeAllProducts, WebsiteSendMail, FavoriteAdd, GetAllFavoriteProducts }
