@@ -12,6 +12,8 @@ router.route('/Home').get(MainController.GetHomeAllProducts)
 
 router.route('/Favorite/Add').post(MainController.FavoriteAdd);
 router.route('/Favorite/Products').get(MainController.GetAllFavoriteProducts);
+router.route('/Favorite/Products/:id').delete(MainController.FavoriteProductsDelete);
+
 
 
 export default router;

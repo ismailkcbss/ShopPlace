@@ -239,15 +239,29 @@ const WebsiteSendMail = async (req, res) => {
 
 const FavoriteAdd = async (req, res) => {
     try {
-        const favoriteProduct = await FavoriteProduct.create({
-            userId: res.locals.user._id,
-            productId: req.body.productId,
-            productType: req.body.productType
-        })
-        res.status(200).json({
-            succeded: true,
-            favoriteProduct,
-        })
+        const userId = res.locals.user._id;
+        const productId = req.body.productId;
+        const productType = req.body.productType;
+
+        const existingFavorite = await FavoriteProduct.findOne({ userId, productId, productType });
+        if (existingFavorite) {
+            res.status(400).json({
+                succeeded: false,
+                message: 'Bu ürün zaten favorilere eklenmiş.'
+            });
+        } else {
+            const favoriteProduct = await FavoriteProduct.create({
+                userId,
+                productId,
+                productType
+            })
+            res.status(200).json({
+                succeded: true,
+                favoriteProduct,
+            })
+        }
+
+
     } catch (error) {
         res.status(500).json({
             succeded: false,
@@ -256,18 +270,24 @@ const FavoriteAdd = async (req, res) => {
     }
 }
 
+
 const GetAllFavoriteProducts = async (req, res) => {
     try {
         const userId = res.locals.user._id;
+        console.log("user = ", userId);
         const userFavorites = await FavoriteProduct.find({ userId });
+        console.log("userFavorites = ", userFavorites);
+
         const favoriteProducts = [];
 
         for (const favorite of userFavorites) {
             const productType = favorite.productType;
-            console.log("type = ",productType);
             const productModel = mongoose.model(`${productType.toLowerCase()}product`);
+            console.log("productModel = ", productModel);
+
             if (productModel) {
                 const product = await productModel.findById(favorite.productId);
+                console.log("product = ", product);
                 if (product) {
                     favoriteProducts.push(product);
                 }
@@ -291,4 +311,35 @@ const GetAllFavoriteProducts = async (req, res) => {
     }
 }
 
-export { GetHomeAllProducts, WebsiteSendMail, FavoriteAdd, GetAllFavoriteProducts }
+
+const FavoriteProductsDelete = async (req, res) => {
+    try {
+        const userId = res.locals.user._id;
+        const productId = req.params.id;
+        const userFavorites = await FavoriteProduct.find({ userId })
+
+        for (const favorite of userFavorites) {
+            if (favorite.productId.toString() === productId.toString()) {
+                await FavoriteProduct.findByIdAndRemove(favorite._id)
+                res.status(200).json({
+                    succeeded: true,
+                    message: "Successfully removed"
+                });
+                return;
+            }
+        }
+        res.status(404).json({
+            succeeded: false,
+            message: 'is not found product'
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error: error.message
+        })
+    }
+}
+
+
+export { GetHomeAllProducts, WebsiteSendMail, FavoriteAdd, GetAllFavoriteProducts, FavoriteProductsDelete }

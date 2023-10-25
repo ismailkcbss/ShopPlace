@@ -50,9 +50,10 @@ app.use((req, res, next) => {
 })
 
 
-app.post('*',CheckUser).get('*',CheckUser)
-app.use('/',userRoute)
-app.use('/Main',mainRoute)
+//app.post('*',CheckUser).get('*',CheckUser)
+app.use('*',CheckUser);
+app.use('/',userRoute);
+app.use('/Main',mainRoute);
 app.use('/User', userRoute);
 app.use('/Product', productRoute);
 
