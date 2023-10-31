@@ -11,13 +11,13 @@ export default function MyCart() {
 
     const history = useHistory();
 
-    const [cartProducts, setCartProduct] = useState([])
+    const [cartProducts, setCartProduct] = useState(null)
     const userCart = useSelector((state) => state.user.user)
     const [loading, setLoading] = useState(false)
 
 
     function getCart() {
-        const cartJSON = storage.getValueByKey(`${userCart.username}` + `cart`);
+        const cartJSON = storage.getValueByKey(`${userCart.username}cart`);
         if (cartJSON) {
             setCartProduct(JSON.parse(cartJSON))
             setLoading(true);
@@ -43,12 +43,13 @@ export default function MyCart() {
                                     cartProducts?.map((Pitem) => (
                                         <MyCartsItem key={Pitem.product._id} Pitem={Pitem} setCartProduct={setCartProduct} />
                                     ))
+
                                 ) : (
                                     <p style={{ textAlign: "center" }}>Sepet boş</p>
                                 )
                                 }
                             </div>
-                            <div style={{ width: "100%", height: "auto", margin: "1rem 0 1rem 0", textAlign: "center" }}>
+                            < div style={{ width: "100%", height: "auto", margin: "1rem 0 1rem 0", textAlign: "center" }}>
                                 <button
                                     onClick={() => history.push('/PayPage')}
                                     className='MyCartListButton'
@@ -61,6 +62,6 @@ export default function MyCart() {
                 }
 
             </div>
-        </div>
+        </div >
     )
 }

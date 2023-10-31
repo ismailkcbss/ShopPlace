@@ -93,7 +93,7 @@ const GetSellerProduct = async (req, res) => {
 const GetSellerAllProducts = async (req, res) => {
     try {
         const allProducts = [];
-// Bu durumda butun şemalara istek atmak zorundayım ve kontrolu sağlayıp diziye aktarmalıyım mongo sadece bu şekilde izin veriyor.
+    // Bu durumda butun şemalara istek atmak zorundayım ve kontrolu sağlayıp diziye aktarmalıyım mongo sadece bu şekilde izin veriyor.
 
         const clothesProduct = await ClothesProduct.find({ productOwner: res.locals.user._id })
         if (clothesProduct.length > 0) {

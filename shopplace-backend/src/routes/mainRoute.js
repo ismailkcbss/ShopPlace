@@ -15,5 +15,8 @@ router.route('/Favorite/Products').get(MainController.GetAllFavoriteProducts);
 router.route('/Favorite/Products/:id').delete(MainController.FavoriteProductsDelete);
 
 
+router.route('/MyOrder').post(MainController.MyOrderSendMail)
+
+
 
 export default router;

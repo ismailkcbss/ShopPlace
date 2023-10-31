@@ -21,7 +21,6 @@ export default function MyFavorites() {
     }
 
 
-    
     useEffect(() => {
         GetAllFavoritesProduct();
     }, [])
