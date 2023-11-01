@@ -84,11 +84,11 @@ export default function ClothesProductViewer() {
                             <button
                                 className='ClothesItemFeatureButton'
                                 onClick={handleClickProductEdit}
-                            >Düzenle</button>
+                            >Edit</button>
                             <button
                                 className='ClothesItemFeatureButton'
                                 onClick={handleClickProductDelete}
-                            >Sil</button>
+                            >Delete</button>
                         </div>
                     </div>
                 </div>

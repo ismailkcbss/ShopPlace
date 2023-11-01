@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios.util';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Radio, Space } from 'antd';
+import { Radio, Space, Spin } from 'antd';
 
 export default function ShoesAddProduct() {
 
@@ -27,6 +27,7 @@ export default function ShoesAddProduct() {
     const [image, setImage] = useState([]);
     const [prevImage, setPrevImage] = useState([])
     const [userData, setUserData] = useState("")
+    const [isWaitClick, setIsWaitClick] = useState(false);
 
 
     const handleTextChange = (value, key) => {
@@ -42,12 +43,24 @@ export default function ShoesAddProduct() {
         }
     }
 
-    const saveButtonClick = (e) => {
+    const saveButtonClick = async (e) => {
         e.preventDefault();
-        if (id) {
-            ClickUpdateProduct();
-        } else {
-            ClickNewProduct();
+
+        if (isWaitClick) {
+            return;
+        }
+
+        setIsWaitClick(true);
+        try {
+            if (id) {
+                await ClickUpdateProduct();
+            } else {
+                await ClickNewProduct();
+            }
+        } catch (error) {
+            alert("Cannot process the product");
+        } finally {
+            setIsWaitClick(false);
         }
     }
 
@@ -109,8 +122,6 @@ export default function ShoesAddProduct() {
                 productImage: imageURL.length === 0 ? (prevImage) : (imageURL)
             })
             history.push('/MyProfile');
-            alert("SUCCESSFUL");
-
         } catch (error) {
             alert("Product is not updated");
         }
@@ -155,7 +166,6 @@ export default function ShoesAddProduct() {
                 productImage: (imageURL).join(',')
             })
             history.push('/MyProfile');
-            alert("SUCCESSFUL");
         } catch (error) {
             alert("Add product error")
         }
@@ -272,8 +282,16 @@ export default function ShoesAddProduct() {
                         multiple
                         className='ShoesAddProductFileInput'
                     />
-                    <button className='ShoesAddProductButton' onClick={saveButtonClick}>Save</button>
+                                        {
+                        isWaitClick ? (
+                            <button className='ShoesAddProductButtonDisable' disabled>
+                                <Spin />  Saving...
+                            </button>
+                        ) : (
+                            <button className='ShoesAddProductButton' onClick={saveButtonClick}>Save</button>
 
+                        )
+                    }
                 </form>
             </div>
         </div>

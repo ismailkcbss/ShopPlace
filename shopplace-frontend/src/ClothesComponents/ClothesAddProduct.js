@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios.util';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Radio, Space } from 'antd';
+import { Radio, Space, Spin } from 'antd';
 
 export default function ClothesAddProduct() {
 
@@ -31,6 +31,7 @@ export default function ClothesAddProduct() {
     const [image, setImage] = useState([]);
     const [prevImage, setPrevImage] = useState([])
     const [userData, setUserData] = useState("")
+    const [isWaitClick, setIsWaitClick] = useState(false);
 
     const handleTextChange = (value, key) => {
         setForm({
@@ -44,12 +45,23 @@ export default function ClothesAddProduct() {
             setImage((prevState) => [...prevState, newImage]);
         }
     }
-    const saveButtonClick = (e) => {
+    const saveButtonClick = async (e) => {
         e.preventDefault();
-        if (id) {
-            ClickUpdateProduct();
-        } else {
-            ClickNewProduct();
+
+        if (isWaitClick) {
+            return;
+        }
+        setIsWaitClick(true);
+        try {
+            if (id) {
+                await ClickUpdateProduct();
+            } else {
+                await ClickNewProduct();
+            }
+        } catch (error) {
+            alert("Cannot process the product");
+        } finally {
+            setIsWaitClick(false);
         }
     }
 
@@ -61,6 +73,7 @@ export default function ClothesAddProduct() {
             alert("Not Found user");
         }
     }
+
 
 
     const getSingleProduct = async () => {
@@ -89,6 +102,8 @@ export default function ClothesAddProduct() {
 
         }
     }
+
+
     const ClickUpdateProduct = async () => {
         try {
             let imageRef = [];
@@ -118,12 +133,11 @@ export default function ClothesAddProduct() {
                 productImage: imageURL.length === 0 ? (prevImage) : (imageURL)
             })
             history.push('/MyProfile');
-            alert("SUCCESSFUL");
-
         } catch (error) {
             alert("Product is not updated");
         }
     }
+
 
     const ClickNewProduct = async () => {
         if (form.productGender.trim() === ""
@@ -170,7 +184,6 @@ export default function ClothesAddProduct() {
                 productImage: (imageURL).join(',')
             })
             history.push('/MyProfile');
-            alert("SUCCESSFUL");
         } catch (error) {
             alert("Add product error")
         }
@@ -307,7 +320,15 @@ export default function ClothesAddProduct() {
                         multiple
                         className='ClothesAddProductFileInput'
                     />
-                    <button className='ClothesAddProductButton' onClick={saveButtonClick}>Save</button>
+                    {
+                        isWaitClick ? (
+                            <button className='ClothesAddProductButtonDisable' disabled>
+                                <Spin />  Saving...
+                            </button>
+                        ) : (
+                            <button className='ClothesAddProductButton' onClick={saveButtonClick}>Save</button>
+                        )
+                    }
                 </form>
             </div>
         </div>

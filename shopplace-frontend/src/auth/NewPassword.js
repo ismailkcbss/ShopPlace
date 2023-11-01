@@ -1,7 +1,9 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { axiosInstance } from '../axios.util';
 import * as storage from '../storage.helper'
+import { Spin } from 'antd';
+
 
 export default function NewPassword() {
 
@@ -11,6 +13,7 @@ export default function NewPassword() {
     }
     const history = useHistory();
     const [form, setForm] = useState({ ...initialForm });
+    const [isWaitClick, setIsWaitClick] = useState(false);
 
 
     const email = storage.GetCookie('passPres')
@@ -25,10 +28,16 @@ export default function NewPassword() {
 
     const ClickNewPassword = async (e) => {
         e.preventDefault();
+       
+        if (isWaitClick) {
+            return;
+        }
+
         if (form.newPassword.trim() === "" || form.newPassword1.trim() === "") {
             alert("Please enter a new password");
             return;
         }
+        setIsWaitClick(true);
         if (form.newPassword === form.newPassword1) {
             try {
                 const { data } = await axiosInstance.post(`/User/NewPasswordReset/${email}`, {
@@ -40,6 +49,11 @@ export default function NewPassword() {
             } catch (error) {
                 alert("Try again");
                 console.log(error);
+            } finally {
+                setIsWaitClick(false);
+                setForm({
+                    ...initialForm,
+                });
             }
         }
     }
@@ -64,12 +78,20 @@ export default function NewPassword() {
                         value={form.newPassword1}
                         onChange={(e) => handleTextChange(e.target.value, "newPassword1")}
                     />
-                    <button
-                        className='NewPasswordButton'
-                        onClick={ClickNewPassword}
-                    >
-                        Login
-                    </button>
+                    {
+                        isWaitClick ? (
+                            <button className='NewPasswordButtonDisable' disabled>
+                                <Spin />  Saving...
+                            </button>
+                        ) : (
+                            <button
+                                className='NewPasswordButton'
+                                onClick={ClickNewPassword}
+                            >
+                                Save
+                            </button>
+                        )
+                    }
                 </form>
             </div>
         </div>

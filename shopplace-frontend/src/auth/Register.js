@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios.util';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import Loading from '../Loading';
+import { Spin } from 'antd';
 
 export default function Register() {
 
@@ -13,12 +13,13 @@ export default function Register() {
         email: "",
         password: "",
         phone: "",
-        sellerCheck:Boolean
+        sellerCheck: false
     }
     const history = useHistory();
 
     const [form, setForm] = useState({ ...initialForm });
     const [image, setImage] = useState(null);
+    const [isWaitClick, setIsWaitClick] = useState(false);
 
     const handleTextChange = (value, key) => {
         setForm({
@@ -36,10 +37,16 @@ export default function Register() {
 
     const ClickRegister = async (e) => {
         e.preventDefault();
+
+        if (isWaitClick) {
+            return;
+        }
+
         if (form.userName.trim() === "" || form.email.trim() === "" || form.password.trim() === "" || form.phone.trim() === "") {
             alert("Please enter information")
             return;
         }
+        setIsWaitClick(true);
         const imageRef = ref(storage, uuidv4());
         try {
             await uploadBytes(imageRef, image);
@@ -55,10 +62,12 @@ export default function Register() {
             history.push('/Login')
         } catch (error) {
             alert("Sorry ! register is not have been ")
+        } finally {
+            setIsWaitClick(false);
+            setForm({
+                ...initialForm,
+            });
         }
-        setForm({
-            ...initialForm
-        })
     }
 
     return (
@@ -105,15 +114,21 @@ export default function Register() {
                         type='checkbox'
                         style={{ margin: "1rem 0 2rem 0", width: "1.4rem", height: "1.4rem" }}
                         value={form.sellerCheck}
-                        onChange={(e) => handleTextChange(e.target.checked,"sellerCheck")}
+                        onChange={(e) => handleTextChange(e.target.checked, "sellerCheck")}
                     />
-
-                    <button className='RegisterButton' onClick={ClickRegister}>
-                        Register
-                    </button>
+                    {
+                        isWaitClick ? (
+                            <button className='RegisterButtonDisable' disabled>
+                                <Spin />  Registering...
+                            </button>
+                        ) : (
+                            <button className='RegisterButton' onClick={ClickRegister}>
+                                Register
+                            </button>
+                        )
+                    }
                 </form>
             </div>
         </div>
-
     )
 }

@@ -9,6 +9,7 @@ const userSchema = new Schema({
         type: String,
         required: [true, "You did not enter a user name."],
         lowercase: true,
+        unique: true,
     },
     email: {
         type: String,

@@ -104,6 +104,7 @@ Login / Register / forgot-password / new-password / Contact-us
     outline: none;
     margin-bottom: 1rem;
 }
+
 .ContactUsTextarea,
 .ClothesAddProductTextarea,
 .ShoesAddProductTextarea,
@@ -130,7 +131,8 @@ Login / Register / forgot-password / new-password / Contact-us
 .NewPasswordButton,
 .ContactUsButton,
 .ClothesAddProductButton,
-.ShoesAddProductButton {
+.ShoesAddProductButton,
+.PayPageButton {
     width: 100%;
     height: 4rem;
     border-radius: .4rem;
@@ -142,13 +144,33 @@ Login / Register / forgot-password / new-password / Contact-us
     transition: ease-in-out .2s;
 }
 
+.RegisterButtonDisable,
+.LoginButtonDisable,
+.ForgotPasswordButtonDisable,
+.NewPasswordButtonDisable,
+.ClothesAddProductButtonDisable,
+.ShoesAddProductButtonDisable,
+.ContactUsButtonDisable,
+.PayPageButtonDisable {
+    width: 100%;
+    height: 4rem;
+    border-radius: .4rem;
+    background-color: rgb(94, 105, 131);
+    border-color: rgb(19, 27, 48);
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 700;
+    cursor: wait;
+}
+
 .LoginButton:hover,
 .RegisterButton:hover,
 .ForgotPasswordButton:hover,
 .NewPasswordButton:hover,
 .ContactUsButton:hover,
 .ClothesAddProductButton:hover,
-.ShoesAddProductButton:hover {
+.ShoesAddProductButton:hover,
+.PayPageButton:hover {
     cursor: pointer;
     background-color: rgba(51, 65, 85, 0.959);
 }
@@ -409,9 +431,72 @@ Home-page / Navbar
     height: auto;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
+.PayPageProductBrief {
+    flex-basis: 50%;
+    display: flex;
+    align-items: center;
+}
 
+.PayPageFormDiv {
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.PayPageItemDiv {
+    width: 100%;
+    height: auto;
+}
+
+.PayPageItemTable {
+    width: 100%;
+}
+
+.PayPageItemTable thead tr {
+    width: 100%;
+    display: flex;
+    border: .1rem solid rgba(187, 187, 187, 0.411);
+    justify-content: space-between;
+}
+
+.PayPageItemTable thead th {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: rgba(184, 184, 184, 0.877);
+    flex-basis: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+    border-left: .1rem solid rgba(187, 187, 187, 0.411);
+}
+
+.PayPageItemTable tbody tr {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border: .1rem solid rgba(187, 187, 187, 0.411);
+    border-top: none;
+}
+
+.PayPageItemTable tbody td {
+    font-size: 1.3rem;
+    font-weight: 700;
+    flex-basis: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: .1rem solid rgba(187, 187, 187, 0.411);
+}
+
+.PayPageItemTable tbody img {
+    width: 5rem;
+    object-fit: contain;
+    border-radius: .4rem;
+}
 
 
 .MyProfileSellerDiv {

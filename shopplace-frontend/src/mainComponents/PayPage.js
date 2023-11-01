@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import * as storage from '../storage.helper';
 import { useSelector } from 'react-redux';
 import { axiosInstance } from '../axios.util';
-import { DatePicker, Space } from 'antd';
-import moment from 'moment';
+import Loading from '../Loading'
+import PayPageItem from '../mainComponentsItem/PayPageItem';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import Navbar from './navbar';
+import { Spin } from 'antd';
 
 export default function PayPage() {
 
-    const initialform = {
+    const initialForm = {
         shippingAdress: "",
         cardName: "",
         cardNumber: "",
@@ -15,10 +18,11 @@ export default function PayPage() {
         cardCvv: "",
     }
     const isAuthUser = useSelector((state) => state.user)
-
+    const history = useHistory();
 
     const [cartJsonData, setCartJsonData] = useState([])
-    const [form, setForm] = useState({ ...initialform });
+    const [form, setForm] = useState({ ...initialForm });
+    const [isWaitClick, setIsWaitClick] = useState(false);
 
 
     const handleTextChange = (value, key) => {
@@ -36,17 +40,30 @@ export default function PayPage() {
             setCartJsonData([])
         }
     }
+
     const totalAmount = cartJsonData.reduce((total, cartJsonData) => total + cartJsonData.sumCartPrice, 0); // cart price sum 
 
+    const PlaceOrderClick = async (e) => {
+        e.preventDefault();
 
-    const PlaceOrderClick = async () => {
+        if (isWaitClick) {
+            return;
+        }
+        setIsWaitClick(true);
         try {
             const { data } = await axiosInstance.post(`/Main/MyOrder`, {
                 productSumPrice: totalAmount,
                 shippingAdress: form.shippingAdress
             })
+            history.push('/')
+            storage.setKeyWithValue(`${isAuthUser.user.username}cart`, "");
         } catch (error) {
             alert(error.message);
+        } finally {
+            setIsWaitClick(false);
+            setForm({
+                ...initialForm,
+            });
         }
     }
 
@@ -56,16 +73,25 @@ export default function PayPage() {
 
     return (
         <div className='PayPageDiv'>
+            <Navbar />
             <div className='PayPage'>
                 <div className='ProductSummaryDiv'>
-                    <div className=''>
+                    <div className='PayPageProductBrief'>
+                        {Loading ? (
+                            <PayPageItem item={cartJsonData} totalAmount={totalAmount} />
+                        ) : (
+                            <loading />
+                        )
+                        }
+                    </div>
+                    <div className='PayPageFormDiv'>
                         <form className='PayPageForm'>
                             <span className='FormHeader'>Shipping Address</span>
                             <textarea
                                 value={form.shippingAdress}
                                 onChange={(e) => handleTextChange(e.target.value, "shippingAdress")}
-                                placeholder="Controlled autosize"
                                 className='PayPageTextarea'
+
                             />
                             <span className='FormHeader'>Name of the Cardholder</span>
                             <input
@@ -78,6 +104,7 @@ export default function PayPage() {
                             <span className='FormHeader'>Card Number</span>
                             <input
                                 type='number'
+                                min={0}
                                 className='PayPageInput'
                                 required
                                 value={form.cardNumber}
@@ -93,11 +120,24 @@ export default function PayPage() {
                             <span className='FormHeader'>Card CVV</span>
                             <input
                                 type='number'
+                                min={0}
                                 className='PayPageInput'
                                 required
                                 value={form.cardCvv}
                                 onChange={(e) => handleTextChange(e.target.value, "cardCvv")}
                             />
+                            {
+                                isWaitClick ? (
+                                    <button className='PayPageButtonDisable' disabled>
+                                        <Spin />  Waiting...
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={PlaceOrderClick}
+                                        className='PayPageButton'
+                                    >Complete the payment</button>
+                                )
+                            }
                         </form>
                     </div>
                 </div>

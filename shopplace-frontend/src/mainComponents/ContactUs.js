@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { axiosInstance } from '../axios.util'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { Spin } from 'antd';
+
 
 export default function ContactUs() {
     const initialForm = {
@@ -11,6 +13,8 @@ export default function ContactUs() {
     }
 
     const [form, setForm] = useState({ ...initialForm })
+    const [isWaitClick, setIsWaitClick] = useState(false);
+
     const history = useHistory();
 
     const handleTextChange = (value, key) => {
@@ -22,10 +26,16 @@ export default function ContactUs() {
 
     const ClickContactUs = async (e) => {
         e.preventDefault();
+        
+        if (isWaitClick) {
+            return;
+        }
+
         if (form.userName.trim() === "" || form.email.trim() === "" || form.phone.trim() === "" || form.description.trim() === "") {
             alert("Please fill in the form")
             return;
         }
+        setIsWaitClick(true);
         try {
             const { data } = await axiosInstance.post(`/Main/ContactUs`, {
                 username: form.userName,
@@ -33,13 +43,14 @@ export default function ContactUs() {
                 phone: form.phone,
                 description: form.description
             })
-            setTimeout(() => {
-                alert("Sent successfully")
-                setForm({ ...initialForm })
-                history.push('/Login')
-            }, 5000);
+            history.push('/')
         } catch (error) {
             alert("Try again")
+        } finally {
+            setIsWaitClick(false);
+            setForm({
+                ...initialForm,
+            });
         }
     }
 
@@ -79,7 +90,15 @@ export default function ContactUs() {
                         onChange={(e) => handleTextChange(e.target.value, "description")}
                         required
                     />
-                    <button className='ContactUsButton' onClick={ClickContactUs}>Send</button>
+                    {
+                        isWaitClick ? (
+                            <button className='ContactUsButtonDisable' disabled>
+                                <Spin />  Sending...
+                            </button>
+                        ) : (
+                            <button className='ContactUsButton' onClick={ClickContactUs}>Send</button>
+                        )
+                    }
                 </form>
             </div>
         </div>
