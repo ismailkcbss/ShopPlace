@@ -9,10 +9,10 @@
 It is an online shopping application that can be used in daily life. The project is not fully completed yet and there are improvements to be added. The project includes features such as registration, username, Decryption, welcome message, product add-edit, product search, contact message, add to favorites, add to cart and more. Many features have already been completed and the rest will be completed shortly.
 
 ## Improvements to be added to the project
-- Add to Cart feature
-- Add Favorite Product feature
-- other Category tabs
-- product viewing page.
+- Other Category tabs
+- Product viewing page.
+- Search product
+- User profile page
 - ...
 
 Besides these features, many more new features will be added to make the online shopping page the most user-friendly in everyday life.
