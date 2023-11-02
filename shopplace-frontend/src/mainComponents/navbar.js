@@ -32,6 +32,7 @@ export default function Navbar() {
       history.push('/Login')
     }
   }
+
   return (
     <div className='Navbar'>
       <div className='HeaderDiv'>
@@ -45,7 +46,7 @@ export default function Navbar() {
       <div className='InoutDiv'>
         {
           user.isAuth ? (
-            <div>
+            <div style={{display:"flex"}}>
               <button className='NavbarButton' onClick={() => history.push('/MyProfile')}>{user.user.username}</button>
               <button className='NavbarButton' onClick={ClickLogout}>Logout</button>
             </div>

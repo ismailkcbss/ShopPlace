@@ -11,7 +11,6 @@ It is an online shopping application that can be used in daily life. The project
 ## Improvements to be added to the project
 - Other Category tabs
 - Product viewing page.
-- Search product
 - User profile page
 - ...
 

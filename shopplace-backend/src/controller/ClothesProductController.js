@@ -35,8 +35,9 @@ const CreateProduct = async (req, res) => {
     }
 }
 const GetEveryoneAllProducts = async (req, res) => {
+    let {search} = req.query;
     try {
-        const allData = await ClothesProduct.find({})
+        const allData = await ClothesProduct.find({ "productName": new RegExp(search, "i") })
         const count = await ClothesProduct.countDocuments()
         res.status(200).json({
             succeded: true,

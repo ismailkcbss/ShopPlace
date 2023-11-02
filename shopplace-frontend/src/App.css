@@ -259,6 +259,7 @@ Home-page / Navbar
     cursor: pointer;
 }
 
+
 .InteractDiv {
     flex-basis: 15%;
     display: flex;
@@ -565,14 +566,49 @@ Home-page / Navbar
     flex-basis: 15%;
 }
 
+.ContentBody {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+.HeaderSearch {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 3rem;
+}
+
+.HeaderSearchInput {
+    width: 40%;
+    height: 3rem;
+    line-height: 3rem;
+    border-radius: .4rem;
+    border: .1rem solid rgba(219, 219, 219, 0.849);
+    outline: none;
+    padding: 1rem;
+    font-weight: 700;
+}
+
 .ProductDiv {
     width: 100%;
     height: auto;
     flex-basis: 70%;
     padding: 3rem;
     display: grid;
-    grid-gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(25em, 2fr));
+    grid-gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(21em, 2fr));
+
+}
+
+.ProductDivItems {
+    display: grid;
+    grid-gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(21em, 2fr));
 }
 
 .FilterDiv {
@@ -615,6 +651,15 @@ Components Items Page
 }
 
 .CategoryListMainButton:hover {
+    cursor: pointer;
+    background-color: rgba(224, 224, 224, 0.699);
+}
+
+.CategoryListMainButton.selected {
+    background-color: rgba(184, 184, 184, 0.699);
+}
+
+.CategoryListMainButton.selected:hover {
     cursor: pointer;
     background-color: rgba(224, 224, 224, 0.699);
 }

@@ -32,8 +32,9 @@ const CreateProduct = async (req, res) => {
 }
 
 const GetEveryoneAllProducts = async (req, res) => {
+    let { search } = req.query;
     try {
-        const allData = await ShoesProduct.find({})
+        const allData = await ShoesProduct.find({ "productName": new RegExp(search, "i") })
         const count = await ShoesProduct.countDocuments()
         res.status(200).json({
             succeded: true,
@@ -88,14 +89,14 @@ const GetSellerAllProducts = async (req, res) => {
         const shoesProduct = await ShoesProduct.find({
             $and: [
                 { productOwner: res.locals.user._id },
-                { "shoesName": new RegExp(search, "i") }
+                { "productName": new RegExp(search, "i") }
             ]
         }).skip(offset).limit(limit).sort({ "updatedAt": -1 })
 
         const count = await ShoesProduct.countDocuments({
             $and: [
                 { productOwner: res.locals.user._id },
-                { "shoesName": new RegExp(search, "i") }
+                { "productName": new RegExp(search, "i") }
             ]
         })
 

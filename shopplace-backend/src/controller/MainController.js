@@ -4,12 +4,15 @@ import FavoriteProduct from "../models/FavoritesModal.js"
 import nodemailer from "nodemailer";
 import mongoose from "mongoose";
 
+
 const GetHomeAllProducts = async (req, res) => {
+    let { search } = req.query;
+    
     try {
-        const clothesProduct = await ClothesProduct.find({});
+        const clothesProduct = await ClothesProduct.find({"productName": new RegExp(search, "i")});
         const clothesCount = await ClothesProduct.countDocuments();
 
-        const shoesProduct = await ShoesProduct.find({});
+        const shoesProduct = await ShoesProduct.find({"productName": new RegExp(search, "i")});
         const shoesCount = await ShoesProduct.countDocuments();
 
         const allProducts = shoesProduct.concat(clothesProduct);
