@@ -14,6 +14,7 @@ export default function ShoesAddProduct() {
         productType: "Shoes",
         productGender: "",
         productName: "",
+        productBrand: "",
         productPrice: "",
         productPiece: "",
         productDescription: "",
@@ -22,6 +23,7 @@ export default function ShoesAddProduct() {
         productColor: "",
         productModel: "",
     }
+    
     const history = useHistory();
     const [form, setForm] = useState({ ...initialForm });
     const [image, setImage] = useState([]);
@@ -81,6 +83,7 @@ export default function ShoesAddProduct() {
                     productType: data.shoesProduct.productType,
                     productGender: data.shoesProduct.productGender,
                     productName: data.shoesProduct.productName,
+                    productBrand: data.shoesProduct.productBrand,
                     productPrice: data.shoesProduct.productPrice,
                     productPiece: data.shoesProduct.productPiece,
                     productDescription: data.shoesProduct.productDescription,
@@ -95,7 +98,6 @@ export default function ShoesAddProduct() {
             }
         }
     }
-    console.log(form);
     const ClickUpdateProduct = async () => {
         try {
             let imageRef = [];
@@ -112,6 +114,7 @@ export default function ShoesAddProduct() {
                 productType: form.productType,
                 productGender: form.productGender,
                 productName: form.productName,
+                productBrand: form.productBrand,
                 productPrice: Number(form.productPrice),
                 productPiece: Number(form.productPiece),
                 productDescription: form.productDescription,
@@ -128,15 +131,11 @@ export default function ShoesAddProduct() {
     }
 
     const ClickNewProduct = async () => {
-        if (form.productGender.trim() === ""
-            || form.productName.trim() === ""
+        if (form.productName.trim() === ""
+            || form.productBrand.trim() === ""
             || form.productPrice.trim() === ""
             || form.productPiece.trim() === ""
-            || form.productDescription.trim() === ""
-            || form.productNumber.trim() === ""
-            || form.productType.trim() === ""
-            || form.productColor.trim() === ""
-            || form.productModel.trim() === "") {
+            || form.productDescription.trim() === "") {
             alert("Please enter a product information")
             return;
         }
@@ -151,11 +150,11 @@ export default function ShoesAddProduct() {
                 const result = await getDownloadURL(imageRef);
                 imageURL.push(result)
             }
-            console.log(imageURL);
             const { data } = await axiosInstance.post(`/Product/Shoes`, {
                 productType: form.productType,
                 productGender: form.productGender,
                 productName: form.productName,
+                productBrand: form.productBrand,
                 productPrice: Number(form.productPrice),
                 productPiece: Number(form.productPiece),
                 productDescription: form.productDescription,
@@ -167,7 +166,7 @@ export default function ShoesAddProduct() {
             })
             history.push('/MyProfile');
         } catch (error) {
-            alert("Add product error")
+            alert(error.response.data.error)
         }
         setForm({
             ...initialForm
@@ -208,7 +207,14 @@ export default function ShoesAddProduct() {
                         onChange={(e) => handleTextChange(e.target.value, "productName")}
                         required
                     />
-
+                    <span className='FormHeader'>Product Brand</span>
+                    <input
+                        type='text'
+                        className='ShoesAddProductInput'
+                        value={form.productBrand}
+                        onChange={(e) => handleTextChange(e.target.value, "productBrand")}
+                        required
+                    />
                     <span className='FormHeader'>Shoe Price</span>
                     <input
                         type='number'
@@ -282,7 +288,7 @@ export default function ShoesAddProduct() {
                         multiple
                         className='ShoesAddProductFileInput'
                     />
-                                        {
+                    {
                         isWaitClick ? (
                             <button className='ShoesAddProductButtonDisable' disabled>
                                 <Spin />  Saving...

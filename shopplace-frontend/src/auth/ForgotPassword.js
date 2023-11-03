@@ -40,7 +40,7 @@ export default function ForgotPassword() {
             })
             history.push('/Login');
         } catch (error) {
-            alert('Please check the e-mail address')
+            alert(error.response.data.error)
         } finally {
             setIsWaitClick(false);
             setForm({

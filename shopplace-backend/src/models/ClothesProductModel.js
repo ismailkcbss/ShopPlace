@@ -16,6 +16,11 @@ const ClothesProductSchema = new Schema({
         required: [true, "You did not enter a product name."],
         lowercase: true,
     },
+    productBrand: {
+        type: String,
+        required: [true, "You did not enter a product brand."],
+        lowercase: true,
+    },
     productPrice: {
         type: Number,
         required: [true, "You did not enter a product price."],
@@ -50,16 +55,11 @@ const ClothesProductSchema = new Schema({
         type: String,
         required: [true, "You did not enter a product material."]
     },
-    productPackageContent: {
-        type: String,
-        required: [true, "You did not enter a product package content."]
-    },
     productHeight: {
         type: String,
         required: [true, "You did not enter a product height."]
     },
     productImage: [String],
-
 
     productOwner: {
         type: Schema.Types.ObjectId,

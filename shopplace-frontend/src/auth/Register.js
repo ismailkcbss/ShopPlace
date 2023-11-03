@@ -61,7 +61,7 @@ export default function Register() {
             })
             history.push('/Login')
         } catch (error) {
-            alert("Sorry ! register is not have been ")
+            alert(error.response.data.error)
         } finally {
             setIsWaitClick(false);
             setForm({

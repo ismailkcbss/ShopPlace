@@ -21,7 +21,7 @@ export default function ClothesProductViewer() {
                 setProductData(data)
                 setLoading(true)
             } catch (error) {
-                alert("error")
+                alert(error.response.data.error)
             }
         }
     }
@@ -33,10 +33,10 @@ export default function ClothesProductViewer() {
     const handleClickProductDelete = async () => {
         try {
             const { data } = await axiosInstance.delete(`/Product/Seller/Clothes/${productData.clothesProduct._id}`)
-            alert('Success')
+            alert(data.message)
             history.push('/MyProfile')
         } catch (error) {
-            alert('product delete error')
+            alert(error.response.data.error)
         }
     }
 
@@ -69,10 +69,6 @@ export default function ClothesProductViewer() {
                             </p>
                             <p className='ClothesItemFeatureP'>
                                 <span>Materyal:</span> <span>{productData.clothesProduct.productMaterial}</span>
-                            </p>
-
-                            <p className='ClothesItemFeatureP'>
-                                <span>Package Contents:</span> <span>{productData.clothesProduct.productPackageContent}</span>
                             </p>
                             <p className='ClothesItemFeatureP'>
                                 <span>height:</span> <span>{productData.clothesProduct.productHeight}</span>

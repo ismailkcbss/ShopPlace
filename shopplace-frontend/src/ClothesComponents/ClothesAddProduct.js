@@ -5,7 +5,6 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { Radio, Space, Spin } from 'antd';
-
 export default function ClothesAddProduct() {
 
     const { id } = useParams();
@@ -14,6 +13,7 @@ export default function ClothesAddProduct() {
         productType: "Clothes",
         productGender: "",
         productName: "",
+        productBrand:"",
         productPrice: "",
         productPiece: "",
         productDescription: "",
@@ -22,7 +22,6 @@ export default function ClothesAddProduct() {
         productCollerType: "",
         productColor: "",
         productMaterial: "",
-        productPackageContent: "",
         productHeight: "",
     }
 
@@ -59,6 +58,7 @@ export default function ClothesAddProduct() {
                 await ClickNewProduct();
             }
         } catch (error) {
+            console.log(error);
             alert("Cannot process the product");
         } finally {
             setIsWaitClick(false);
@@ -70,7 +70,7 @@ export default function ClothesAddProduct() {
             const { data } = await axiosInstance.get(`/User/UserMe`)
             setUserData(data.user);
         } catch (error) {
-            alert("Not Found user");
+            alert('User not found');
         }
     }
 
@@ -84,6 +84,7 @@ export default function ClothesAddProduct() {
                     productType: data.clothesProduct.productType,
                     productGender: data.clothesProduct.productGender,
                     productName: data.clothesProduct.productName,
+                    productBrand:data.clothesProduct.productBrand,
                     productPrice: data.clothesProduct.productPrice,
                     productPiece: data.clothesProduct.productPiece,
                     productDescription: data.clothesProduct.productDescription,
@@ -92,14 +93,12 @@ export default function ClothesAddProduct() {
                     productCollerType: data.clothesProduct.productCollerType,
                     productColor: data.clothesProduct.productColor,
                     productMaterial: data.clothesProduct.productMaterial,
-                    productPackageContent: data.clothesProduct.productPackageContent,
                     productHeight: data.clothesProduct.productHeight
                 })
                 setPrevImage(data.clothesProduct.productImage)
             } catch (error) {
-                alert("Not Found product");
+                alert(error.response.data.error);
             }
-
         }
     }
 
@@ -120,6 +119,7 @@ export default function ClothesAddProduct() {
                 productType: form.productType,
                 productGender: form.productGender,
                 productName: form.productName,
+                productBrand:form.productBrand,
                 productPrice: Number(form.productPrice),
                 productPiece: Number(form.productPiece),
                 productDescription: form.productDescription,
@@ -128,31 +128,22 @@ export default function ClothesAddProduct() {
                 productCollerType: form.productCollerType,
                 productColor: form.productColor,
                 productMaterial: form.productMaterial,
-                productPackageContent: form.productPackageContent,
                 productHeight: form.productHeight,
                 productImage: imageURL.length === 0 ? (prevImage) : (imageURL)
             })
             history.push('/MyProfile');
         } catch (error) {
-            alert("Product is not updated");
+            alert(error.response.data.error);
         }
     }
 
 
     const ClickNewProduct = async () => {
-        if (form.productGender.trim() === ""
-            || form.productName.trim() === ""
+        if (form.productName.trim() === ""
+            || form.productBrand.trim() === ""
             || form.productPrice.trim() === ""
             || form.productPiece.trim() === ""
-            || form.productDescription.trim() === ""
-            || form.productSize.trim() === ""
-            || form.productPackageContent.trim() === ""
-            || form.productPattern.trim() === ""
-            || form.productCollerType.trim() === ""
-            || form.productColor.trim() === ""
-            || form.productMaterial.trim() === ""
-            || form.productPackageContent.trim() === ""
-            || form.productHeight.trim() === "") {
+            || form.productDescription.trim() === "") {
             alert("Please enter a product information")
             return;
         }
@@ -166,11 +157,11 @@ export default function ClothesAddProduct() {
                 const result = await getDownloadURL(imageRef);
                 imageURL.push(result)
             }
-            console.log(imageURL);
             const { data } = await axiosInstance.post(`/Product/Clothes`, {
                 productType: form.productType,
                 productGender: form.productGender,
                 productName: form.productName,
+                productBrand:form.productBrand,
                 productPrice: Number(form.productPrice),
                 productPiece: Number(form.productPiece),
                 productDescription: form.productDescription,
@@ -179,13 +170,13 @@ export default function ClothesAddProduct() {
                 productCollerType: form.productCollerType,
                 productColor: form.productColor,
                 productMaterial: form.productMaterial,
-                productPackageContent: form.productPackageContent,
                 productHeight: form.productHeight,
                 productImage: (imageURL).join(',')
             })
             history.push('/MyProfile');
         } catch (error) {
-            alert("Add product error")
+            console.log(error);
+            alert(error.response.data.error)
         }
         setForm({
             ...initialForm
@@ -212,7 +203,7 @@ export default function ClothesAddProduct() {
                         disabled
                     />
                     <span className='FormHeader'>Gender</span>
-                    <Radio.Group onChange={(e) => handleTextChange(e.target.value, "productGender")} value={form.productGender}>
+                    <Radio.Group size='large' className='abc' onChange={(e) => handleTextChange(e.target.value, "productGender")} value={form.productGender}>
                         <Space direction="vertical">
                             <Radio value="Male">Male </Radio>
                             <Radio value="Female">Female</Radio>
@@ -225,6 +216,13 @@ export default function ClothesAddProduct() {
                         className='ClothesAddProductInput'
                         value={form.productName}
                         onChange={(e) => handleTextChange(e.target.value, "productName")}
+                    />                    
+                    <span className='FormHeader'>Product Brand</span>
+                    <input
+                        type='text'
+                        className='ClothesAddProductInput'
+                        value={form.productBrand}
+                        onChange={(e) => handleTextChange(e.target.value, "productBrand")}
                     />
                     <span className='FormHeader'>Product Price</span>
                     <input
@@ -293,14 +291,6 @@ export default function ClothesAddProduct() {
                             <Radio value="Cotton">Cotton</Radio>
                             <Radio value="Lycra">Lycra</Radio>
                             <Radio value="Polyester">Polyester</Radio>
-                        </Space>
-                    </Radio.Group>
-                    <span className='FormHeader'>Product Package Content</span>
-                    <Radio.Group value={form.productPackageContent} onChange={(e) => handleTextChange(e.target.value, "productPackageContent")}>
-                        <Space direction="vertical">
-                            <Radio value="Single">Single</Radio>
-                            <Radio value="Two Pieces">Two Pieces</Radio>
-                            <Radio value="Three and more">Three and more</Radio>
                         </Space>
                     </Radio.Group>
                     <span className='FormHeader'>Product Height</span>

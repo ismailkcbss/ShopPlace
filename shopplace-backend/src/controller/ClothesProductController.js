@@ -1,4 +1,5 @@
 import ClothesProduct from "../models/ClothesProductModel.js";
+import FavoritesProduct from "../models/FavoritesModal.js";
 import ShoesProduct from "../models/ShoesProductModel.js";
 import User from "../models/userModel.js";
 
@@ -11,6 +12,7 @@ const CreateProduct = async (req, res) => {
             productType: req.body.productType,
             productGender: req.body.productGender,
             productName: req.body.productName,
+            productBrand: req.body.productBrand,
             productPrice: req.body.productPrice,
             productPiece: req.body.productPiece,
             productDescription: req.body.productDescription,
@@ -19,7 +21,6 @@ const CreateProduct = async (req, res) => {
             productCollerType: req.body.productCollerType,
             productColor: req.body.productColor,
             productMaterial: req.body.productMaterial,
-            productPackageContent: req.body.productPackageContent,
             productHeight: req.body.productHeight,
             productImage: req.body.productImage.split(',')
         })
@@ -30,12 +31,12 @@ const CreateProduct = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: error
         })
     }
 }
 const GetEveryoneAllProducts = async (req, res) => {
-    let {search} = req.query;
+    let { search } = req.query;
     try {
         const allData = await ClothesProduct.find({ "productName": new RegExp(search, "i") })
         const count = await ClothesProduct.countDocuments()
@@ -94,7 +95,7 @@ const GetSellerProduct = async (req, res) => {
 const GetSellerAllProducts = async (req, res) => {
     try {
         const allProducts = [];
-    // Bu durumda butun şemalara istek atmak zorundayım ve kontrolu sağlayıp diziye aktarmalıyım mongo sadece bu şekilde izin veriyor.
+        // Bu durumda butun şemalara istek atmak zorundayım ve kontrolu sağlayıp diziye aktarmalıyım mongo sadece bu şekilde izin veriyor.
 
         const clothesProduct = await ClothesProduct.find({ productOwner: res.locals.user._id })
         if (clothesProduct.length > 0) {
@@ -120,10 +121,23 @@ const GetSellerAllProducts = async (req, res) => {
 
 const DeleteProduct = async (req, res) => {
     try {
-        await ClothesProduct.findByIdAndRemove({ _id: req.params.id })
-        res.status(200).json({
-            succeded: true,
-        })
+        const productId = req.params.id;
+
+        await ClothesProduct.findByIdAndRemove({ _id: productId })
+
+        const userFavorites = await FavoritesProduct.find({})
+
+        for (const favorite of userFavorites) {
+            if (favorite.productId.toString() === productId.toString()) {
+                await FavoritesProduct.findByIdAndRemove(favorite._id)
+                res.status(200).json({
+                    succeded: true,
+                    message: "Product deleted successfully",
+                });
+                return;
+            }
+        }
+        
     } catch (error) {
         res.status(500).json({
             succeded: false,

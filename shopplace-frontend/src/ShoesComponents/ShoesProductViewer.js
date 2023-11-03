@@ -21,7 +21,7 @@ export default function ShoesProductViewer() {
                 setProductData(data)
                 setLoading(true)
             } catch (error) {
-                alert("error")
+                alert(error.response.data.error)
             }
         }
     }
@@ -33,10 +33,10 @@ export default function ShoesProductViewer() {
     const handleClickProductDelete = async () => {
         try {
             const { data } = await axiosInstance.delete(`/Product/Seller/Shoes/${productData.shoesProduct._id}`)
-            alert('Success')
+            alert(data.message)
             history.push('/MyProfile')
         } catch (error) {
-            alert('product delete error')
+            alert(error.response.data.error)
         }
     }
 

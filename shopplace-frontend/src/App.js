@@ -23,8 +23,7 @@ import ShoesAddProduct from './ShoesComponents/ShoesAddProduct';
 import ShoesProductCardItem from './ShoesComponents/ShoesComponentsItem/ShoesProductCardItem';
 import ShoesProductViewer from './ShoesComponents/ShoesProductViewer';
 import PayPage from './mainComponents/PayPage';
-
-
+import 'antd/dist/reset.css';
 
 function App() {
 
@@ -40,7 +39,6 @@ function App() {
         dispatch(userActions.set(data))
       }
     } catch (error) {
-      console.log("App = ", error);
       alert(error);
     }
   }

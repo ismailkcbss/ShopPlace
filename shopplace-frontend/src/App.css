@@ -245,9 +245,12 @@ Home-page / Navbar
 }
 
 .HeaderDiv {
+    width: 100%;
+    height: 100%;
     flex-basis: 70%;
     display: flex;
     justify-content: start;
+    align-items: stretch;
 }
 
 .HeaderDiv p {
@@ -399,6 +402,24 @@ Home-page / Navbar
     height: 4rem;
     background-color: transparent;
     border: none;
+}
+
+.ProductCardItemPlusMinIconButton {
+    width: 4rem;
+    height: 4rem;
+    background-color: transparent;
+    border: none;
+    margin:1rem 1.5rem 1rem 1.5rem;
+}
+
+.ProductCardItemPlusMinIconButton .anticon svg {
+    font-size: 3.5rem !important;
+    color: rgb(201, 201, 201);
+}
+
+.ProductCardItemPlusMinIconButton .anticon svg:hover {
+    cursor: pointer;
+    color: rgb(184, 184, 184);
 }
 
 .MyCartCardButtonDeleteIcon:hover,
@@ -733,7 +754,7 @@ Components Items Page
 
 .ClothesProductViewerPage,
 .ShoesProductViewerPage {
-    width: 90%;
+    width: 100%;
     height: auto;
     display: flex;
     justify-content: center;
@@ -769,7 +790,7 @@ Components Items Page
     font-size: 2.4rem;
     white-space: pre-wrap !important;
     word-break: break-all;
-    margin-bottom: 8rem;
+    margin-bottom: 5rem;
 }
 
 .ProductSeller {
@@ -785,75 +806,98 @@ Components Items Page
 
 .ClothesItemFeature,
 .ShoesItemFeature {
-    display: grid;
-    grid-gap: 5rem;
-    grid-template-columns: repeat(auto-fit, minmax(26em, 3fr));
     width: 100%;
     height: auto;
-    margin-bottom: 8rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
 }
 
 .ClothesItemFeatureP,
 .ShoesItemFeatureP {
     display: flex;
     justify-content: space-between;
-    width: 30rem;
-    height: 3.5rem;
-    line-height: 3.5rem;
-    padding: 0 .5rem 0 .5rem;
-    background-color: rgba(243, 243, 243, 0.555);
+    width: 100%;
+    height: 4rem;
+    line-height: 4rem;
+    padding: 0 1rem 0 1rem;
+    background-color: rgb(250, 250, 250);
+    color: rgb(155, 155, 155);
     border-radius: .4rem;
+    box-shadow: .1rem .1rem .5rem .1rem rgba(206, 221, 255, 0.589);
+    border: .1rem solid rgb(228, 228, 228);
 }
 
 .ClothesItemFeatureP span,
 .ShoesItemFeatureP span {
-    font-size: 1.2rem;
+    width: 100%;
+    font-size: 1.6rem;
     font-weight: bold;
+    color: rgba(89, 98, 128, 0.699);
 }
 
 .ClothesItemFeatureDesc,
 .ShoesItemFeatureDesc {
-    border-radius: .4rem;
-    border: .1rem solid rgba(243, 243, 243, 0.89);
-    background-color: rgba(243, 243, 243, 0.555);
-    width: 98%;
+    width: 100%;
     height: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8rem;
+    border-radius: .4rem;
+    border: .1rem solid rgb(228, 228, 228);
+    background-color: rgb(250, 250, 250);
+    box-shadow: .1rem .1rem .5rem .1rem rgba(206, 221, 255, 0.589);
+    margin-bottom: 2rem;
     font-size: 1.6rem;
     padding: 1.3rem;
-    white-space: pre-wrap;
-    word-break: keep-all;
+    white-space: pre-wrap !important;
+    word-break: break-all !important;
+
 }
-
-.ClothesItemFeatureDescSize,
-.ShoesItemFeatureDescSize {
+.ClothesItemFeatureDesc span,
+.ShoesItemFeatureDesc span {
     width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    margin-bottom: 8rem;
-
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: rgba(89, 98, 128, 0.699);
+    display: -webkit-box;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important; 
+    overflow: hidden !important;
+}
+.ClothesItemFeatureDesc span:hover,
+.ShoesItemFeatureDesc span:hover {
+    width: 100%;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: rgba(89, 98, 128, 0.699);
+    display: block;
 }
 
 .ClothesItemFeatureButton,
 .ShoesItemFeatureButton {
-    width: 45rem;
+    width: 100%;
     height: 4rem;
     font-size: 1.8rem;
     border-radius: .5rem;
     color: white;
     background-color: rgb(21, 38, 78);
     transition: ease-in-out .2s;
-    margin-bottom: 8rem;
-
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .ClothesItemFeatureButton:hover,
 .ShoesItemFeatureButton:hover {
     cursor: pointer;
     background-color: rgba(21, 38, 78, 0.788);
+}
+.ClothesItemFeatureButton .anticon svg{
+    font-size: 1.8rem;
+    margin-right: 1rem;
+}
+.ClothesItemFeatureButton:hover .anticon svg{
+    color: pink;
 }

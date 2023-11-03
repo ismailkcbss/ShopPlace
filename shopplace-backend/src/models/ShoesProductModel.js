@@ -16,6 +16,11 @@ const ShoesProductSchema = new Schema({
         required: [true, "You did not enter a product name."],
         lowercase: true,
     },
+    productBrand: {
+        type: String,
+        required: [true, "You did not enter a product brand."],
+        lowercase: true,
+    },
     productPrice:{
         type: Number,
         required: [true, "You did not enter a product price."],

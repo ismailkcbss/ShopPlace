@@ -47,7 +47,7 @@ export default function NewPassword() {
                 storage.RemoveCookie('passPres')
                 history.push('/Login')
             } catch (error) {
-                alert("Try again");
+                alert(error.response.data.error);
                 console.log(error);
             } finally {
                 setIsWaitClick(false);

@@ -1,5 +1,6 @@
 import User from '../models/userModel.js';
 import ShoesProduct from '../models/ShoesProductModel.js';
+import FavoritesProduct from '../models/FavoritesModal.js';
 
 // USER-ROLE = EVERYONE CONTROLLER
 
@@ -10,6 +11,7 @@ const CreateProduct = async (req, res) => {
             productType: req.body.productType,
             productGender: req.body.productGender,
             productName: req.body.productName,
+            productBrand: req.body.productBrand,
             productPrice: req.body.productPrice,
             productPiece: req.body.productPiece,
             productDescription: req.body.productDescription,
@@ -116,10 +118,23 @@ const GetSellerAllProducts = async (req, res) => {
 
 const DeleteProduct = async (req, res) => {
     try {
-        await ShoesProduct.findByIdAndRemove({ _id: req.params.id })
-        res.status(200).json({
-            succeded: true,
-        })
+        const productId = req.params.id;
+
+        await ShoesProduct.findByIdAndRemove({ _id: productId })
+
+        const userFavorites = await FavoritesProduct.find({})
+
+        for (const favorite of userFavorites) {
+            if (favorite.productId.toString() === productId.toString()) {
+                await FavoritesProduct.findByIdAndRemove(favorite._id)
+                res.status(200).json({
+                    succeded: true,
+                    message: "Product deleted successfully",
+                });
+                return;
+            }
+        }
+        
     } catch (error) {
         res.status(500).json({
             succeded: false,
