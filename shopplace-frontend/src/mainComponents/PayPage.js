@@ -40,7 +40,10 @@ export default function PayPage() {
             setCartJsonData([])
         }
     }
-console.log(cartJsonData);
+
+    console.log(JSON.stringify(cartJsonData));
+
+
     const totalAmount = cartJsonData.reduce((total, cartJsonData) => total + cartJsonData.sumCartPrice, 0); // cart price sum 
 
     const PlaceOrderClick = async (e) => {
@@ -52,7 +55,7 @@ console.log(cartJsonData);
         setIsWaitClick(true);
         try {
             const { data } = await axiosInstance.post(`/Main/MyOrder`, {
-                productSumPrice: totalAmount,
+                orderSumPrice: totalAmount,
                 shippingAdress: form.shippingAdress
             })
             history.push('/')

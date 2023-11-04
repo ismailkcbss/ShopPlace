@@ -37,11 +37,12 @@ export default function ShoesProductCardItem() {
     }
   }
   const GetAllFavoritesProduct = async () => {
-    if (id) {
+    if (isAuthUser.isAuth) {
       try {
         const { data } = await axiosInstance.get(`/Main/Favorite/Products`)
         setFavoritesList(data.favoriteProducts);
       } catch (error) {
+        console.log(error);
         alert(error.response.data.error)
       }
     }
@@ -70,24 +71,32 @@ export default function ShoesProductCardItem() {
   }
 
   const handleClickAddFavorite = async () => {
-    try {
-      const { data } = await axiosInstance.post(`/Main/Favorite/Add`, {
-        productId: id,
-        productType: productData.shoesProduct.productType,
-      })
-      setfavoriteButtonCheck(true)
-    } catch (error) {
-      alert(error.response.data.error)
+    if(isAuthUser.isAuth){
+      try {
+        const { data } = await axiosInstance.post(`/Main/Favorite/Add`, {
+          productId: id,
+          productType: productData.shoesProduct.productType,
+        })
+        setfavoriteButtonCheck(true)
+      } catch (error) {
+        alert(error.response.data.error)
+      }
+    }else{
+      history.push('/Login');
     }
   }
 
   const handleClickDeleteFavorite = async () => {
-    try {
-      const { data } = await axiosInstance.delete(`/Main/Favorite/Products/${id}`)
-      //alert(data.message)
-      setfavoriteButtonCheck(false)
-    } catch (error) {
-      alert(error.response.data.error)
+    if(isAuthUser.isAuth){
+      try {
+        const { data } = await axiosInstance.delete(`/Main/Favorite/Products/${id}`)
+        //alert(data.message)
+        setfavoriteButtonCheck(false)
+      } catch (error) {
+        alert(error.response.data.error)
+      }
+    }else{
+      history.push('/Login');
     }
   }
 
@@ -125,8 +134,11 @@ export default function ShoesProductCardItem() {
 
   useEffect(() => {
     GetProductItem();
+  }, [id])
+
+  useEffect(() => {
     GetAllFavoritesProduct();
-  }, [id, favoriteButtonCheck])
+  }, [isAuthUser, favoriteButtonCheck])
 
   useEffect(() => {
     MyCartButtonControl();

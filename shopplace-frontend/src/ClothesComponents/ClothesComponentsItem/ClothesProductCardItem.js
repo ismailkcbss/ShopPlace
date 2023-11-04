@@ -36,7 +36,7 @@ export default function ClothesProductCardItem() {
         }
     }
     const GetAllFavoritesProduct = async () => {
-        if (id) {
+        if (isAuthUser.isAuth) {
             try {
                 const { data } = await axiosInstance.get(`/Main/Favorite/Products`)
                 setFavoritesList(data.favoriteProducts);
@@ -45,6 +45,7 @@ export default function ClothesProductCardItem() {
             }
         }
     }
+
     function getCart() {
         const cartJSON = storage.getValueByKey(`${isAuthUser.user.username}cart`);
         return cartJSON ? JSON.parse(cartJSON) : [];
@@ -68,24 +69,30 @@ export default function ClothesProductCardItem() {
         }
     }
     const handleClickAddFavorite = async () => {
-        try {
-            const { data } = await axiosInstance.post(`/Main/Favorite/Add`, {
-                productId: id,
-                productType: productData.clothesProduct.productType,
-            })
-            setfavoriteButtonCheck(true)
-        } catch (error) {
-            alert(error.response.data.error)
+        if(isAuthUser.isAuth){
+            try {
+                const { data } = await axiosInstance.post(`/Main/Favorite/Add`, {
+                    productId: id,
+                    productType: productData.clothesProduct.productType,
+                })
+                setfavoriteButtonCheck(true)
+            } catch (error) {
+                alert(error.response.data.error)
+            }
+        }else{
+            history.push('/Login');
         }
     }
 
     const handleClickDeleteFavorite = async () => {
-        try {
-            const { data } = await axiosInstance.delete(`/Main/Favorite/Products/${id}`)
-            //alert(data.message)
-            setfavoriteButtonCheck(false)
-        } catch (error) {
-            alert(error.response.data.error)
+        if(isAuthUser.isAuth){
+            try {
+                const { data } = await axiosInstance.delete(`/Main/Favorite/Products/${id}`)
+                //alert(data.message)
+                setfavoriteButtonCheck(false)
+            } catch (error) {
+                alert(error.response.data.error)
+            }
         }
     }
 
@@ -102,7 +109,7 @@ export default function ClothesProductCardItem() {
     }
 
     const MyFavoriteButtonControl = async () => {
-        if (id) {
+        if (isAuthUser.isAuth) {
             const existingProductIndex = favoritesList.some(item => item._id === productData?.clothesProduct?._id);
             if (existingProductIndex) {
                 setfavoriteButtonCheck(true);
@@ -125,8 +132,11 @@ export default function ClothesProductCardItem() {
 
     useEffect(() => {
         GetProductItem();
+    }, [id])
+
+    useEffect(() => {
         GetAllFavoritesProduct();
-    }, [id, favoriteButtonCheck])
+    }, [isAuthUser.isAuth, favoriteButtonCheck])
 
     useEffect(() => {
         MyCartButtonControl();

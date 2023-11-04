@@ -559,7 +559,14 @@ Home-page / Navbar
     background-color: rgb(98, 118, 145);
 }
 
-.MyProfileSellerBody {
+
+.MyProfileSellerMain{
+
+}
+.MyProfileSellerMainHeader{
+    
+}
+.MyProfileSellerMainProduct {
     width: 100%;
     height: auto;
     padding: 2rem;

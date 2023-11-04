@@ -56,7 +56,7 @@ export default function MyProfile() {
                   }}
                   trigger={['click']}
                 >
-                  <button onClick={(e) => e.preventDefault()}  className='MyProfileSellerHeaderButton'>
+                  <button onClick={(e) => e.preventDefault()} className='MyProfileSellerHeaderButton'>
                     <Space>
                       Add Product
                       <DownOutlined />
@@ -64,14 +64,27 @@ export default function MyProfile() {
                   </button>
                 </Dropdown>
               </div>
-              <span style={{ fontSize: "2rem", margin: "3rem 0 3rem 0", borderBottom: ".1rem solid rgba(190, 190, 190, 0.705)" }}>My Products</span>
-              <div className='MyProfileSellerBody'>
-                {
-                  productsData?.map((productItem) => (
-                    <MyProfileProductsItem key={productItem._id} productItem={productItem} />
-                  ))
-                }
+
+
+              <div className='MyProfileSellerMain'>
+                <div className='MyProfileSellerMainHeader'>
+                  <span style={{ marginLeft: "1rem", fontSize: "2rem", margin: "3rem 0 3rem 0", borderBottom: ".1rem solid rgba(190, 190, 190, 0.705)" }}>My Products</span>
+                  <div className='MyProfileSellerMainProduct'>
+                    {
+                      productsData?.map((productItem) => (
+                        <MyProfileProductsItem key={productItem._id} productItem={productItem} />
+                      ))
+                    }
+                  </div>
+                </div>
+                <div className='MyProfileSellerMainOrdersReceived'>
+                  <span style={{ marginLeft: "1rem", fontSize: "2rem", margin: "3rem 0 3rem 0", borderBottom: ".1rem solid rgba(190, 190, 190, 0.705)" }}>Orders Received</span>
+                  <div className='OrdersReceivedDiv'>
+
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         ) : (

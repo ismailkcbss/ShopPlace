@@ -1,18 +1,19 @@
 import ClothesProduct from "../models/ClothesProductModel.js";
 import ShoesProduct from "../models/ShoesProductModel.js";
 import FavoriteProduct from "../models/FavoritesModal.js"
+import OrdersReceived from '../models/OrdersReceivedModel.js'
 import nodemailer from "nodemailer";
 import mongoose from "mongoose";
 
 
 const GetHomeAllProducts = async (req, res) => {
     let { search } = req.query;
-    
+
     try {
-        const clothesProduct = await ClothesProduct.find({"productName": new RegExp(search, "i")});
+        const clothesProduct = await ClothesProduct.find({ "productName": new RegExp(search, "i") });
         const clothesCount = await ClothesProduct.countDocuments();
 
-        const shoesProduct = await ShoesProduct.find({"productName": new RegExp(search, "i")});
+        const shoesProduct = await ShoesProduct.find({ "productName": new RegExp(search, "i") });
         const shoesCount = await ShoesProduct.countDocuments();
 
         const allProducts = shoesProduct.concat(clothesProduct);
@@ -239,7 +240,7 @@ const WebsiteSendMail = async (req, res) => {
     }
 }
 
-const MyOrderSendMail = async (req, res) => {
+const MyOrderSendMail = async (req, res, next) => {
     const htmlTemplate = `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en"><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport"><meta name="x-apple-disable-message-reformatting"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta content="telephone=no" name="format-detection"><title>New Message</title> <!--[if (mso 16)]><style type="text/css">     a {text-decoration: none;}     </style><![endif]--> <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]--> <!--[if gte mso 9]><xml> <o:OfficeDocumentSettings> <o:AllowPNG></o:AllowPNG> <o:PixelsPerInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml>
 <![endif]--><style type="text/css">#outlook a { padding:0;}.es-button { mso-style-priority:100!important; text-decoration:none!important;}a[x-apple-data-detectors] { color:inherit!important; text-decoration:none!important; font-size:inherit!important; font-family:inherit!important; font-weight:inherit!important; line-height:inherit!important;}.es-desk-hidden { display:none; float:left; overflow:hidden; width:0; max-height:0; line-height:0; mso-hide:all;}@media only screen and (max-width:600px) {p, ul li, ol li, a { line-height:150%!important } h1, h2, h3, h1 a, h2 a, h3 a { line-height:120% } h1 { font-size:36px!important; text-align:left } h2 { font-size:26px!important; text-align:left } h3 { font-size:20px!important; text-align:left } .es-header-body h1 a, .es-content-body h1 a, .es-footer-body h1 a { font-size:36px!important; text-align:left }
@@ -258,7 +259,7 @@ Hello ${res.locals.user.username}, we wanted to inform you that your order has b
 <td class="es-m-p0r" align="center" style="padding:0;Margin:0;width:560px"><table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-top:2px solid #efefef" role="presentation"><tr><td align="center" class="es-m-txt-r" style="padding:0;Margin:0;padding-top:15px"><h3 style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:bold;color:#333333">
 The person who ordered: ${res.locals.user.username}</h3> <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"><br></p>
 <h3 style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:bold;color:#333333">
-Order Amount: <strong>₺ ${req.body.productSumPrice}</strong></h3></td></tr></table></td></tr></table></td></tr> <tr><td class="esdev-adapt-off" align="left" style="padding:0;Margin:0;padding-bottom:20px;padding-left:20px;padding-right:20px"><table cellpadding="0" cellspacing="0" width="100%" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"><tr><td class="es-m-p0r" align="center" style="padding:0;Margin:0;width:560px"><table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-top:2px solid #efefef" role="presentation"><tr>
+Order Amount: <strong>₺ ${req.body.orderSumPrice}</strong></h3></td></tr></table></td></tr></table></td></tr> <tr><td class="esdev-adapt-off" align="left" style="padding:0;Margin:0;padding-bottom:20px;padding-left:20px;padding-right:20px"><table cellpadding="0" cellspacing="0" width="100%" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"><tr><td class="es-m-p0r" align="center" style="padding:0;Margin:0;width:560px"><table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-top:2px solid #efefef" role="presentation"><tr>
 <td align="left" class="es-m-txt-r" style="padding:0;Margin:0;padding-top:15px"><h3 style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:bold;color:#333333">
 Shipping Address: ${req.body.shippingAdress} </h3></td></tr></table></td></tr></table> </td></tr><tr><td align="left" style="padding:20px;Margin:0"> <!--[if mso]><table style="width:560px" cellpadding="0" cellspacing="0"><tr><td style="width:143px" valign="top"><![endif]--><table cellpadding="0" cellspacing="0" class="es-left" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left"><tr>
 <td class="es-m-p0r es-m-p20b" align="center" style="padding:0;Margin:0;width:133px"><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"><tr><td align="center" style="padding:0;Margin:0;font-size:0px"><img src="https://xckbdl.stripocdn.email/content/guids/CABINET_1154ef987a3f887ce59a7fdb008c50d6/images/17971617974647919.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="45" height="45"></td></tr> <tr><td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">FREE <br>SHIPPING</p></td></tr></table></td>
@@ -274,32 +275,72 @@ Shipping Address: ${req.body.shippingAdress} </h3></td></tr></table></td></tr></
  <td align="center" valign="top" style="padding:0;Margin:0"><a target="_blank" href="https://www.youtube.com/" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#333333;font-size:12px"><img title="Youtube" src="https://xckbdl.stripocdn.email/content/assets/img/social-icons/logo-black/youtube-logo-black.png" alt="Yt" width="32" height="32" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a></td></tr></table></td></tr><tr><td align="center" style="padding:0;Margin:0;padding-bottom:35px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;font-size:12px">Shopping Place © 2023</p></td></tr></table></td></tr></table></td></tr></table> </td></tr></table></td></tr></table></div>
 </body></html>
 `
-try {
-    const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-            user: process.env.NODE_MAIL,
-            pass: process.env.NODE_PASS,
-        },
-    });
-    await transporter.sendMail({
-        to: `${res.locals.user.email}`,
-        subject: process.env.NODE_MAIL,
-        html: htmlTemplate,
-    });
-    res.status(201).json({
-        succeded: true,
-    })
-} catch (error) {
-    res.status(500).json({
-        succeded: false,
-        error: "Mail could not be sent",
-    });
-}
+    try {
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.NODE_MAIL,
+                pass: process.env.NODE_PASS,
+            },
+        });
+        await transporter.sendMail({
+            to: `${res.locals.user.email}`,
+            subject: process.env.NODE_MAIL,
+            html: htmlTemplate,
+        });
+        // res.status(201).json({
+        //     succeded: true,
+        // })
+        next();
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error: "Mail could not be sent",
+        });
+    }
 }
 
+const OrdersReceivedCreate = async (req, res) => {
+    try {
+        const ordersReceived = await OrdersReceived.create({
+            orderProducts: req.body.orderProducts,
+            customer: req.body.customer,
+            shippingAdress: req.body.shippingAdress,
+            orderSumPrice: req.body.orderSumPrice
+        })
+        res.status(200).json({
+            succeded: true,
+            ordersReceived,
+            message: 'The order was successfully received'
+        })
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error: error.message
+        })
+        console.log(error);
+    }
+}
+
+const GetOrderReceived = async (req, res) => {
+    try {
+        // let ownerId = res.locals.user._id;
+        // const ordersReceived = await OrdersReceived.findById({ownerId:product}) 
+        // const productsOwner = req.body
+/*
+ burda localden gelen id ile orderReceived içinde gelen productOwnerı 
+ karşılaştırmak lazım çünkü müşteri birden fazla satıcdan alışveriş yapmış olabilir.
+ bunun içinde şema içerisine daha kolay erişimek adına bir bilgi ekle.
+*/
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error: 'Order received could not be processed'
+        })
+    }
+}
 
 const FavoriteAdd = async (req, res) => {
     try {
@@ -402,4 +443,4 @@ const FavoriteProductsDelete = async (req, res) => {
 }
 
 
-export { GetHomeAllProducts, WebsiteSendMail, MyOrderSendMail, FavoriteAdd, GetAllFavoriteProducts, FavoriteProductsDelete }
+export { GetHomeAllProducts, WebsiteSendMail, MyOrderSendMail, OrdersReceivedCreate, GetOrderReceived, FavoriteAdd, GetAllFavoriteProducts, FavoriteProductsDelete }
