@@ -9,7 +9,6 @@ export default function ProductCard(props) {
 
     const history = useHistory()
 
-
     const ClickProduct = () => {
         if (userRole.seller) {
             if (userRole._id === item.productOwner) {
@@ -21,6 +20,7 @@ export default function ProductCard(props) {
             history.push(`/${item.productType}` + `ProductCardItem/${item._id}`)
         }
     }
+
 
     return (
         <div className='ProductCardDiv' onClick={ClickProduct}>

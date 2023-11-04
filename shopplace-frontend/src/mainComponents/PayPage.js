@@ -40,7 +40,7 @@ export default function PayPage() {
             setCartJsonData([])
         }
     }
-
+console.log(cartJsonData);
     const totalAmount = cartJsonData.reduce((total, cartJsonData) => total + cartJsonData.sumCartPrice, 0); // cart price sum 
 
     const PlaceOrderClick = async (e) => {

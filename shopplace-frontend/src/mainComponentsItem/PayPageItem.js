@@ -11,6 +11,7 @@ export default function PayPageItem(props) {
                 <thead>
                     <tr>
                         <th>Product Image</th>
+                        <th>Product Type</th>
                         <th>Product Name</th>
                         <th>Total Piece</th>
                         <th>Product Total Amount</th>
@@ -21,6 +22,7 @@ export default function PayPageItem(props) {
                         item?.map((product) => (
                             <tr key={product.product._id}>
                                 <td><img src={product.product.productImage[0]} alt='productimg' /></td>
+                                <td>{product.product.productType}</td>
                                 <td>{product.product.productName}</td>
                                 <td>{product.quantity}</td>
                                 <td>{product.sumCartPrice}</td>

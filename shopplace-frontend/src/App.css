@@ -331,7 +331,7 @@ Home-page / Navbar
     padding: 1rem;
     border-radius: .5rem;
     width: 100%;
-    height: 20rem;
+    height: 25rem;
     border: .1rem solid rgba(201, 201, 201, 0.788);
     margin-bottom: 5rem;
 }
@@ -370,8 +370,8 @@ Home-page / Navbar
 
 .MyFavoritesCardInfoData p,
 .MyCartCardInfoData p {
-    border: .1rem solid rgb(255, 233, 189);
-    background-color: rgb(255, 244, 225);
+    border: .1rem solid rgb(255, 243, 219);
+    background-color: rgb(255, 251, 245);
     color: rgba(31, 44, 54, 0.78);
     border-radius: .4rem;
     height: 4rem;
@@ -409,7 +409,7 @@ Home-page / Navbar
     height: 4rem;
     background-color: transparent;
     border: none;
-    margin:1rem 1.5rem 1rem 1.5rem;
+    margin: 1rem 1.5rem 1rem 1.5rem;
 }
 
 .ProductCardItemPlusMinIconButton .anticon svg {
@@ -515,9 +515,11 @@ Home-page / Navbar
 }
 
 .PayPageItemTable tbody img {
-    width: 5rem;
-    object-fit: contain;
-    border-radius: .4rem;
+    padding: 1rem;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 2rem !important;
+    object-fit: cover;
 }
 
 
@@ -854,6 +856,7 @@ Components Items Page
     word-break: break-all !important;
 
 }
+
 .ClothesItemFeatureDesc span,
 .ShoesItemFeatureDesc span {
     width: 100%;
@@ -862,9 +865,10 @@ Components Items Page
     color: rgba(89, 98, 128, 0.699);
     display: -webkit-box;
     -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important; 
+    -webkit-box-orient: vertical !important;
     overflow: hidden !important;
 }
+
 .ClothesItemFeatureDesc span:hover,
 .ShoesItemFeatureDesc span:hover {
     width: 100%;
@@ -876,17 +880,13 @@ Components Items Page
 
 .ClothesItemFeatureButton,
 .ShoesItemFeatureButton {
-    width: 100%;
+    width: 70%;
     height: 4rem;
     font-size: 1.8rem;
     border-radius: .5rem;
     color: white;
     background-color: rgb(21, 38, 78);
     transition: ease-in-out .2s;
-    margin-bottom: 4rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .ClothesItemFeatureButton:hover,
@@ -894,10 +894,75 @@ Components Items Page
     cursor: pointer;
     background-color: rgba(21, 38, 78, 0.788);
 }
-.ClothesItemFeatureButton .anticon svg{
-    font-size: 1.8rem;
-    margin-right: 1rem;
+
+
+.ClothesItemFavoriteButtonFirst {
+    width: 4rem;
+    height: 4rem;
+    background-color: transparent;
+    border: .1rem solid rgba(163, 163, 163, 0.596);
+    border-radius: 50%;
 }
-.ClothesItemFeatureButton:hover .anticon svg{
-    color: pink;
+
+.ClothesItemFavoriteButtonFirst .FavoriteIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ClothesItemFavoriteButtonFirst .FavoriteIcon svg {
+    font-size: 2rem !important;
+}
+
+.ClothesItemFavoriteButtonFirst .FavoriteIcon path:first-child {
+    fill: rgb(184, 184, 184);
+}
+
+.ClothesItemFavoriteButtonFirst .FavoriteIcon path:last-child {
+    fill: rgb(255, 255, 255);
+}
+
+.ClothesItemFavoriteButtonFirst .FavoriteIcon svg:hover {
+    cursor: pointer;
+}
+
+.ClothesItemFavoriteButtonFirst .FavoriteIcon svg:hover path:first-child {
+    fill: red;
+
+}
+
+
+
+.ClothesItemFavoriteButtonLast {
+    width: 4rem;
+    height: 4rem;
+    background-color: transparent;
+    border: .1rem solid rgba(163, 163, 163, 0.596);
+    border-radius: 50%;
+}
+
+.ClothesItemFavoriteButtonLast .FavoriteIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ClothesItemFavoriteButtonLast .FavoriteIcon svg {
+    font-size: 2rem !important;
+}
+
+.ClothesItemFavoriteButtonLast .FavoriteIcon path:first-child {
+    fill: rgb(255, 0, 0);
+}
+
+.ClothesItemFavoriteButtonLast .FavoriteIcon path:last-child {
+    fill: rgb(255, 36, 36);
+}
+
+.ClothesItemFavoriteButtonLast .FavoriteIcon svg:hover {
+    cursor: pointer;
+}
+
+.ClothesItemFavoriteButtonLast .FavoriteIcon svg:hover path:last-child {
+    fill: rgb(255, 111, 111);
 }

@@ -13,7 +13,7 @@ export default function ShoesProductViewer() {
     const [productData, setProductData] = useState([])
     const [loading, setLoading] = useState(false)
 
-    
+
     const GetShoesProduct = async () => {
         if (id) {
             try {
@@ -53,42 +53,50 @@ export default function ShoesProductViewer() {
                     <div className='ShoesProductViewerPageImage'>
                         <ShoesProductItemPageImageList productData={productData.shoesProduct} />
                     </div>
-                    <div className='ShoesProductViewerPageBody'>
-                        <div className='ShoesProductViewerPageBodyHeader'>
-                            <span onClick={() => history.push('/')} className='ProductSeller'>{productData.user.username.toUpperCase()}</span>  {productData.shoesProduct.productName.toUpperCase()}
+                    {productData && (
+                        <div className='ShoesProductViewerPageBody'>
+                            <div className='ShoesProductViewerPageBodyHeader'>
+                                {productData.shoesProduct.productName.toUpperCase()}
+                            </div>
+                            <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Feature:</span>
+                            <div className='ShoesItemFeature'>
+                                <p className='ShoesItemFeatureP'>
+                                    <span>Gender:</span> <span>{productData.shoesProduct.productGender}</span>
+                                </p>
+                                <p className='ShoesItemFeatureP'>
+                                    <span>Shoes Type:</span><span>{productData.shoesProduct.productTypeOf}</span>
+                                </p>
+                                <p className='ShoesItemFeatureP'>
+                                    <span>Model:</span> <span>{productData.shoesProduct.productModel}</span>
+                                </p>
+                                <p className='ShoesItemFeatureP'>
+                                    <span>Color:</span> <span>{productData.shoesProduct.productNumber}</span>
+                                </p>
+                                <p className='ShoesItemFeatureP'>
+                                    <span>Shoes Number:</span> <span>{productData.shoesProduct.productColor}</span>
+                                </p>
+                                <p className='ShoesItemFeatureP'>
+                                    <span>Unit Price:</span> <span>{productData.shoesProduct.productPrice}</span>
+                                </p>
+                                <p className='ShoesItemFeatureP'>
+                                    <span>Max Piece:</span><span>{productData.shoesProduct.productPiece}</span>
+                                </p>
+                                <p className='ShoesItemFeatureDesc'>
+                                    <span>Product Description:</span> <span>{productData.shoesProduct.productDescription}</span>
+                                </p>
+                            </div>
+                            <div style={{ display: "flex" }}>
+                                <button
+                                    className='ShoesItemFeatureButton'
+                                    onClick={handleClickProductEdit}
+                                >Edit</button>
+                                <button
+                                    className='ShoesItemFeatureButton'
+                                    onClick={handleClickProductDelete}
+                                >Delete</button>
+                            </div>
                         </div>
-                        <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Feature:</span>
-                        <div className='ShoesItemFeature'>
-                            <p className='ShoesItemFeatureP'>
-                                <span>Price:</span> <span>{productData.shoesProduct.productPrice}</span>
-                            </p>
-                            <p className='ShoesItemFeatureP'>
-                                <span>Shoes Type:</span> <span>{productData.shoesProduct.productType}</span>
-                            </p>
-                            <p className='ShoesItemFeatureP'>
-                                <span>Color:</span> <span>{productData.shoesProduct.productColor}</span>
-                            </p>
-                            <p className='ShoesItemFeatureP'>
-                                <span>Model:</span> <span>{productData.shoesProduct.productModel}</span>
-                            </p>
-                            <p className='ShoesItemFeatureP'>
-                                <span>Piece:</span> <span>{productData.shoesProduct.productPiece}</span>
-                            </p>
-
-                        </div>
-                        <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Description:</span>
-                        <div className='ShoesItemFeatureDesc'>{productData.shoesProduct.productDescription}</div>
-                        <div style={{ display: "flex" }}>
-                            <button
-                                className='ShoesItemFeatureButton'
-                                onClick={handleClickProductEdit}
-                            >Edit</button>
-                            <button
-                                className='ShoesItemFeatureButton'
-                                onClick={handleClickProductDelete}
-                            >Delete</button>
-                        </div>
-                    </div>
+                    )}
                 </div>
             ) : (
                 <Loading />

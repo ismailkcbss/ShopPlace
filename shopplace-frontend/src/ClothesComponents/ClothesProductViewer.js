@@ -52,42 +52,57 @@ export default function ClothesProductViewer() {
                     <div className='ClothesProductViewerPageImage'>
                         <ClothesProductItemPageImageList productData={productData.clothesProduct} />
                     </div>
-                    <div className='ClothesProductViewerPageBody'>
-                        <div className='ClothesProductViewerPageBodyHeader'>
-                            <span onClick={() => history.push('/')} className='ProductSeller'>{productData.user.username.toUpperCase()}</span> {productData.clothesProduct.productName.toUpperCase()}
+                    {productData && (
+                        <div className='ClothesProductViewerPageBody'>
+                            <div className='ClothesProductViewerPageBodyHeader'>
+                                {productData.clothesProduct.productName.toUpperCase()}
+                            </div>
+                            <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Feature:</span>
+                            <div className='ClothesItemFeature'>
+                            <p className='ClothesItemFeatureP'>
+                                    <span>Gender:</span> <span>{productData.clothesProduct.productGender.toUpperCase()}</span>
+                                </p>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>Collar Type:</span> <span>{productData.clothesProduct.productCollerType}</span>
+                                </p>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>Color:</span> <span>{productData.clothesProduct.productColor}</span>
+                                </p>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>Pattern:</span> <span>{productData.clothesProduct.productPattern}</span>
+                                </p>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>Materyal:</span> <span>{productData.clothesProduct.productMaterial}</span>
+                                </p>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>height:</span> <span>{productData.clothesProduct.productHeight}</span>
+                                </p>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>Size:</span> <span>{productData.clothesProduct.productSize}</span>
+                                </p>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>Unit Price:</span> <span>{productData.clothesProduct.productPrice} TL</span>
+                                </p>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>Max Piece:</span> <span>{productData.clothesProduct.productPiece}</span>
+                                </p>
+                                <p className='ClothesItemFeatureDesc'>
+                                    <span>Product Description:</span> <span>{productData.clothesProduct.productDescription}</span>
+                                </p>
+                            </div><div style={{ display: "flex" }}>
+                                <button
+                                    className='ClothesItemFeatureButton'
+                                    onClick={handleClickProductEdit}
+                                >Edit</button>
+                                <button
+                                    className='ClothesItemFeatureButton'
+                                    onClick={handleClickProductDelete}
+                                >Delete</button>
+                            </div>
                         </div>
-                        <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Feature:</span>
-                        <div className='ClothesItemFeature'>
-                            <p className='ClothesItemFeatureP'>
-                                <span>Pattern:</span> <span>{productData.clothesProduct.productPattern}</span>
-                            </p>
-                            <p className='ClothesItemFeatureP'>
-                                <span>Collar Type:</span> <span>{productData.clothesProduct.productCollerType}</span>
-                            </p>
-                            <p className='ClothesItemFeatureP'>
-                                <span>Color:</span> <span>{productData.clothesProduct.productColor}</span>
-                            </p>
-                            <p className='ClothesItemFeatureP'>
-                                <span>Materyal:</span> <span>{productData.clothesProduct.productMaterial}</span>
-                            </p>
-                            <p className='ClothesItemFeatureP'>
-                                <span>height:</span> <span>{productData.clothesProduct.productHeight}</span>
-                            </p>
-                        </div>
-                        <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Description:</span>
-                        <div className='ClothesItemFeatureDesc'>{productData.clothesProduct.productDescription}</div>
-                        <div style={{ display: "flex" }}>
-                            <button
-                                className='ClothesItemFeatureButton'
-                                onClick={handleClickProductEdit}
-                            >Edit</button>
-                            <button
-                                className='ClothesItemFeatureButton'
-                                onClick={handleClickProductDelete}
-                            >Delete</button>
-                        </div>
-                    </div>
+                    )}
                 </div>
+
             ) : (
                 <Loading />
             )

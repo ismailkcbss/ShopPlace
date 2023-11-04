@@ -59,41 +59,49 @@ export default function MyCartsItem(props) {
             <div className='MyCartCardInfo'>
                 <div className='MyCartCardInfoData'>
                     <p>
-                        <span>Ürün Adı:</span> {product.productName}
+                        <span> Product Name:</span> {product.productName}
                     </p>
                     <p>
-                        <span> Maximum Alınabilecek Adet:</span> {product.productPiece}
+                        <span> Product Type:</span> {product.productType}
                     </p>
                     <p>
-                        <span> Ürün Toplam Fiyat:</span> {product.productPrice * productCartQuentity}
+                        <span> Maximum Quantity:</span> {product.productPiece}
+                    </p>
+                    <p>
+                        <span> Product Total Amount:</span> {product.productPrice * productCartQuentity}
                     </p>
                 </div>
                 <div className='MyCartCardButton'>
-                    <div>
+                    <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
                         <button
                             onClick={() => handleDeleteClick(product._id)}
                             className='MyCartCardButtonDeleteIcon'
                         >
                             <DeleteOutlined />
                         </button>
-                        <p>Ürünü sil</p>
+                        <p>Delete Product</p>
                         <div>
                         </div>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <button
-                            id='plus'
-                            name={product._id}
-                            className='MyCartCardButtonPlusMinIcon'
-                            onClick={() => handleAdetSayacClick(product._id, 'plus')}
-                        ><PlusCircleOutlined /></button>
-                        <span style={{ fontSize: "1.2rem", color: "rgba(82, 82, 82, 0.664)" }}>{productCartQuentity}</span>
-                        <button
-                            id='minus'
-                            name={product._id}
-                            className='MyCartCardButtonPlusMinIcon'
-                            onClick={() => handleAdetSayacClick(product._id, 'minus')}
-                        ><MinusCircleOutlined /></button>
+
+                    <div style={{ display: "flex",flexDirection:"column", alignItems: "center" }}>
+                        <span>Piece</span>
+                        <div>
+                            <button
+                                id='plus'
+                                name={product._id}
+                                className='MyCartCardButtonPlusMinIcon'
+                                onClick={() => handleAdetSayacClick(product._id, 'plus')}
+                            ><PlusCircleOutlined /></button>
+                            <span style={{ fontSize: "1.2rem", color: "rgba(82, 82, 82, 0.664)" }}>{productCartQuentity}</span>
+                            <button
+                                id='minus'
+                                name={product._id}
+                                className='MyCartCardButtonPlusMinIcon'
+                                onClick={() => handleAdetSayacClick(product._id, 'minus')}
+                            ><MinusCircleOutlined /></button>
+                        </div>
+
                     </div>
                 </div>
             </div>

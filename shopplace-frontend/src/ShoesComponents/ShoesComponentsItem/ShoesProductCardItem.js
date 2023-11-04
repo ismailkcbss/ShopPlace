@@ -7,27 +7,23 @@ import { axiosInstance } from '../../axios.util';
 import Navbar from '../../mainComponents/navbar';
 import { Radio } from 'antd';
 import * as storage from '../../storage.helper'
-import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, MinusCircleOutlined, HeartTwoTone } from '@ant-design/icons';
+import 'antd/dist/reset.css';
 
 
 
 export default function ShoesProductCardItem() {
 
   const { id } = useParams();
-  const initialSize = {
-    productSize: ""
-  }
-
   const history = useHistory();
-
   const isAuthUser = useSelector((state) => state.user)
 
-  const [productSizeState, setProductSizeState] = useState({ ...initialSize })
   const [productData, setProductData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [quantity, setQuantity] = useState(1);
   const [buttonCheck, setbuttonCheck] = useState(false)
-
+  const [favoriteButtonCheck, setfavoriteButtonCheck] = useState(false)
+  const [favoritesList, setFavoritesList] = useState([]);
 
   const GetProductItem = async () => {
     if (id) {
@@ -40,38 +36,19 @@ export default function ShoesProductCardItem() {
       }
     }
   }
-
-  const handleProductSizeTextChange = (value, key) => {
-    setProductSizeState({
-      ...productSizeState,
-      [key]: value
-    })
-  }
-
-  const handleAdetSayacClick = (count) => {
-    if (count.id === 'plus' && quantity > 0 && quantity < productData.shoesProduct.productPiece) {
-      setQuantity(quantity + 1)
-    }
-    else if (count.id === 'minus' && quantity > 1) {
-      setQuantity(quantity - 1)
+  const GetAllFavoritesProduct = async () => {
+    if (id) {
+      try {
+        const { data } = await axiosInstance.get(`/Main/Favorite/Products`)
+        setFavoritesList(data.favoriteProducts);
+      } catch (error) {
+        alert(error.response.data.error)
+      }
     }
   }
-
   function getCart() {
     const cartJSON = storage.getValueByKey(`${isAuthUser.user.username}cart`);
     return cartJSON ? JSON.parse(cartJSON) : [];
-  }
-
-  const MyCartButton = async () => {
-    if (id) {
-      let productCheck = await getCart();
-      const existingProductIndex = productCheck.some(item => item.product?._id === productData?.shoesProduct?._id);
-      if (existingProductIndex) {
-        setbuttonCheck(true);
-      } else {
-        setbuttonCheck(false);
-      }
-    }
   }
 
   const handleClickCart = () => {
@@ -92,16 +69,73 @@ export default function ShoesProductCardItem() {
     }
   }
 
+  const handleClickAddFavorite = async () => {
+    try {
+      const { data } = await axiosInstance.post(`/Main/Favorite/Add`, {
+        productId: id,
+        productType: productData.shoesProduct.productType,
+      })
+      setfavoriteButtonCheck(true)
+    } catch (error) {
+      alert(error.response.data.error)
+    }
+  }
 
+  const handleClickDeleteFavorite = async () => {
+    try {
+      const { data } = await axiosInstance.delete(`/Main/Favorite/Products/${id}`)
+      //alert(data.message)
+      setfavoriteButtonCheck(false)
+    } catch (error) {
+      alert(error.response.data.error)
+    }
+  }
 
+  const MyCartButtonControl = async () => {
+    if (id) {
+      let productCheck = await getCart();
+      const existingProductIndex = productCheck.some(item => item.product?._id === productData?.shoesProduct?._id);
+      if (existingProductIndex) {
+        setbuttonCheck(true);
+      } else {
+        setbuttonCheck(false);
+      }
+    }
+  }
+
+  const MyFavoriteButtonControl = async () => {
+    if (id) {
+      const existingProductIndex = favoritesList.some(item => item._id === productData?.shoesProduct?._id);
+      if (existingProductIndex) {
+        setfavoriteButtonCheck(true);
+      } else {
+        setfavoriteButtonCheck(false);
+      }
+    }
+  }
+
+  const handleAdetSayacClick = (count) => {
+    if (count.id === 'plus' && quantity > 0 && quantity < productData.shoesProduct.productPiece) {
+      setQuantity(quantity + 1)
+    }
+    else if (count.id === 'minus' && quantity > 1) {
+      setQuantity(quantity - 1)
+    }
+  }
 
   useEffect(() => {
     GetProductItem();
-  }, [id])
+    GetAllFavoritesProduct();
+  }, [id, favoriteButtonCheck])
 
   useEffect(() => {
-    MyCartButton();
+    MyCartButtonControl();
   }, [GetProductItem])
+
+
+  useEffect(() => {
+    MyFavoriteButtonControl();
+  }, [GetAllFavoritesProduct])
 
   return (
     <div className='ShoesProductViewerDiv'>
@@ -114,72 +148,85 @@ export default function ShoesProductCardItem() {
           {productData && (
             <div className='ShoesProductViewerPageBody'>
               <div className='ShoesProductViewerPageBodyHeader'>
-                {productData.shoesProduct.productName.toUpperCase()}
+                <span style={{ color: "skyblue", fontSize: "1.7rem" }}>{productData.shoesProduct.productBrand.toUpperCase()}</span> {productData.shoesProduct.productName.toUpperCase()}
               </div>
               <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Feature:</span>
               <div className='ShoesItemFeature'>
                 <p className='ShoesItemFeatureP'>
-                  <span>Price:</span> <span>{productData.shoesProduct.productPrice}</span>
+                  <span>Gender:</span> <span>{productData.shoesProduct.productGender}</span>
                 </p>
                 <p className='ShoesItemFeatureP'>
-                  <span>Shoes Type:</span><span>{productData.shoesProduct.productType}</span>
-                </p>
-                <p className='ShoesItemFeatureP'>
-                  <span>Color:</span> <span>{productData.shoesProduct.productColor}</span>
+                  <span>Shoes Type:</span><span>{productData.shoesProduct.productTypeOf}</span>
                 </p>
                 <p className='ShoesItemFeatureP'>
                   <span>Model:</span> <span>{productData.shoesProduct.productModel}</span>
                 </p>
                 <p className='ShoesItemFeatureP'>
-                  <span>Piece:</span> <span>{productData.shoesProduct.productPiece}</span>
+                  <span>Color:</span> <span>{productData.shoesProduct.productNumber}</span>
+                </p>
+                <p className='ShoesItemFeatureP'>
+                  <span>Shoes Number:</span> <span>{productData.shoesProduct.productColor}</span>
+                </p>
+                <p className='ShoesItemFeatureP'>
+                  <span>Unit Price:</span> <span>{productData.shoesProduct.productPrice}</span>
+                </p>
+                <p className='ShoesItemFeatureP'>
+                  <span>Max Piece:</span><span>{productData.shoesProduct.productPiece}</span>
+                </p>
+                <p className='ShoesItemFeatureDesc'>
+                  <span>Product Description:</span> <span>{productData.shoesProduct.productDescription}</span>
                 </p>
               </div>
-              <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Description:</span>
-              <div className='ShoesItemFeatureDesc'>{productData.shoesProduct.productDescription}</div>
-
               <div>
                 <div className='ShoesItemFeatureDescSize'>
-                  <span style={{ fontSize: "1.4rem", fontWeight: "bold", marginRight: "2rem" }}>
-                    Shoes Number:
-                  </span>
-                  <Radio.Group buttonStyle="solid" defaultValue='XXL' onChange={(e) => handleProductSizeTextChange(e.target.value, "productNumber")} value={productSizeState.productNumber} style={{ width: "100%", display: "flex", justifyContent: "space-around" }}>
-                    <Radio.Button value="40">40</Radio.Button>
-                    <Radio.Button value="41">41</Radio.Button>
-                    <Radio.Button value="42">42</Radio.Button>
-                    <Radio.Button value="43">43</Radio.Button>
-                    <Radio.Button value="44">44</Radio.Button>
-                    <Radio.Button value="45">45</Radio.Button>
-                  </Radio.Group>
-                </div>
-                <span>Adet</span>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <button
-                    id='plus'
-                    name={productData.shoesProduct._id}
-                    className='MyCartCardButtonPlusMinIcon'
-                    onClick={() => handleAdetSayacClick(document.getElementById('plus'))}
-                  ><PlusCircleOutlined /></button>
-                  <span style={{ fontSize: "1.2rem", color: "rgba(82, 82, 82, 0.664)" }}>{quantity}</span>
-                  <button
-                    id='minus'
-                    name={productData.shoesProduct._id}
-                    className='MyCartCardButtonPlusMinIcon'
-                    onClick={() => handleAdetSayacClick(document.getElementById('minus'))}
-                  ><MinusCircleOutlined /></button>
-                </div>
-                {
-                  buttonCheck ? (
+                  <span style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "1.6rem", fontWeight: "bold", color: "rgba(89, 98, 128, 0.699)" }}>Piece</span>
+                  <div style={{ width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "2rem" }}>
                     <button
-                      className='ClothesItemFeatureButton'
-                      onClick={() => history.push('/MyCart')}
-                    >Go to cart</button>
-                  ) : (
+                      id='minus'
+                      name={productData.shoesProduct._id}
+                      className='ProductCardItemPlusMinIconButton'
+                      onClick={() => handleAdetSayacClick(document.getElementById('minus'))}
+                    ><MinusCircleOutlined /></button>
+                    <span style={{ fontSize: "1.2rem", color: "rgba(82, 82, 82, 0.664)" }}>{quantity}</span>
                     <button
-                      className='ClothesItemFeatureButton'
-                      onClick={() => handleClickCart()}
-                    >Add to cart</button>
-                  )
-                }
+                      id='plus'
+                      name={productData.shoesProduct._id}
+                      className='ProductCardItemPlusMinIconButton'
+                      onClick={() => handleAdetSayacClick(document.getElementById('plus'))}
+                    >< PlusCircleOutlined /></button>
+                  </div>
+                  <div style={{ width: "100%", height: "auto", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
+                    {
+                      buttonCheck ? (
+                        <button
+                          className='ClothesItemFeatureButton'
+                          onClick={() => history.push('/MyCart')}
+                        >Go to cart</button>
+                      ) : (
+                        <button
+                          className='ClothesItemFeatureButton'
+                          onClick={() => handleClickCart()}
+                        >Add to cart</button>
+                      )
+                    }
+                    {
+                      favoriteButtonCheck ? (
+                        <button
+                          className='ClothesItemFavoriteButtonLast'
+                          onClick={handleClickDeleteFavorite}
+                        ><HeartTwoTone className='FavoriteIcon' /> </button>
+                      ) : (
+                        <button
+                          className='ClothesItemFavoriteButtonFirst'
+                          onClick={handleClickAddFavorite}
+                        >
+                          <HeartTwoTone className='FavoriteIcon' />
+                        </button>
+                      )
+                    }
+                  </div>
+
+                </div>
               </div>
             </div>
           )}

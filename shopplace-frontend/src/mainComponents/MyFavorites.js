@@ -29,16 +29,23 @@ export default function MyFavorites() {
         <div className='MyFavoritesDiv'>
             <Navbar />
             <div className='MyFavoritesPage'>
-                <div className='ProductDiv'>
-                    {loading ? (
-                        favoritesList?.map((item) => (
-                            <MyFavoritesItem key={item._id} item={item} />
-                        ))
+                {
+                    favoritesList[0] ? (
+                        <div className='ProductDiv'>
+                            {loading ? (
+                                favoritesList?.map((item) => (
+                                    <MyFavoritesItem key={item._id} item={item} />
+                                ))
+                            ) : (
+                                <Loading />
+                            )
+                            }
+                        </div>
                     ) : (
-                        <Loading />
+                        <p style={{width:"100%",height:"80vh",fontSize:"2rem", display:"flex",justifyContent:"center",alignItems:"center"}}>You have no favorite products.</p>
                     )
-                    }
-                </div>
+                }
+
             </div>
         </div>
     )

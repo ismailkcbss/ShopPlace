@@ -3,11 +3,10 @@ import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min
 import { axiosInstance } from '../../axios.util';
 import Navbar from '../../mainComponents/navbar';
 import ProductItemPageImageList from './ClothesProductItemPageImageList';
-import { Radio } from 'antd';
 import Loading from '../../Loading';
 import * as storage from '../../storage.helper'
 import { useSelector } from 'react-redux';
-import { PlusCircleOutlined, MinusCircleOutlined, HeartOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, MinusCircleOutlined, HeartTwoTone } from '@ant-design/icons';
 import 'antd/dist/reset.css';
 
 export default function ClothesProductCardItem() {
@@ -83,7 +82,7 @@ export default function ClothesProductCardItem() {
     const handleClickDeleteFavorite = async () => {
         try {
             const { data } = await axiosInstance.delete(`/Main/Favorite/Products/${id}`)
-            alert(data.message)
+            //alert(data.message)
             setfavoriteButtonCheck(false)
         } catch (error) {
             alert(error.response.data.error)
@@ -149,7 +148,7 @@ export default function ClothesProductCardItem() {
                     {productData && (
                         <div className='ClothesProductViewerPageBody'>
                             <div className='ClothesProductViewerPageBodyHeader'>
-                                {/* {productData.clothesProduct.productBrand.toUpperCase()*/} {productData.clothesProduct.productName.toUpperCase()}
+                                <span style={{ color: "skyblue", fontSize: "1.7rem" }}>{productData.clothesProduct.productBrand.toUpperCase()}</span> {productData.clothesProduct.productName.toUpperCase()}
                             </div>
                             <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem", color: "rgb(78,78,78)" }}>Product Feature:</span>
                             <div className='ClothesItemFeature'>
@@ -177,6 +176,9 @@ export default function ClothesProductCardItem() {
                                 <p className='ClothesItemFeatureP'>
                                     <span>Unit Price:</span> <span>{productData.clothesProduct.productPrice} TL</span>
                                 </p>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>Max Piece:</span> <span>{productData.clothesProduct.productPiece}</span>
+                                </p>
                                 <p className='ClothesItemFeatureDesc'>
                                     <span>Product Description:</span> <span>{productData.clothesProduct.productDescription}</span>
                                 </p>
@@ -190,15 +192,15 @@ export default function ClothesProductCardItem() {
                                         className='ProductCardItemPlusMinIconButton'
                                         onClick={() => handleAdetSayacClick(document.getElementById('minus'))}
                                     ><MinusCircleOutlined /></button>
-                                    <span style={{ fontSize: "1.8rem", color: "rgba(82, 82, 82, 0.664)" }}>{quantity}</span>
+                                    <span style={{ fontSize: "1.2rem", color: "rgba(82, 82, 82, 0.664)" }}>{quantity}</span>
                                     <button
                                         id='plus'
                                         name={productData.clothesProduct._id}
                                         className='ProductCardItemPlusMinIconButton'
                                         onClick={() => handleAdetSayacClick(document.getElementById('plus'))}
-                                    ><PlusCircleOutlined /></button>
+                                    >< PlusCircleOutlined /></button>
                                 </div>
-                                <div style={{ width: "100%", height: "auto", display: "flex", justifyContent: "space-between" }}>
+                                <div style={{ width: "100%", height: "auto", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
                                     {
                                         buttonCheck ? (
                                             <button
@@ -215,15 +217,15 @@ export default function ClothesProductCardItem() {
                                     {
                                         favoriteButtonCheck ? (
                                             <button
-                                                className='ClothesItemFeatureButton'
+                                                className='ClothesItemFavoriteButtonLast'
                                                 onClick={handleClickDeleteFavorite}
-                                            >Remove from Favorites</button>
+                                            ><HeartTwoTone className='FavoriteIcon' /> </button>
                                         ) : (
                                             <button
-                                                className='ClothesItemFeatureButton'
+                                                className='ClothesItemFavoriteButtonFirst'
                                                 onClick={handleClickAddFavorite}
                                             >
-                                                <HeartOutlined /> Add to favorites
+                                                <HeartTwoTone className='FavoriteIcon' />
                                             </button>
                                         )
                                     }
