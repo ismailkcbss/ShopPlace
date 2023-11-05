@@ -6,15 +6,18 @@
 </p>
 
 ## Project Description
-It is an online shopping application that can be used in daily life. The project is not fully completed yet and there are improvements to be added. The project includes features such as registration, username, Decryption, welcome message, product add-edit, product search, contact message, add to favorites, add to cart and more. Many features have already been completed and the rest will be completed shortly.
+It is an online shopping application that can be used in everyday life. The project is not yet fully completed and there are improvements to be added. The project includes features such as registration, login, Forgot Decryption, welcome message, product add-edit, product search, sending a message to the page owner, adding to favorites, adding to cart and displaying products purchased by the customer, among others. Many of the features have already been completed and the rest will be completed shortly.
 
 ## Improvements to be added to the project
-- Other Category tabs
-- Product viewing page.
-- User profile page
+- Other Category tabs.
+- There will be more plugins on my profile page.
+- Design beautification.
 - ...
 
 Besides these features, many more new features will be added to make the online shopping page the most user-friendly in everyday life.
+
+## How the project works?
+After the installation process is completed, first run the backend, and then run the frontend. This is because the products on the homepage will throw errors if the backend is not running. 
 
 ## Project testing
 Launches the test runner in the interactive watch mode.

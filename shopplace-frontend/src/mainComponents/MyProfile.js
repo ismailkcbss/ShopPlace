@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Navbar from './navbar';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { axiosInstance } from '../axios.util';
 import MyProfileProductsItem from '../mainComponentsItem/MyProfileProductsItem';
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
+import MyProfileOrdersTable from '../mainComponentsItem/MyProfileOrdersTable';
+import MyProfileInfoTable from '../mainComponentsItem/MyProfileInfoTable';
+import MyProfileOrdersPlacedTable from '../mainComponentsItem/MyProfileOrdersPlacedTable';
+import Loading from '../Loading';
+
 
 const items = [
   {
@@ -21,24 +25,55 @@ const items = [
 export default function MyProfile() {
 
   const userData = useSelector((state) => state.user);
-  const history = useHistory();
   const [productsData, setProductsData] = useState([])
-
+  const [ordersReceived, setOrdersReceived] = useState([])
+  const [ordersPlaced, setOrdersPlaced] = useState([])
+  const [loading, setLoading] = useState(false);
 
   const getAllProducts = async () => {
     if (userData.user.seller) {
       try {
         const { data } = await axiosInstance.get(`/Product/Seller/Clothes`)
         setProductsData(data.allProducts)
+        setLoading(true)
       } catch (error) {
         alert('Not find all products')
       }
     }
   }
 
+  const getAllOrdersReceived = async () => {
+    if (userData.user.seller) {
+      try {
+        const { data } = await axiosInstance.get(`/Main/MyOrder/Seller`)
+        setOrdersReceived(data.product)
+        setLoading(true)
+      } catch (error) {
+        alert('Not find all orders')
+      }
+    }
+  }
+
+  console.log(ordersReceived);
+
+  const getAllOrdersPlaced = async () => {
+    if (!userData.user.seller) {
+      try {
+        const { data } = await axiosInstance.get(`/Main/MyOrder/Customer`)
+        setOrdersPlaced(data.ordersPlaced)
+        setLoading(true)
+      } catch (error) {
+        alert('Not find all orders')
+      }
+    }
+  }
+
+
   useEffect(() => {
     getAllProducts();
-  }, [userData.user.seller])
+    getAllOrdersReceived();
+    getAllOrdersPlaced();
+  }, [userData.user])
 
 
   return (
@@ -47,53 +82,91 @@ export default function MyProfile() {
       <div className='MyProfilePage'>
         {userData.user.seller ? (
           <div className='MyProfileSellerDiv'>
-            <div>
-              <div className='MyProfileSellerHeader'>
-                <h2>Welcome! {userData.user.username}</h2>
-                <Dropdown
-                  menu={{
-                    items,
-                  }}
-                  trigger={['click']}
-                >
-                  <button onClick={(e) => e.preventDefault()} className='MyProfileSellerHeaderButton'>
-                    <Space>
-                      Add Product
-                      <DownOutlined />
-                    </Space>
-                  </button>
-                </Dropdown>
+            <div className='MyProfileSellerHeader'>
+              <div className='MyProfileSellerHeaderImg'>
+                <img src={userData.user.image} alt='profileimg' />
               </div>
-
-
-              <div className='MyProfileSellerMain'>
-                <div className='MyProfileSellerMainHeader'>
-                  <span style={{ marginLeft: "1rem", fontSize: "2rem", margin: "3rem 0 3rem 0", borderBottom: ".1rem solid rgba(190, 190, 190, 0.705)" }}>My Products</span>
-                  <div className='MyProfileSellerMainProduct'>
-                    {
-                      productsData?.map((productItem) => (
-                        <MyProfileProductsItem key={productItem._id} productItem={productItem} />
-                      ))
-                    }
-                  </div>
-                </div>
-                <div className='MyProfileSellerMainOrdersReceived'>
-                  <span style={{ marginLeft: "1rem", fontSize: "2rem", margin: "3rem 0 3rem 0", borderBottom: ".1rem solid rgba(190, 190, 190, 0.705)" }}>Orders Received</span>
-                  <div className='OrdersReceivedDiv'>
-
-                  </div>
-                </div>
-              </div>
-
+              <div className='MyProfileSellerHeaderProfileInfo'>
+                <MyProfileInfoTable userData={userData} /></div>
             </div>
+            <div className='MyProfileSellerProductsDiv'>
+              <Dropdown
+                menu={{
+                  items,
+                }}
+                trigger={['click']}
+              >
+                <button onClick={(e) => e.preventDefault()} className='MyProfileSellerProductsDivButton'>
+                  <Space>
+                    Add Product
+                    <DownOutlined />
+                  </Space>
+                </button>
+              </Dropdown>
+            </div>
+            {
+              loading ? (
+                <div className='MyProfileSellerMain'>
+                  <div>
+                    <span style={{ width: "100%", fontSize: "2rem", display: "flex", justifyContent: "center", marginBottom: "2rem" }}>My Products</span>
+                    <div className='MyProfileSellerMainProduct'>
+                      {
+                        productsData?.map((productItem) => (
+                          <MyProfileProductsItem key={productItem._id} productItem={productItem} />
+                        ))
+                      }
+                    </div>
+                  </div>
+                  <span style={{ width: "100%", fontSize: "2rem", display: "flex", justifyContent: "center", margin: "2rem 0 2rem 0" }}>Orders Received</span>
+                  {
+                    ordersReceived.length > 0 ? (
+                      <div>
+                        <MyProfileOrdersTable ordersReceived={ordersReceived} />
+                      </div>
+                    ) : (
+                      <p style={{ width: "100%", fontSize: "1.4rem", display: "flex", justifyContent: "center", alignItems: "center", margin: "10rem 0 10rem 0" }}>No orders received</p>
+                    )
+                  }
+                </div>
+              ) : (
+                <Loading />
+              )
+            }
           </div>
         ) : (
-          <div className='MyProfileNotSellerDiv'>
+          <div className='MyProfileCustomerDiv'>
+            <div className='MyProfileCustomerHeader'>
+              <div className='MyProfileCustomerHeaderImg'>
+                <img src={userData.user.image} alt='profileimg' />
+              </div>
+              <div className='MyProfileCustomerHeaderProfileInfo'>
+                <MyProfileInfoTable userData={userData} /></div>
+            </div>
+
+            {
+              loading ? (
+                <div className='MyProfileCustomerMain'>
+                  <span style={{ width: "100%", fontSize: "2rem", display: "flex", justifyContent: "center", marginBottom: "2rem 0 2rem 0" }}>My Orders</span>
+                  {
+                    ordersPlaced.length > 0 ? (
+                      <div>
+                        <MyProfileOrdersPlacedTable ordersPlaced={ordersPlaced} />
+                      </div>
+                    ) : (
+                      <p style={{ width: "100%", fontSize: "1.4rem", display: "flex", justifyContent: "center", alignItems: "center", margin: "10rem 0 10rem 0" }}>No my order</p>
+                    )
+                  }
+
+                </div>
+              ) : (
+                <Loading />
+              )
+            }
+
 
           </div>
-        )
+        )}
 
-        }
       </div>
     </div>
   )

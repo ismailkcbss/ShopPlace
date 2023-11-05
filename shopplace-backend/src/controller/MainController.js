@@ -340,20 +340,28 @@ const GetOrderReceived = async (req, res) => {
                 }
             }
         }
-        if (orderRecProduct.length > 0) {
-            res.status(200).json({
-                product: orderRecProduct
-            });
-        } else {
-            res.status(404).json({
-                success: false,
-                error: 'Your order could not be found.'
-            });
-        }
+        res.status(200).json({
+            product: orderRecProduct
+        });
     } catch (error) {
         res.status(500).json({
             succeded: false,
             error: 'The orders received could not be processed'
+        })
+    }
+}
+
+const GetOrderPlaced = async (req, res) => {
+    try {
+        let user = res.locals.user.username;
+        const ordersPlaced = await OrdersReceived.find({ customer: user })
+        res.status(200).json({
+            ordersPlaced
+        })
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error: "The orders placed could not be processed"
         })
     }
 }
@@ -459,4 +467,4 @@ const FavoriteProductsDelete = async (req, res) => {
 }
 
 
-export { GetHomeAllProducts, WebsiteSendMail, MyOrderSendMail, OrdersReceivedCreate, GetOrderReceived, FavoriteAdd, GetAllFavoriteProducts, FavoriteProductsDelete }
+export { GetHomeAllProducts, WebsiteSendMail, MyOrderSendMail, OrdersReceivedCreate, GetOrderReceived, GetOrderPlaced, FavoriteAdd, GetAllFavoriteProducts, FavoriteProductsDelete }

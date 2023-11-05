@@ -522,28 +522,103 @@ Home-page / Navbar
     object-fit: cover;
 }
 
+/*SELLER / CUSTOMER */
 
-.MyProfileSellerDiv {
+.MyProfileSellerDiv,
+.MyProfileCustomerDiv {
     width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
 }
 
-.MyProfileSellerHeader {
+.MyProfileSellerHeader,
+.MyProfileCustomerHeader {
+    width: 100%;
+    height: auto;
+    margin-bottom: 4rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.MyProfileSellerHeaderImg,
+.MyProfileCustomerHeaderImg {
+    width: 20rem;
+    height: 20rem;
+    object-fit: contain;
+}
+
+.MyProfileSellerHeaderImg img,
+.MyProfileCustomerHeaderImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 25%;
+    border-radius: 50%;
+}
+
+.MyProfileSellerHeaderProfileInfo,
+.MyProfileCustomerHeaderProfileInfo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MyProfileInfoTable {
+    width: 100%;
+    display: flex;
+
+}
+
+.MyProfileInfoTable thead tr {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.MyProfileInfoTable thead th {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: rgba(184, 184, 184, 0.877);
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 5rem;
+    margin-right: 3rem;
+}
+
+.MyProfileInfoTable tbody tr {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.MyProfileInfoTable tbody td {
+    width: 100%;
+    height: 5rem;
+    font-size: 1.7rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.MyProfileSellerProductsDiv {
     flex-basis: 10%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    align-items: center;
     margin: 2rem 0 2rem 0;
     padding: 0 3rem 0 3rem;
 }
 
-.MyProfileSellerHeader h2 {
-    font-size: 2rem;
-    color: rgba(179, 203, 248, 0.815);
-}
-
-.MyProfileSellerHeaderButton {
+.MyProfileSellerProductsDivButton {
     width: 15rem;
     height: 3rem;
     line-height: 3rem;
@@ -554,18 +629,20 @@ Home-page / Navbar
     box-shadow: .1rem .3rem 2.2rem rgb(156, 156, 156);
 }
 
-.MyProfileSellerHeaderButton:hover {
+.MyProfileSellerProductsDivButton:hover {
     cursor: pointer;
     background-color: rgb(98, 118, 145);
 }
 
 
-.MyProfileSellerMain{
+.MyProfileSellerMain,
+.MyProfileCustomerMain {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
 
-}
-.MyProfileSellerMainHeader{
-    
-}
 .MyProfileSellerMainProduct {
     width: 100%;
     height: auto;
@@ -574,6 +651,63 @@ Home-page / Navbar
     grid-gap: 3rem;
     grid-template-columns: repeat(auto-fit, minmax(25em, 2fr));
 }
+
+.MyProfileOrdersTable,
+.MyProfileOrdersPlacedTable {
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+.MyProfileOrdersTable thead tr,
+.MyProfileOrdersPlacedTable thead tr {
+    width: 100%;
+    display: flex;
+    border: .1rem solid rgba(187, 187, 187, 0.411);
+    justify-content: space-between;
+}
+
+.MyProfileOrdersTable thead th,
+.MyProfileOrdersPlacedTable thead th {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: rgba(184, 184, 184, 0.877);
+    flex-basis: 20%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 5rem;
+    border-left: .1rem solid rgba(187, 187, 187, 0.411);
+    padding: 1rem;
+}
+
+.MyProfileOrdersTable tbody tr,
+.MyProfileOrdersPlacedTable tbody tr {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border: .1rem solid rgba(187, 187, 187, 0.411);
+    border-top: none;
+}
+
+.MyProfileOrdersTable tbody td,
+.MyProfileOrdersPlacedTable tbody td {
+    padding: 0 2rem 0 2rem;
+    height: auto;
+    min-height: 4rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    flex-basis: 20%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-left: .1rem solid rgba(187, 187, 187, 0.411);
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+
+
+
 
 
 /*HomePage*/
@@ -700,7 +834,7 @@ Components Items Page
 .MyProfileProductsItemDiv,
 .ShoesProductCardDiv {
     width: 23rem;
-    height: 38rem;
+    height: 31rem;
     border-radius: 1rem;
     border: 1px solid rgba(190, 190, 190, 0.705);
     transition: ease-in-out .2s;
@@ -716,17 +850,19 @@ Components Items Page
 .MyProfileProductsItemImg,
 .ShoesProductCardImg {
     width: 100%;
-    height: 28rem;
+    height: 22rem;
     margin-bottom: 1rem;
+    background-size: auto !important;
 }
 
 .ProductCardImg img,
 .MyProfileProductsItemImg img,
 .ShoesProductCardImg img {
     border-radius: 1rem 1rem 0 0;
-    object-fit: cover;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: 50% 30%;
 }
 
 .ProductCardDesc,
