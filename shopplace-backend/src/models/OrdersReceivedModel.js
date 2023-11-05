@@ -16,10 +16,6 @@ const OrdersReceivedSchema = new Schema({
         required: [true, "You did not found the shipping address."],
         lowercase: true,
     },
-    orderSumPrice: {
-        type: Number,
-        required: [true, "You did not found the  order sum price."],
-    },
 }, {
     timestamps: true,
 });

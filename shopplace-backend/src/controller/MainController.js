@@ -276,6 +276,7 @@ Shipping Address: ${req.body.shippingAdress} </h3></td></tr></table></td></tr></
 </body></html>
 `
     try {
+        //sadece gmail adreslerine gönderim var diğer adresler için koşullar koymam ve hesap açmam gerek.
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 465,
@@ -290,9 +291,6 @@ Shipping Address: ${req.body.shippingAdress} </h3></td></tr></table></td></tr></
             subject: process.env.NODE_MAIL,
             html: htmlTemplate,
         });
-        // res.status(201).json({
-        //     succeded: true,
-        // })
         next();
     } catch (error) {
         res.status(500).json({
@@ -305,7 +303,7 @@ Shipping Address: ${req.body.shippingAdress} </h3></td></tr></table></td></tr></
 const OrdersReceivedCreate = async (req, res) => {
     try {
         const ordersReceived = await OrdersReceived.create({
-            orderProducts: req.body.orderProducts,
+            orderProducts: JSON.parse(req.body.orderProducts),
             customer: req.body.customer,
             shippingAdress: req.body.shippingAdress,
             orderSumPrice: req.body.orderSumPrice
@@ -326,18 +324,36 @@ const OrdersReceivedCreate = async (req, res) => {
 
 const GetOrderReceived = async (req, res) => {
     try {
-        // let ownerId = res.locals.user._id;
-        // const ordersReceived = await OrdersReceived.findById({ownerId:product}) 
-        // const productsOwner = req.body
-/*
- burda localden gelen id ile orderReceived içinde gelen productOwnerı 
- karşılaştırmak lazım çünkü müşteri birden fazla satıcdan alışveriş yapmış olabilir.
- bunun içinde şema içerisine daha kolay erişimek adına bir bilgi ekle.
-*/
+        let ownerId = res.locals.user._id;
+        const ordersReceived = await OrdersReceived.find({})
+        let orderRecProduct = [];
+
+        for (const owner of ordersReceived) {
+            for (const ownerItem of owner.orderProducts) {
+                if (ownerId.toString() === ownerItem.product.productOwner.toString()) {
+                    let shippingProductİnfo = {
+                        ShippingProducts: ownerItem,
+                        ProductCustomer: owner.customer,
+                        ShippingAdresscustomer: owner.shippingAdress,
+                    }
+                    orderRecProduct.push(shippingProductİnfo);
+                }
+            }
+        }
+        if (orderRecProduct.length > 0) {
+            res.status(200).json({
+                product: orderRecProduct
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                error: 'Your order could not be found.'
+            });
+        }
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: 'Order received could not be processed'
+            error: 'The orders received could not be processed'
         })
     }
 }

@@ -55,7 +55,8 @@ export default function PayPage() {
         setIsWaitClick(true);
         try {
             const { data } = await axiosInstance.post(`/Main/MyOrder`, {
-                orderSumPrice: totalAmount,
+                orderProducts: JSON.stringify(cartJsonData),
+                customer:isAuthUser.user.username,
                 shippingAdress: form.shippingAdress
             })
             history.push('/')
