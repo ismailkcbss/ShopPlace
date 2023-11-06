@@ -10,6 +10,11 @@ router.route('/ContactUs').post(MainController.WebsiteSendMail)
 router.route('/Home').get(MainController.GetHomeAllProducts)
 
 
+//Seller Route Get All Products
+router.route('/Seller/Products')
+    .get(MainController.GetSellerAllProducts)
+
+
 router.route('/Favorite/Add').post(MainController.FavoriteAdd);
 router.route('/Favorite/Products').get(MainController.GetAllFavoriteProducts);
 router.route('/Favorite/Products/:id').delete(MainController.FavoriteProductsDelete);

@@ -33,7 +33,7 @@ export default function MyProfile() {
   const getAllProducts = async () => {
     if (userData.user.seller) {
       try {
-        const { data } = await axiosInstance.get(`/Product/Seller/Clothes`)
+        const { data } = await axiosInstance.get(`/Main/Seller/Products`)
         setProductsData(data.allProducts)
         setLoading(true)
       } catch (error) {

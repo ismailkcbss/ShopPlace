@@ -1,5 +1,8 @@
 import ClothesProduct from "../models/ClothesProductModel.js";
 import ShoesProduct from "../models/ShoesProductModel.js";
+import ElectronicProduct from "../models/ElectronicProductModel.js";
+import PersonalCareProduct from "../models/PersonalCareProductModel.js";
+import BagProduct from "../models/BagProductModel.js";
 import FavoriteProduct from "../models/FavoritesModal.js"
 import OrdersReceived from '../models/OrdersReceivedModel.js'
 import nodemailer from "nodemailer";
@@ -31,6 +34,51 @@ const GetHomeAllProducts = async (req, res) => {
         })
     }
 }
+
+
+const GetSellerAllProducts = async (req, res) => {
+    try {
+        const allProducts = [];
+        // Bu durumda butun şemalara istek atmak zorundayım ve kontrolu sağlayıp diziye aktarmalıyım mongo sadece bu şekilde izin veriyor.
+
+        const clothesProduct = await ClothesProduct.find({ productOwner: res.locals.user._id })
+        if (clothesProduct.length > 0) {
+            allProducts.push(...clothesProduct);
+        }
+
+        const shoesProduct = await ShoesProduct.find({ productOwner: res.locals.user._id })
+        if (shoesProduct.length > 0) {
+            allProducts.push(...shoesProduct);
+        }
+
+        const electronicProduct = await ElectronicProduct.find({ productOwner: res.locals.user._id })
+        if (electronicProduct.length > 0) {
+            allProducts.push(...electronicProduct);
+        }
+
+        const personalCareProduct = await PersonalCareProduct.find({ productOwner: res.locals.user._id })
+        if (personalCareProduct.length > 0) {
+            allProducts.push(...personalCareProduct);
+        }
+
+        const bagProduct = await BagProduct.find({ productOwner: res.locals.user._id })
+        if (bagProduct.length > 0) {
+            allProducts.push(...bagProduct);
+        }
+
+
+        res.status(201).json({
+            succeded: true,
+            allProducts
+        })
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error: "Products could not be brought"
+        })
+    }
+}
+
 
 const WebsiteSendMail = async (req, res) => {
     const htmlTemplate = `
@@ -373,6 +421,7 @@ const FavoriteAdd = async (req, res) => {
         const productType = req.body.productType;
 
         const existingFavorite = await FavoriteProduct.findOne({ userId, productId, productType });
+        
         if (existingFavorite) {
             res.status(400).json({
                 succeeded: false,
@@ -467,4 +516,4 @@ const FavoriteProductsDelete = async (req, res) => {
 }
 
 
-export { GetHomeAllProducts, WebsiteSendMail, MyOrderSendMail, OrdersReceivedCreate, GetOrderReceived, GetOrderPlaced, FavoriteAdd, GetAllFavoriteProducts, FavoriteProductsDelete }
+export { GetHomeAllProducts, GetSellerAllProducts, WebsiteSendMail, MyOrderSendMail, OrdersReceivedCreate, GetOrderReceived, GetOrderPlaced, FavoriteAdd, GetAllFavoriteProducts, FavoriteProductsDelete }

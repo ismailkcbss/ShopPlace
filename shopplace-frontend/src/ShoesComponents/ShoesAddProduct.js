@@ -19,7 +19,7 @@ export default function ShoesAddProduct() {
         productPiece: "",
         productDescription: "",
         productNumber: "",
-        productTypeOf: "",
+        productCategory: "",
         productColor: "",
         productModel: "",
     }
@@ -88,7 +88,7 @@ export default function ShoesAddProduct() {
                     productPiece: data.shoesProduct.productPiece,
                     productDescription: data.shoesProduct.productDescription,
                     productNumber: (data.shoesProduct.productNumber).toString(),
-                    productTypeOf: data.shoesProduct.productTypeOf,
+                    productCategory: data.shoesProduct.productCategory,
                     productColor: data.shoesProduct.productColor,
                     productModel: data.shoesProduct.productModel,
                 })
@@ -119,7 +119,7 @@ export default function ShoesAddProduct() {
                 productPiece: Number(form.productPiece),
                 productDescription: form.productDescription,
                 productNumber: Number(form.productNumber),
-                productTypeOf: form.productTypeOf,
+                productCategory: form.productCategory,
                 productColor: form.productColor,
                 productModel: form.productModel,
                 productImage: imageURL.length === 0 ? (prevImage) : (imageURL)
@@ -159,7 +159,7 @@ export default function ShoesAddProduct() {
                 productPiece: Number(form.productPiece),
                 productDescription: form.productDescription,
                 productNumber: Number(form.productNumber),
-                productTypeOf: form.productTypeOf,
+                productCategory: form.productCategory,
                 productColor: form.productColor,
                 productModel: form.productModel,
                 productImage: (imageURL).join(',')
@@ -252,7 +252,7 @@ export default function ShoesAddProduct() {
                     </Radio.Group>
 
                     <span className='FormHeader'>Type of Shoe</span>
-                    <Radio.Group onChange={(e) => handleTextChange(e.target.value, "productTypeOf")} value={form.productTypeOf}>
+                    <Radio.Group onChange={(e) => handleTextChange(e.target.value, "productCategory")} value={form.productCategory}>
                         <Space direction="vertical">
                             <Radio value="Flip-Flops">Flip-Flops </Radio>
                             <Radio value="Ballet Shoes">Ballet Shoes</Radio>

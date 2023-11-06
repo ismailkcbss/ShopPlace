@@ -541,6 +541,7 @@ Home-page / Navbar
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-bottom: .1rem solid rgba(230, 230, 230, 0.61);
 }
 
 .MyProfileSellerHeaderImg,
@@ -664,13 +665,14 @@ Home-page / Navbar
     display: flex;
     border: .1rem solid rgba(187, 187, 187, 0.411);
     justify-content: space-between;
+    background-color: rgba(132, 66, 255, 0.842);
 }
 
 .MyProfileOrdersTable thead th,
 .MyProfileOrdersPlacedTable thead th {
     font-size: 1.7rem;
     font-weight: 700;
-    color: rgba(184, 184, 184, 0.877);
+    color: rgb(255, 255, 255);
     flex-basis: 20%;
     display: flex;
     justify-content: flex-start;
@@ -689,6 +691,11 @@ Home-page / Navbar
     border-top: none;
 }
 
+.MyProfileOrdersTable tbody tr:nth-child(odd),
+.MyProfileOrdersPlacedTable tbody tr:nth-child(odd) {
+    background-color: rgba(217, 204, 255, 0.527);
+}
+
 .MyProfileOrdersTable tbody td,
 .MyProfileOrdersPlacedTable tbody td {
     padding: 0 2rem 0 2rem;
@@ -704,7 +711,10 @@ Home-page / Navbar
     white-space: pre-wrap;
     word-break: break-all;
 }
-
+.MyProfileOrdersTable tbody tr:nth-child(odd) td,
+.MyProfileOrdersPlacedTable tbody tr:nth-child(odd) td{
+    color: rgb(116, 116, 116);
+} 
 
 
 

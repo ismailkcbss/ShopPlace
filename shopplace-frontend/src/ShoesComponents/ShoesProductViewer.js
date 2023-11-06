@@ -64,7 +64,7 @@ export default function ShoesProductViewer() {
                                     <span>Gender:</span> <span>{productData.shoesProduct.productGender}</span>
                                 </p>
                                 <p className='ShoesItemFeatureP'>
-                                    <span>Shoes Type:</span><span>{productData.shoesProduct.productTypeOf}</span>
+                                    <span>Shoes Category:</span><span>{productData.shoesProduct.produproductCategoryctTypeOf}</span>
                                 </p>
                                 <p className='ShoesItemFeatureP'>
                                     <span>Model:</span> <span>{productData.shoesProduct.productModel}</span>

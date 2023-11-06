@@ -23,7 +23,7 @@ export default function MyProfileOrdersTable(props) {
                 </thead>
                 <tbody>
                     {
-                        ordersReceived?.map((item,index) => (
+                        ordersReceived?.map((item, index) => (
                             <tr key={index}>
                                 <td>{item.ProductCustomer}</td>
                                 <td>{item.ShippingProducts.product.productType}</td>

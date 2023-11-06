@@ -168,7 +168,7 @@ export default function ShoesProductCardItem() {
                   <span>Gender:</span> <span>{productData.shoesProduct.productGender}</span>
                 </p>
                 <p className='ShoesItemFeatureP'>
-                  <span>Shoes Type:</span><span>{productData.shoesProduct.productTypeOf}</span>
+                  <span>Shoes Type:</span><span>{productData.shoesProduct.productCategory}</span>
                 </p>
                 <p className='ShoesItemFeatureP'>
                   <span>Model:</span> <span>{productData.shoesProduct.productModel}</span>

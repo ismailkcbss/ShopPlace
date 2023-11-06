@@ -1,6 +1,5 @@
 import ClothesProduct from "../models/ClothesProductModel.js";
 import FavoritesProduct from "../models/FavoritesModal.js";
-import ShoesProduct from "../models/ShoesProductModel.js";
 import User from "../models/userModel.js";
 
 // USER-ROLE = EVERYONE CONTROLLER
@@ -92,52 +91,25 @@ const GetSellerProduct = async (req, res) => {
     }
 }
 
-const GetSellerAllProducts = async (req, res) => {
-    try {
-        const allProducts = [];
-        // Bu durumda butun şemalara istek atmak zorundayım ve kontrolu sağlayıp diziye aktarmalıyım mongo sadece bu şekilde izin veriyor.
-
-        const clothesProduct = await ClothesProduct.find({ productOwner: res.locals.user._id })
-        if (clothesProduct.length > 0) {
-            allProducts.push(...clothesProduct);
-        }
-
-        const shoesProduct = await ShoesProduct.find({ productOwner: res.locals.user._id },)
-        if (shoesProduct.length > 0) {
-            allProducts.push(...shoesProduct);
-        }
-
-        res.status(201).json({
-            succeded: true,
-            allProducts
-        })
-    } catch (error) {
-        res.status(500).json({
-            succeded: false,
-            error: "Products could not be brought"
-        })
-    }
-}
-
 const DeleteProduct = async (req, res) => {
     try {
         const productId = req.params.id;
-
-        await ClothesProduct.findByIdAndRemove({ _id: productId })
 
         const userFavorites = await FavoritesProduct.find({})
 
         for (const favorite of userFavorites) {
             if (favorite.productId.toString() === productId.toString()) {
                 await FavoritesProduct.findByIdAndRemove(favorite._id)
-                res.status(200).json({
-                    succeded: true,
-                    message: "Product deleted successfully",
-                });
                 return;
             }
         }
-        
+
+        await ClothesProduct.findByIdAndRemove({ _id: productId })
+
+        res.status(200).json({
+            succeded: true,
+            message: "Product deleted successfully",
+        });
     } catch (error) {
         res.status(500).json({
             succeded: false,
@@ -167,4 +139,4 @@ const UpdateProduct = async (req, res) => {
 
 
 
-export { CreateProduct, GetEveryoneProduct, GetEveryoneAllProducts, GetSellerProduct, GetSellerAllProducts, DeleteProduct, UpdateProduct }
+export { CreateProduct, GetEveryoneProduct, GetEveryoneAllProducts, GetSellerProduct, DeleteProduct, UpdateProduct }

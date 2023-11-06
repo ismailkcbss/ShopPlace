@@ -1,17 +1,18 @@
 import mongoose from "mongoose";
 
-const {Schema} = mongoose;
 
-const ShoesProductSchema = new Schema({
-    productType:{
-        type:String,
-        required:[true,"You did not a product type."]
+const { Schema } = mongoose;
+
+const ElectronicProductSchema = new Schema({
+    productType: {
+        type: String,
+        required: [true, "You did not a product type."]
     },
-    productGender:{
-        type:String,
-        required:[true,"You did not a product gender."]
+    productGender: {
+        type: String,
+        required: [true, "You did not a product gender."]
     },
-    productName:{
+    productName: {
         type: String,
         required: [true, "You did not enter a product name."],
         lowercase: true,
@@ -21,46 +22,45 @@ const ShoesProductSchema = new Schema({
         required: [true, "You did not enter a product brand."],
         lowercase: true,
     },
-    productPrice:{
+    productPrice: {
         type: Number,
         required: [true, "You did not enter a product price."],
         minLength: [1, "Set a price for the product."],
     },
-    productPiece:{
+    productPiece: {
         type: Number,
         required: [true, "You did not enter a product piece."],
         minLength: [1, "Set a price for the product."],
     },
-    productDescription:{
+    productDescription: {
         type: String,
         required: [true, "You did not enter a product description."],
     },
-    productNumber:{
+    productColor: {
+        type: String,
+        required: [true, "You did not enter a product color."],
+    },
+    productCategory: {
+        type: String,
+        required: [true, "You did not enter a product type of."],
+    },
+    productGuaranteePeriod: {
         type: Number,
-        required: [true, "You did not enter a product number."],
+        required: [true, "You did not enter a product guarantee period."],
     },
-    productCategory:{
-        type: String,
-        required: [true, "You did not enter a product type."],
-    },
-    productColor:{
-        type: String,
-        required: [true, "You did not enter a product color."]
-    },
-    productModel:{
-        type: String,
-        required: [true, "You did not enter a product type."],
-    },
-    productImage:[String],
+
+
+
+    productImage: [String],
 
     productOwner: {
         type: Schema.Types.ObjectId,
         ref: "User",
     }
+
 }, {
     timestamps: true,
 })
 
-const ShoesProduct = mongoose.model('shoesproduct', ShoesProductSchema);
-
-export default ShoesProduct;
+const ElectronicProduct = mongoose.model('electronicproduct', ElectronicProductSchema);
+export default ElectronicProduct;
