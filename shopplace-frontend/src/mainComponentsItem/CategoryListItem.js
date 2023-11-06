@@ -16,8 +16,8 @@ export default function CategoryListItem() {
         { id: 'Clothes', text: 'Clothes' },
         { id: 'Shoes', text: 'Shoes' },
         { id: 'Bag', text: 'Bag' },
-        { id: 'Personal Care', text: 'Personal Care' },
-        { id: 'Watch and Accessory', text: 'Watch and Accessory' }
+        { id: 'PersonalCare', text: 'Personal Care' },
+        { id: 'Electronic', text: 'Electronic' }
     ];
 
     return (

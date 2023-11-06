@@ -24,7 +24,10 @@ Login / Register / forgot-password / new-password / Contact-us
 .MyProfileDiv,
 .MyFavoritesDiv,
 .MyCartDiv,
-.PayPageDiv {
+.PayPageDiv,
+.ElectronicAddProductDiv,
+.PersonalCareAddProductDiv,
+.BagAddProductDiv {
     width: 100%;
     height: auto;
 }
@@ -36,7 +39,10 @@ Login / Register / forgot-password / new-password / Contact-us
 .ContactUsPage,
 .ClothesAddProductPage,
 .ShoesAddProductPage,
-.MyProfilePage {
+.ElectronicAddProductPage,
+.MyProfilePage,
+.BagAddProductPage,
+.PersonalCareAddProductPage {
     width: 100%;
     height: 100%;
     display: flex;
@@ -64,7 +70,10 @@ Login / Register / forgot-password / new-password / Contact-us
 .ContactUsForm,
 .ClothesAddProductForm,
 .ShoesAddProductForm,
-.PayPageForm {
+.PayPageForm,
+.ElectronicAddProductForm,
+.PersonalCareAddProductForm,
+.BagAddProductForm {
     width: 50rem;
     height: auto;
     display: flex;
@@ -94,7 +103,10 @@ Login / Register / forgot-password / new-password / Contact-us
 .ContactUsInput,
 .ClothesAddProductInput,
 .ShoesAddProductInput,
-.PayPageInput {
+.PayPageInput,
+.ElectronicAddProductInput,
+.BagAddProductInput,
+.PersonalCareAddProductInput {
     width: 100%;
     height: 4.5rem;
     line-height: 4.5rem;
@@ -108,7 +120,10 @@ Login / Register / forgot-password / new-password / Contact-us
 .ContactUsTextarea,
 .ClothesAddProductTextarea,
 .ShoesAddProductTextarea,
-.PayPageTextarea {
+.PayPageTextarea,
+.ElectronicAddProductTextarea,
+.PersonalCareAddProductTextarea,
+.BagAddProductTextarea {
     width: 100%;
     height: 18rem;
     margin-bottom: 1em;
@@ -121,7 +136,10 @@ Login / Register / forgot-password / new-password / Contact-us
 .ContactUsTextarea:focus,
 .ClothesAddProductTextarea:focus,
 .ShoesAddProductTextarea:focus,
-.PayPageTextarea:focus {
+.PayPageTextarea:focus,
+.ElectronicAddProductTextarea:focus,
+.PersonalCareAddProductTextarea:focus,
+.BagAddProductTextarea:focus {
     outline: none;
 }
 
@@ -132,7 +150,10 @@ Login / Register / forgot-password / new-password / Contact-us
 .ContactUsButton,
 .ClothesAddProductButton,
 .ShoesAddProductButton,
-.PayPageButton {
+.PayPageButton,
+.ElectronicAddProductButton,
+.BagAddProductButton,
+.PersonalCareAddProductButton {
     width: 100%;
     height: 4rem;
     border-radius: .4rem;
@@ -151,7 +172,10 @@ Login / Register / forgot-password / new-password / Contact-us
 .ClothesAddProductButtonDisable,
 .ShoesAddProductButtonDisable,
 .ContactUsButtonDisable,
-.PayPageButtonDisable {
+.PayPageButtonDisable,
+.ElectronicAddProductButtonDisable,
+.PersonalCareAddProductButtonDisable,
+.BagAddProductButtonDisable {
     width: 100%;
     height: 4rem;
     border-radius: .4rem;
@@ -170,7 +194,10 @@ Login / Register / forgot-password / new-password / Contact-us
 .ContactUsButton:hover,
 .ClothesAddProductButton:hover,
 .ShoesAddProductButton:hover,
-.PayPageButton:hover {
+.PayPageButton:hover,
+.ElectronicAddProductButton:hover,
+.BagAddProductButton:hover,
+.PersonalCareAddProductButton:hover {
     cursor: pointer;
     background-color: rgba(51, 65, 85, 0.959);
 }
@@ -182,7 +209,8 @@ input::-webkit-inner-spin-button {
 
 .RegisterFileInput::file-selector-button,
 .ClothesAddProductFileInput::file-selector-button,
-.ShoesAddProductFileInput::file-selector-button {
+.ShoesAddProductFileInput::file-selector-button,
+.ElectronicAddProductFileInput::file-selector-button {
     margin: 2rem 10rem 3rem 0;
     width: 10rem;
     height: 3rem;
@@ -197,7 +225,8 @@ input::-webkit-inner-spin-button {
 
 .RegisterFileInput::file-selector-button:hover,
 .ClothesAddProductFileInput::file-selector-button:hover,
-.ShoesAddProductFileInput::file-selector-button:hover {
+.ShoesAddProductFileInput::file-selector-button:hover,
+.ElectronicAddProductFileInput::file-selector-button:hover {
     cursor: pointer;
     color: rgb(80, 151, 179);
 }
@@ -711,10 +740,11 @@ Home-page / Navbar
     white-space: pre-wrap;
     word-break: break-all;
 }
+
 .MyProfileOrdersTable tbody tr:nth-child(odd) td,
-.MyProfileOrdersPlacedTable tbody tr:nth-child(odd) td{
+.MyProfileOrdersPlacedTable tbody tr:nth-child(odd) td {
     color: rgb(116, 116, 116);
-} 
+}
 
 
 
@@ -902,13 +932,19 @@ Components Items Page
 
 
 .ClothesProductViewerDiv,
-.ShoesProductViewerDiv {
+.ShoesProductViewerDiv,
+.ElectronicProductViewerDiv,
+.PersonalCareProductViewerDiv,
+.BagProductViewerDiv {
     width: 100%;
     height: auto;
 }
 
 .ClothesProductViewerPage,
-.ShoesProductViewerPage {
+.ShoesProductViewerPage,
+.ElectronicProductViewerPage,
+.PersonalCareProductViewerPage,
+.BagProductViewerPage {
     width: 100%;
     height: auto;
     display: flex;
@@ -917,14 +953,20 @@ Components Items Page
 }
 
 .ClothesProductViewerPageImage,
-.ShoesProductViewerPageImage {
+.ShoesProductViewerPageImage,
+.ElectronicProductViewerPageImage,
+.PersonalCareProductViewerPageImage,
+.BagProductViewerPageImage {
     width: 40%;
     height: 75rem;
     object-fit: contain;
 }
 
 .ClothesProductViewerPageImage img,
-.ShoesProductViewerPageImage img {
+.ShoesProductViewerPageImage img,
+.ElectronicProductViewerPageImage img,
+.PersonalCareProductViewerPageImage img,
+.BagProductViewerPageImage img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -932,7 +974,10 @@ Components Items Page
 }
 
 .ClothesProductViewerPageBody,
-.ShoesProductViewerPageBody {
+.ShoesProductViewerPageBody,
+.ElectronicProductViewerPageBody,
+.BagProductViewerPageBody,
+.PersonalCareProductViewerPageBody {
     width: 48%;
     height: 80rem;
     padding: 1.4rem;
@@ -941,7 +986,10 @@ Components Items Page
 }
 
 .ClothesProductViewerPageBodyHeader,
-.ShoesProductViewerPageBodyHeader {
+.ShoesProductViewerPageBodyHeader,
+.ElectronicProductViewerPageBodyHeader,
+.PersonalCareProductViewerPageBodyHeader,
+.BagProductViewerPageBodyHeader {
     font-size: 2.4rem;
     white-space: pre-wrap !important;
     word-break: break-all;
@@ -960,7 +1008,10 @@ Components Items Page
 }
 
 .ClothesItemFeature,
-.ShoesItemFeature {
+.ShoesItemFeature,
+.ElectronicItemFeature,
+.BagItemFeature,
+.PersonalCareItemFeature {
     width: 100%;
     height: auto;
     display: flex;
@@ -969,7 +1020,10 @@ Components Items Page
 }
 
 .ClothesItemFeatureP,
-.ShoesItemFeatureP {
+.ShoesItemFeatureP,
+.ElectronicItemFeatureP,
+.PersonalCareItemFeatureP,
+.BagItemFeatureP {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -984,7 +1038,10 @@ Components Items Page
 }
 
 .ClothesItemFeatureP span,
-.ShoesItemFeatureP span {
+.ShoesItemFeatureP span,
+.ElectronicItemFeatureP span,
+.BagItemFeatureP span,
+.PersonalCareItemFeatureP span {
     width: 100%;
     font-size: 1.6rem;
     font-weight: bold;
@@ -992,7 +1049,10 @@ Components Items Page
 }
 
 .ClothesItemFeatureDesc,
-.ShoesItemFeatureDesc {
+.ShoesItemFeatureDesc,
+.ElectronicItemFeatureDesc,
+.BagItemFeatureDesc,
+.PersonalCareItemFeatureDesc {
     width: 100%;
     height: auto;
     display: flex;
@@ -1011,7 +1071,10 @@ Components Items Page
 }
 
 .ClothesItemFeatureDesc span,
-.ShoesItemFeatureDesc span {
+.ShoesItemFeatureDesc span,
+.ElectronicItemFeatureDesc span,
+.BagItemFeatureDesc span,
+.PersonalCareItemFeatureDesc span {
     width: 100%;
     font-size: 1.6rem;
     font-weight: bold;
@@ -1023,7 +1086,9 @@ Components Items Page
 }
 
 .ClothesItemFeatureDesc span:hover,
-.ShoesItemFeatureDesc span:hover {
+.ShoesItemFeatureDesc span:hover,
+.BagItemFeatureDesc span:hover,
+.PersonalCareItemFeatureDesc span:hover {
     width: 100%;
     font-size: 1.6rem;
     font-weight: bold;
@@ -1032,7 +1097,10 @@ Components Items Page
 }
 
 .ClothesItemFeatureButton,
-.ShoesItemFeatureButton {
+.ShoesItemFeatureButton,
+.ElectronicItemFeatureButton,
+.PersonalCareItemFeatureButton,
+.BagItemFeatureButton {
     width: 70%;
     height: 4rem;
     font-size: 1.8rem;
@@ -1043,13 +1111,20 @@ Components Items Page
 }
 
 .ClothesItemFeatureButton:hover,
-.ShoesItemFeatureButton:hover {
+.ShoesItemFeatureButton:hover,
+.ElectronicItemFeatureButton:hover,
+.PersonalCareItemFeatureButton:hover,
+.BagItemFeatureButton:hover {
     cursor: pointer;
     background-color: rgba(21, 38, 78, 0.788);
 }
 
 
-.ClothesItemFavoriteButtonFirst {
+.ClothesItemFavoriteButtonFirst,
+.ShoesItemFavoriteButtonFirst,
+.ElectronicItemFavoriteButtonFirst,
+.PersonalCareItemFavoriteButtonFirst,
+.BagItemFavoriteButtonFirst {
     width: 4rem;
     height: 4rem;
     background-color: transparent;
@@ -1057,36 +1132,64 @@ Components Items Page
     border-radius: 50%;
 }
 
-.ClothesItemFavoriteButtonFirst .FavoriteIcon {
+.ClothesItemFavoriteButtonFirst .FavoriteIcon,
+.ShoesItemFavoriteButtonFirst .FavoriteIcon,
+.ElectronicItemFavoriteButtonFirst .FavoriteIcon,
+.PersonalCareItemFavoriteButtonFirst .FavoriteIcon,
+.BagItemFavoriteButtonFirst .FavoriteIcon {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.ClothesItemFavoriteButtonFirst .FavoriteIcon svg {
+.ClothesItemFavoriteButtonFirst .FavoriteIcon svg,
+.ShoesItemFavoriteButtonFirst .FavoriteIcon svg,
+.ElectronicItemFavoriteButtonFirst .FavoriteIcon svg,
+.PersonalCareItemFavoriteButtonFirst .FavoriteIcon svg,
+.BagItemFavoriteButtonFirst .FavoriteIcon svg {
     font-size: 2rem !important;
 }
 
-.ClothesItemFavoriteButtonFirst .FavoriteIcon path:first-child {
+.ClothesItemFavoriteButtonFirst .FavoriteIcon path:first-child,
+.ShoesItemFavoriteButtonFirst .FavoriteIcon path:first-child,
+.ElectronicItemFavoriteButtonFirst .FavoriteIcon path:first-child,
+.PersonalCareItemFavoriteButtonFirst .FavoriteIcon path:first-child,
+.BagItemFavoriteButtonFirst .FavoriteIcon path:first-child {
     fill: rgb(184, 184, 184);
 }
 
-.ClothesItemFavoriteButtonFirst .FavoriteIcon path:last-child {
+.ClothesItemFavoriteButtonFirst .FavoriteIcon path:last-child,
+.ShoesItemFavoriteButtonFirst .FavoriteIcon path:last-child,
+.ElectronicItemFavoriteButtonFirst .FavoriteIcon path:last-child,
+.PersonalCareItemFavoriteButtonFirst .FavoriteIcon path:last-child,
+.BagItemFavoriteButtonFirst .FavoriteIcon path:last-child {
     fill: rgb(255, 255, 255);
 }
 
-.ClothesItemFavoriteButtonFirst .FavoriteIcon svg:hover {
+.ClothesItemFavoriteButtonFirst .FavoriteIcon svg:hover,
+.ShoesItemFavoriteButtonFirst .FavoriteIcon svg:hover,
+.ElectronicItemFavoriteButtonFirst .FavoriteIcon svg:hover,
+.PersonalCareItemFavoriteButtonFirst .FavoriteIcon svg:hover,
+.BagItemFavoriteButtonFirst .FavoriteIcon svg:hover {
     cursor: pointer;
 }
 
-.ClothesItemFavoriteButtonFirst .FavoriteIcon svg:hover path:first-child {
+.ClothesItemFavoriteButtonFirst .FavoriteIcon svg:hover path:first-child,
+.ShoesItemFavoriteButtonFirst .FavoriteIcon svg:hover path:first-child,
+.ElectronicItemFavoriteButtonFirst .FavoriteIcon svg:hover path:first-child,
+.PersonalCareItemFavoriteButtonFirst .FavoriteIcon svg:hover path:first-child,
+.BagItemFavoriteButtonFirst .FavoriteIcon svg:hover path:first-child {
     fill: red;
 
 }
 
 
 
-.ClothesItemFavoriteButtonLast {
+.ClothesItemFavoriteButtonLast,
+.ShoesItemFavoriteButtonLast,
+.ElectronicItemFavoriteButtonLast,
+.BagItemFavoriteButtonLast,
+.PersonalCareItemFavoriteButtonLast {
     width: 4rem;
     height: 4rem;
     background-color: transparent;
@@ -1094,28 +1197,52 @@ Components Items Page
     border-radius: 50%;
 }
 
-.ClothesItemFavoriteButtonLast .FavoriteIcon {
+.ClothesItemFavoriteButtonLast .FavoriteIcon,
+.ShoesItemFavoriteButtonLast .FavoriteIcon,
+.ElectronicItemFavoriteButtonLast .FavoriteIcon,
+.BagItemFavoriteButtonLast .FavoriteIcon,
+.PersonalCareItemFavoriteButtonLast .FavoriteIcon {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.ClothesItemFavoriteButtonLast .FavoriteIcon svg {
+.ClothesItemFavoriteButtonLast .FavoriteIcon svg,
+.ShoesItemFavoriteButtonLast .FavoriteIcon svg,
+.ElectronicItemFavoriteButtonLast .FavoriteIcon svg,
+.BagItemFavoriteButtonLast .FavoriteIcon svg,
+.PersonalCareItemFavoriteButtonLast .FavoriteIcon svg {
     font-size: 2rem !important;
 }
 
-.ClothesItemFavoriteButtonLast .FavoriteIcon path:first-child {
+.ClothesItemFavoriteButtonLast .FavoriteIcon path:first-child,
+.ShoesItemFavoriteButtonLast .FavoriteIcon path:first-child,
+.ElectronicItemFavoriteButtonLast .FavoriteIcon path:first-child,
+.BagItemFavoriteButtonLast .FavoriteIcon path:first-child,
+.PersonalCareItemFavoriteButtonLast .FavoriteIcon path:first-child {
     fill: rgb(255, 0, 0);
 }
 
-.ClothesItemFavoriteButtonLast .FavoriteIcon path:last-child {
+.ClothesItemFavoriteButtonLast .FavoriteIcon path:last-child,
+.ShoesItemFavoriteButtonLast .FavoriteIcon path:last-child,
+.ElectronicItemFavoriteButtonLast .FavoriteIcon path:last-child,
+.BagItemFavoriteButtonLast .FavoriteIcon path:last-child,
+.PersonalCareItemFavoriteButtonLast .FavoriteIcon path:last-child {
     fill: rgb(255, 36, 36);
 }
 
-.ClothesItemFavoriteButtonLast .FavoriteIcon svg:hover {
+.ClothesItemFavoriteButtonLast .FavoriteIcon svg:hover,
+.ShoesItemFavoriteButtonLast .FavoriteIcon svg:hover,
+.ElectronicItemFavoriteButtonLast .FavoriteIcon svg:hover,
+.BagItemFavoriteButtonLast .FavoriteIcon svg:hover,
+.PersonalCareItemFavoriteButtonLast .FavoriteIcon svg:hover {
     cursor: pointer;
 }
 
-.ClothesItemFavoriteButtonLast .FavoriteIcon svg:hover path:last-child {
+.ClothesItemFavoriteButtonLast .FavoriteIcon svg:hover path:last-child,
+.ShoesItemFavoriteButtonLast .FavoriteIcon svg:hover path:last-child,
+.ElectronicItemFavoriteButtonLast .FavoriteIcon svg:hover path:last-child,
+.BagItemFavoriteButtonLast .FavoriteIcon svg:hover path:last-child,
+.PersonalCareItemFavoriteButtonLast .FavoriteIcon svg:hover path:last-child {
     fill: rgb(255, 111, 111);
 }

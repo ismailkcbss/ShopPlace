@@ -13,12 +13,12 @@ export default function MyFavoritesItem(props) {
   const ClickProduct = () => {
     if (userRole.seller) {
       if (userRole._id === item.productOwner) {
-        history.push(`/${item.productType}` + `ProductViewer/${item._id}`)
+        history.push(`/${item.productType}ProductViewer/${item._id}`)
       } else {
-        history.push(`/${item.productType}` + `ProductCardItem/${item._id}`)
+        history.push(`/${item.productType}ProductCardItem/${item._id}`)
       }
     } else {
-      history.push(`/${item.productType}` + `ProductCardItem/${item._id}`)
+      history.push(`/${item.productType}ProductCardItem/${item._id}`)
     }
   }
 

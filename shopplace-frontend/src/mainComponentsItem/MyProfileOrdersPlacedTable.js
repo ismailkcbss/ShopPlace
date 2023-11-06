@@ -4,7 +4,6 @@ export default function MyProfileOrdersPlacedTable(props) {
 
     const { ordersPlaced } = props;
 
-    console.log(ordersPlaced);
     return (
         <div>
             <table className='MyProfileOrdersPlacedTable'>

@@ -19,13 +19,18 @@ const GetHomeAllProducts = async (req, res) => {
         const shoesProduct = await ShoesProduct.find({ "productName": new RegExp(search, "i") });
         const shoesCount = await ShoesProduct.countDocuments();
 
-        const allProducts = shoesProduct.concat(clothesProduct);
+        const electronicProduct = await ElectronicProduct.find({ "productName": new RegExp(search, "i") });
+        const ElectronicCount = await ElectronicProduct.countDocuments();
+
+
+        const allProducts = shoesProduct.concat(clothesProduct, electronicProduct);
 
         res.status(200).json({
             succeded: true,
             allProducts,
             clothesCount,
-            shoesCount
+            shoesCount,
+            ElectronicCount
         })
     } catch (error) {
         res.status(500).json({
@@ -421,7 +426,7 @@ const FavoriteAdd = async (req, res) => {
         const productType = req.body.productType;
 
         const existingFavorite = await FavoriteProduct.findOne({ userId, productId, productType });
-        
+
         if (existingFavorite) {
             res.status(400).json({
                 succeeded: false,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { DeleteOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import * as storage from '../storage.helper'
 import { useSelector } from 'react-redux';
@@ -16,14 +16,14 @@ export default function MyCartsItem(props) {
     const [productCartQuentity, setProductCartQuentity] = useState(quantity);
 
     function getCart() {
-        const cartJSON = storage.getValueByKey(`${userCart.username}` + `cart`);
+        const cartJSON = storage.getValueByKey(`${userCart.username}cart`);
         return cartJSON ? JSON.parse(cartJSON) : [];
     }
 
     const handleDeleteClick = (productID) => {
         const cart = getCart() || [];
         const updatedCart = cart.filter(item => item.product._id !== productID);
-        storage.setKeyWithValue(`${userCart.username}` + `cart`, JSON.stringify(updatedCart));
+        storage.setKeyWithValue(`${userCart.username}cart`, JSON.stringify(updatedCart));
         setCartProduct(updatedCart)
     }
 
@@ -48,7 +48,7 @@ export default function MyCartsItem(props) {
             }
             return item;
         });
-        storage.setKeyWithValue(`${userCart.username}` + `cart`, JSON.stringify(updatedCart));
+        storage.setKeyWithValue(`${userCart.username}cart`, JSON.stringify(updatedCart));
     }
 
     return (

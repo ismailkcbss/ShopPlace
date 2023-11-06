@@ -5,6 +5,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { Radio, Space, Spin } from 'antd';
+
 export default function ClothesAddProduct() {
 
     const { id } = useParams();
@@ -13,7 +14,7 @@ export default function ClothesAddProduct() {
         productType: "Clothes",
         productGender: "",
         productName: "",
-        productBrand:"",
+        productBrand: "",
         productPrice: "",
         productPiece: "",
         productDescription: "",
@@ -84,7 +85,7 @@ export default function ClothesAddProduct() {
                     productType: data.clothesProduct.productType,
                     productGender: data.clothesProduct.productGender,
                     productName: data.clothesProduct.productName,
-                    productBrand:data.clothesProduct.productBrand,
+                    productBrand: data.clothesProduct.productBrand,
                     productPrice: data.clothesProduct.productPrice,
                     productPiece: data.clothesProduct.productPiece,
                     productDescription: data.clothesProduct.productDescription,
@@ -119,7 +120,7 @@ export default function ClothesAddProduct() {
                 productType: form.productType,
                 productGender: form.productGender,
                 productName: form.productName,
-                productBrand:form.productBrand,
+                productBrand: form.productBrand,
                 productPrice: Number(form.productPrice),
                 productPiece: Number(form.productPiece),
                 productDescription: form.productDescription,
@@ -161,7 +162,7 @@ export default function ClothesAddProduct() {
                 productType: form.productType,
                 productGender: form.productGender,
                 productName: form.productName,
-                productBrand:form.productBrand,
+                productBrand: form.productBrand,
                 productPrice: Number(form.productPrice),
                 productPiece: Number(form.productPiece),
                 productDescription: form.productDescription,
@@ -175,19 +176,16 @@ export default function ClothesAddProduct() {
             })
             history.push('/MyProfile');
         } catch (error) {
-            console.log(error);
             alert(error.response.data.error)
+        } finally {
+            setForm({ ...initialForm })
         }
-        setForm({
-            ...initialForm
-        })
     }
 
 
     useEffect(() => {
-        getSingleProduct();
-
         userMe();
+        getSingleProduct();
     }, [])
 
 
@@ -216,7 +214,7 @@ export default function ClothesAddProduct() {
                         className='ClothesAddProductInput'
                         value={form.productName}
                         onChange={(e) => handleTextChange(e.target.value, "productName")}
-                    />                    
+                    />
                     <span className='FormHeader'>Product Brand</span>
                     <input
                         type='text'

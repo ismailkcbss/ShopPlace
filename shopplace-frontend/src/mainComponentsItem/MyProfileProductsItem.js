@@ -7,12 +7,7 @@ export default function MyProfileProductsItem(props) {
     const history = useHistory();
 
     const handleMyProfileProductClick = () => {
-        if(productItem.productType === 'Clothes'){
-            history.push(`/ClothesProductViewer/${productItem._id}`)
-        }
-        else if (productItem.productType === 'Shoes'){
-            history.push(`/ShoesProductViewer/${productItem._id}`)
-        }
+        history.push(`/${productItem.productType}ProductViewer/${productItem._id}`)
     }
 
     return (

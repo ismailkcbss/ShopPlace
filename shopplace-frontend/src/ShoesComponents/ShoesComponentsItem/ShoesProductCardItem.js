@@ -211,12 +211,12 @@ export default function ShoesProductCardItem() {
                     {
                       buttonCheck ? (
                         <button
-                          className='ClothesItemFeatureButton'
+                          className='ShoesItemFeatureButton'
                           onClick={() => history.push('/MyCart')}
                         >Go to cart</button>
                       ) : (
                         <button
-                          className='ClothesItemFeatureButton'
+                          className='ShoesItemFeatureButton'
                           onClick={() => handleClickCart()}
                         >Add to cart</button>
                       )
@@ -224,12 +224,12 @@ export default function ShoesProductCardItem() {
                     {
                       favoriteButtonCheck ? (
                         <button
-                          className='ClothesItemFavoriteButtonLast'
+                          className='ShoesItemFavoriteButtonLast'
                           onClick={handleClickDeleteFavorite}
                         ><HeartTwoTone className='FavoriteIcon' /> </button>
                       ) : (
                         <button
-                          className='ClothesItemFavoriteButtonFirst'
+                          className='ShoesItemFavoriteButtonFirst'
                           onClick={handleClickAddFavorite}
                         >
                           <HeartTwoTone className='FavoriteIcon' />

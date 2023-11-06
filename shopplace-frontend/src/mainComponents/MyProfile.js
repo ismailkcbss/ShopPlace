@@ -20,6 +20,18 @@ const items = [
     label: <a href="/ShoesAddProduct">Add shoes product</a>,
     key: '1',
   },
+  {
+    label: <a href="/ElectronicAddProduct">Add electronic product</a>,
+    key: '2',
+  },
+  {
+    label: <a href="/">Add Bag product</a>,
+    key: '3',
+  },
+  {
+    label: <a href="/">Add Personal Care product</a>,
+    key: '4',
+  },
 ];
 
 export default function MyProfile() {
@@ -53,8 +65,6 @@ export default function MyProfile() {
       }
     }
   }
-
-  console.log(ordersReceived);
 
   const getAllOrdersPlaced = async () => {
     if (!userData.user.seller) {
