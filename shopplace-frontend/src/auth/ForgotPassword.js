@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { axiosInstance } from '../axios.util'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import { Spin } from 'antd';
+import { Spin, Alert, Space } from 'antd';
 
 
 export default function ForgotPassword() {
@@ -13,7 +13,8 @@ export default function ForgotPassword() {
 
     const [form, setForm] = useState({ ...initialForm })
     const [isWaitClick, setIsWaitClick] = useState(false);
-
+    const [errorState, setErrorState] = useState('');
+    const [visible, setVisible] = useState(false);
 
     const handleTextChange = (value, key) => {
         setForm({
@@ -40,12 +41,17 @@ export default function ForgotPassword() {
             })
             history.push('/Login');
         } catch (error) {
-            alert(error.response.data.error)
+            setErrorState(error.response.data.error);
+            setVisible(true);
         } finally {
             setIsWaitClick(false);
             setForm({
                 ...initialForm,
             });
+            setTimeout(() => {
+                setVisible(false);
+                setErrorState('');
+            }, 5000);
         }
     }
 
@@ -54,6 +60,9 @@ export default function ForgotPassword() {
             <div className='ForgotPasswordPage'>
                 <h1 className='PageHeader'>Enter your email and we'll send you a link to reset your password.</h1>
                 <form className='ForgotPasswordForm'>
+                    <Space direction="vertical" style={{ width: '100%', display: visible ? 'block' : 'none' }}>
+                        <Alert message={errorState} type="error" showIcon />
+                    </Space>
                     <span className='FormHeader'>Email adress</span>
                     <input
                         type='email'

@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios.util';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Radio, Space, Spin } from 'antd';
+import { Radio, Space, Spin, notification, icon } from 'antd';
 
 export default function ShoesAddProduct() {
 
@@ -23,14 +23,13 @@ export default function ShoesAddProduct() {
         productColor: "",
         productModel: "",
     }
-    
+
     const history = useHistory();
     const [form, setForm] = useState({ ...initialForm });
     const [image, setImage] = useState([]);
     const [prevImage, setPrevImage] = useState([])
     const [userData, setUserData] = useState("")
     const [isWaitClick, setIsWaitClick] = useState(false);
-
 
     const handleTextChange = (value, key) => {
         setForm({
@@ -65,6 +64,30 @@ export default function ShoesAddProduct() {
             setIsWaitClick(false);
         }
     }
+
+
+
+    const showNotification = (icon, message) => {
+        if (icon === 'error') {
+            let notificationClass = 'custom-error-notification';
+            notification.error({
+                message: 'Error',
+                description: `${message}`,
+                placement: 'topRight',
+                className: notificationClass
+            });
+        } else if (icon === 'success') {
+            let notificationClass = 'custom-success-notification';
+            notification.success({
+                message: 'Success',
+                description: `${message}`,
+                placement: 'topRight',
+                className: notificationClass
+            });
+        }
+    };
+
+
 
     const userMe = async () => {
         try {
@@ -126,6 +149,7 @@ export default function ShoesAddProduct() {
             })
             history.push('/MyProfile');
         } catch (error) {
+            showNotification('error', "Please enter a product information")
             alert("Product is not updated");
         }
     }
@@ -136,7 +160,8 @@ export default function ShoesAddProduct() {
             || form.productPrice.trim() === ""
             || form.productPiece.trim() === ""
             || form.productDescription.trim() === "") {
-            alert("Please enter a product information")
+            // alert("Please enter a product information")
+            showNotification('error', "Please enter a product information")
             return;
         }
 
@@ -166,7 +191,8 @@ export default function ShoesAddProduct() {
             })
             history.push('/MyProfile');
         } catch (error) {
-            alert(error.response.data.error)
+            // alert(error.response.data.error)
+            showNotification(error.response.data.error)
         }
         setForm({
             ...initialForm
@@ -251,7 +277,7 @@ export default function ShoesAddProduct() {
                         <Radio value="45">45</Radio>
                     </Radio.Group>
 
-                    <span className='FormHeader'>Type of Shoe</span>
+                    <span className='FormHeader'>Category</span>
                     <Radio.Group onChange={(e) => handleTextChange(e.target.value, "productCategory")} value={form.productCategory}>
                         <Space direction="vertical">
                             <Radio value="Flip-Flops">Flip-Flops </Radio>

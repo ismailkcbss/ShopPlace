@@ -71,7 +71,7 @@ export default function ShoesProductCardItem() {
   }
 
   const handleClickAddFavorite = async () => {
-    if(isAuthUser.isAuth){
+    if (isAuthUser.isAuth) {
       try {
         const { data } = await axiosInstance.post(`/Main/Favorite/Add`, {
           productId: id,
@@ -81,13 +81,13 @@ export default function ShoesProductCardItem() {
       } catch (error) {
         alert(error.response.data.error)
       }
-    }else{
+    } else {
       history.push('/Login');
     }
   }
 
   const handleClickDeleteFavorite = async () => {
-    if(isAuthUser.isAuth){
+    if (isAuthUser.isAuth) {
       try {
         const { data } = await axiosInstance.delete(`/Main/Favorite/Products/${id}`)
         //alert(data.message)
@@ -95,7 +95,7 @@ export default function ShoesProductCardItem() {
       } catch (error) {
         alert(error.response.data.error)
       }
-    }else{
+    } else {
       history.push('/Login');
     }
   }
@@ -165,10 +165,13 @@ export default function ShoesProductCardItem() {
               <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Feature:</span>
               <div className='ShoesItemFeature'>
                 <p className='ShoesItemFeatureP'>
+                  <span>Type:</span> <span>{productData.shoesProduct.productType}</span>
+                </p>
+                <p className='ShoesItemFeatureP'>
                   <span>Gender:</span> <span>{productData.shoesProduct.productGender}</span>
                 </p>
                 <p className='ShoesItemFeatureP'>
-                  <span>Shoes Type:</span><span>{productData.shoesProduct.productCategory}</span>
+                  <span>Shoes Category:</span><span>{productData.shoesProduct.productCategory}</span>
                 </p>
                 <p className='ShoesItemFeatureP'>
                   <span>Model:</span> <span>{productData.shoesProduct.productModel}</span>

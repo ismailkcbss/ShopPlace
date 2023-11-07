@@ -24,12 +24,13 @@ const CreateProduct = async (req, res) => {
         })
         res.status(201).json({
             succeded: true,
+            message:'The product created successfully',
             bagProduct
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error
+            error: 'The product could not be created'
         })
     }
 }
@@ -40,13 +41,14 @@ const GetEveryoneAllProducts = async (req, res) => {
         const count = await BagProduct.countDocuments()
         res.status(200).json({
             succeded: true,
+            message:'Successfully',
             allData,
             count
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: 'Products could not be found'
         })
     }
 }
@@ -57,12 +59,14 @@ const GetEveryoneProduct = async (req, res) => {
 
         res.status(201).json({
             succeded: true,
+            message:'Successfully',
             bagProduct
         })
     } catch (error) {
         res.status(500).json({
-            succeded: false,
-            error: "The requested product could not be received"
+            succeded: false,            
+            error: 'The product was not found'
+
         })
     }
 }
@@ -79,13 +83,14 @@ const GetSellerProduct = async (req, res) => {
 
         res.status(201).json({
             succeded: true,
+            message:'Successfully',
             bagProduct,
             user,
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: "The requested product could not be received"
+            error: 'The product was not found'
         })
     }
 }
@@ -112,7 +117,7 @@ const DeleteProduct = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: "The product data could not be deleted"
+            error: 'The product could not be deleted'
         })
     }
 }
@@ -122,12 +127,13 @@ const UpdateProduct = async (req, res) => {
         const bagProduct = await BagProduct.findByIdAndUpdate(req.params.id, { ...req.body }, { new: true });
         res.status(200).json({
             succeded: true,
+            message: "Product updated successfully",
             bagProduct
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: "Data could not be updated"
+            error: "The product could not be updated"
         })
         console.log(error);
     }

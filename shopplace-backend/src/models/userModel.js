@@ -21,6 +21,7 @@ const userSchema = new Schema({
         type: String,
         required: [true, "You have not entered a password"],
         minLength: [4, "Create a password with at least 4 characters."],
+        maxLength: [20, "Maximum of 20 characters"],
     },
     phone: {
         type: Number,

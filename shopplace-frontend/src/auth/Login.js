@@ -4,8 +4,7 @@ import { axiosInstance, setApiToken } from '../axios.util';
 import { userActions } from '../redux/slice/userSlice';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import * as storage from '../storage.helper';
-import { Spin } from 'antd';
-
+import { Spin, Alert, Space } from 'antd';
 
 
 export default function Login() {
@@ -19,6 +18,9 @@ export default function Login() {
 
     const [form, setForm] = useState({ ...initialForm })
     const [isWaitClick, setIsWaitClick] = useState(false);
+    const [errorState, setErrorState] = useState('');
+    const [visible, setVisible] = useState(false);
+
 
 
     const handleTextChange = (value, key) => {
@@ -30,11 +32,9 @@ export default function Login() {
 
     const ClickLogin = async (e) => {
         e.preventDefault();
-
         if (isWaitClick) {
             return;
         }
-
         if (form.email.trim() === "" || form.password.trim() === "") {
             alert("Please enter your information");
             return;
@@ -50,14 +50,18 @@ export default function Login() {
             dispatch(userActions.login(data));
             history.push('/');
         } catch (error) {
-            alert(error.response.data.error)
+            setErrorState(error.response.data.error);
+            setVisible(true);
         } finally {
             setIsWaitClick(false);
-            setForm({
-                ...initialForm,
-            });
-        }
+            setForm({ ...initialForm, });
+            setTimeout(() => {
+                setVisible(false);
+                setErrorState('');
+            }, 5000);
+        };
     }
+
 
 
     return (
@@ -65,6 +69,9 @@ export default function Login() {
             <div className='LoginPage'>
                 <h1 className='PageHeader'>Login</h1>
                 <form className='LoginForm'>
+                    <Space direction="vertical" style={{ width: '100%', display: visible ? 'block' : 'none' }}>
+                        <Alert message={errorState} type="error" showIcon />
+                    </Space>
                     <span className='FormHeader'>Email adress</span>
                     <input
                         type='email'

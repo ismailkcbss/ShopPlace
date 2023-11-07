@@ -13,7 +13,7 @@ import 'antd/dist/reset.css';
 
 export default function ElectronicProductCardItem() {
 
-    
+
     const { id } = useParams();
     const history = useHistory();
     const isAuthUser = useSelector((state) => state.user)
@@ -72,7 +72,7 @@ export default function ElectronicProductCardItem() {
         }
     }
     const handleClickAddFavorite = async () => {
-        if(isAuthUser.isAuth){
+        if (isAuthUser.isAuth) {
             try {
                 const { data } = await axiosInstance.post(`/Main/Favorite/Add`, {
                     productId: id,
@@ -82,13 +82,13 @@ export default function ElectronicProductCardItem() {
             } catch (error) {
                 alert(error.response.data.error)
             }
-        }else{
+        } else {
             history.push('/Login');
         }
     }
 
     const handleClickDeleteFavorite = async () => {
-        if(isAuthUser.isAuth){
+        if (isAuthUser.isAuth) {
             try {
                 const { data } = await axiosInstance.delete(`/Main/Favorite/Products/${id}`)
                 //alert(data.message)
@@ -167,10 +167,10 @@ export default function ElectronicProductCardItem() {
                             <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem", color: "rgb(78,78,78)" }}>Product Feature:</span>
                             <div className='ElectronicItemFeature'>
                                 <p className='ElectronicItemFeatureP'>
-                                    <span>Gender:</span> <span>{productData.electronicProduct.productGender.toUpperCase()}</span>
+                                    <span>Type:</span> <span>{productData.electronicProduct.productType.toUpperCase()}</span>
                                 </p>
                                 <p className='ElectronicItemFeatureP'>
-                                    <span>Collar Type:</span> <span>{productData.electronicProduct.productCollerType}</span>
+                                    <span>Gender:</span> <span>{productData.electronicProduct.productGender.toUpperCase()}</span>
                                 </p>
                                 <p className='ElectronicItemFeatureP'>
                                     <span>Color:</span> <span>{productData.electronicProduct.productColor}</span>

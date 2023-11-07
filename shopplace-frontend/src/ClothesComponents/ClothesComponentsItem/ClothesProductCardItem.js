@@ -69,7 +69,7 @@ export default function ClothesProductCardItem() {
         }
     }
     const handleClickAddFavorite = async () => {
-        if(isAuthUser.isAuth){
+        if (isAuthUser.isAuth) {
             try {
                 const { data } = await axiosInstance.post(`/Main/Favorite/Add`, {
                     productId: id,
@@ -79,13 +79,13 @@ export default function ClothesProductCardItem() {
             } catch (error) {
                 alert(error.response.data.error)
             }
-        }else{
+        } else {
             history.push('/Login');
         }
     }
 
     const handleClickDeleteFavorite = async () => {
-        if(isAuthUser.isAuth){
+        if (isAuthUser.isAuth) {
             try {
                 const { data } = await axiosInstance.delete(`/Main/Favorite/Products/${id}`)
                 //alert(data.message)
@@ -162,6 +162,9 @@ export default function ClothesProductCardItem() {
                             </div>
                             <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem", color: "rgb(78,78,78)" }}>Product Feature:</span>
                             <div className='ClothesItemFeature'>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>Type:</span> <span>{productData.clothesProduct.productType.toUpperCase()}</span>
+                                </p>
                                 <p className='ClothesItemFeatureP'>
                                     <span>Gender:</span> <span>{productData.clothesProduct.productGender.toUpperCase()}</span>
                                 </p>

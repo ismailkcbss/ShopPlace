@@ -90,7 +90,7 @@ export default function PersonalCareAddProduct() {
           productColor: data.personalCareProduct.productColor,
           productCategory: data.personalCareProduct.productCategory,
           productTypeofSmell: data.personalCareProduct.productTypeofSmell,
-          productVolume: data.personalCareProduct.productVolume,
+          productVolume: (data.personalCareProduct.productVolume).toString(),
         })
         setPrevImage(data.personalCareProduct.productImage)
       } catch (error) {
@@ -249,19 +249,16 @@ export default function PersonalCareAddProduct() {
           <Radio.Group value={form.productCategory} onChange={(e) => handleTextChange(e.target.value, "productCategory")} style={{ display: "flex", justifyContent: "space-evenly" }}>
             <Radio value="Perfume">Perfume</Radio>
             <Radio value="Shampoo">Shampoo</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
+            <Radio value="Deodorant">Deodorant</Radio>
+            <Radio value="Skin Cream">Skin Cream</Radio>
           </Radio.Group>
           <span className='FormHeader'>Product Type of Smell</span>
           <Radio.Group value={form.productTypeofSmell} onChange={(e) => handleTextChange(e.target.value, "productTypeofSmell")}>
             <Space direction="vertical">
               <Radio value="Minty">Minty</Radio>
               <Radio value="Woody">Woody</Radio>
-              <Radio value="-">-</Radio>
-              <Radio value="-">-</Radio>
-              <Radio value="-">-</Radio>
+              <Radio value="Lemon">Lemon</Radio>
+              <Radio value="Nature">Nature</Radio>
             </Space>
           </Radio.Group>
           <span className='FormHeader'>Product Volume</span>

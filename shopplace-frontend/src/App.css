@@ -175,7 +175,8 @@ Login / Register / forgot-password / new-password / Contact-us
 .PayPageButtonDisable,
 .ElectronicAddProductButtonDisable,
 .PersonalCareAddProductButtonDisable,
-.BagAddProductButtonDisable {
+.BagAddProductButtonDisable,
+.ProductViewerDisable {
     width: 100%;
     height: 4rem;
     border-radius: .4rem;
@@ -210,7 +211,9 @@ input::-webkit-inner-spin-button {
 .RegisterFileInput::file-selector-button,
 .ClothesAddProductFileInput::file-selector-button,
 .ShoesAddProductFileInput::file-selector-button,
-.ElectronicAddProductFileInput::file-selector-button {
+.ElectronicAddProductFileInput::file-selector-button,
+.BagAddProductFileInput::file-selector-button,
+.PersonalCareAddProductFileInput::file-selector-button {
     margin: 2rem 10rem 3rem 0;
     width: 10rem;
     height: 3rem;
@@ -226,7 +229,9 @@ input::-webkit-inner-spin-button {
 .RegisterFileInput::file-selector-button:hover,
 .ClothesAddProductFileInput::file-selector-button:hover,
 .ShoesAddProductFileInput::file-selector-button:hover,
-.ElectronicAddProductFileInput::file-selector-button:hover {
+.ElectronicAddProductFileInput::file-selector-button:hover,
+.BagAddProductFileInput::file-selector-button:hover,
+.PersonalCareAddProductFileInput::file-selector-button:hover {
     cursor: pointer;
     color: rgb(80, 151, 179);
 }
@@ -665,6 +670,29 @@ Home-page / Navbar
 }
 
 
+.custom-error-notification {
+    background-color: rgb(255, 152, 152) !important;
+    border-radius: .8rem;
+}
+
+.custom-error-notification svg {
+    color: rgb(97, 0, 0) !important;
+    font-size: 2rem;
+}
+
+.custom-success-notification {
+    background-color: rgb(114, 211, 114) !important;
+    color: white;
+}
+
+.custom-success-notification svg {
+    color: rgb(0, 122, 0) !important;
+    font-size: 2rem;
+}
+
+
+
+
 .MyProfileSellerMain,
 .MyProfileCustomerMain {
     width: 100%;
@@ -694,7 +722,7 @@ Home-page / Navbar
     display: flex;
     border: .1rem solid rgba(187, 187, 187, 0.411);
     justify-content: space-between;
-    background-color: rgba(132, 66, 255, 0.842);
+    background-color: rgb(77, 96, 122);
 }
 
 .MyProfileOrdersTable thead th,
@@ -722,7 +750,7 @@ Home-page / Navbar
 
 .MyProfileOrdersTable tbody tr:nth-child(odd),
 .MyProfileOrdersPlacedTable tbody tr:nth-child(odd) {
-    background-color: rgba(217, 204, 255, 0.527);
+    background-color: rgb(185, 193, 204);
 }
 
 .MyProfileOrdersTable tbody td,
@@ -736,14 +764,14 @@ Home-page / Navbar
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    border-left: .1rem solid rgba(187, 187, 187, 0.411);
+    border-left: .1rem solid rgba(77, 77, 77, 0.411);
     white-space: pre-wrap;
     word-break: break-all;
 }
 
 .MyProfileOrdersTable tbody tr:nth-child(odd) td,
 .MyProfileOrdersPlacedTable tbody tr:nth-child(odd) td {
-    color: rgb(116, 116, 116);
+    color: rgb(255, 255, 255);
 }
 
 
@@ -983,6 +1011,7 @@ Components Items Page
     padding: 1.4rem;
     display: flex;
     flex-direction: column;
+    margin-bottom: 5rem;
 }
 
 .ClothesProductViewerPageBodyHeader,
@@ -1030,11 +1059,10 @@ Components Items Page
     height: 4rem;
     line-height: 4rem;
     padding: 0 1rem 0 1rem;
-    background-color: rgb(250, 250, 250);
-    color: rgb(155, 155, 155);
+    background-color: rgba(200, 245, 245, 0.173);
     border-radius: .4rem;
     box-shadow: .1rem .1rem .5rem .1rem rgba(206, 221, 255, 0.589);
-    border: .1rem solid rgb(228, 228, 228);
+    border: .1rem solid rgba(117, 139, 139, 0.527);
 }
 
 .ClothesItemFeatureP span,
@@ -1045,7 +1073,7 @@ Components Items Page
     width: 100%;
     font-size: 1.6rem;
     font-weight: bold;
-    color: rgba(89, 98, 128, 0.699);
+    color: rgba(136, 142, 167, 0.699);
 }
 
 .ClothesItemFeatureDesc,
@@ -1059,8 +1087,8 @@ Components Items Page
     justify-content: space-between;
     align-items: center;
     border-radius: .4rem;
-    border: .1rem solid rgb(228, 228, 228);
-    background-color: rgb(250, 250, 250);
+    border: .1rem solid rgba(117, 139, 139, 0.527);
+    background-color: rgba(200, 245, 245, 0.173);
     box-shadow: .1rem .1rem .5rem .1rem rgba(206, 221, 255, 0.589);
     margin-bottom: 2rem;
     font-size: 1.6rem;
@@ -1078,7 +1106,7 @@ Components Items Page
     width: 100%;
     font-size: 1.6rem;
     font-weight: bold;
-    color: rgba(89, 98, 128, 0.699);
+    color: rgba(136, 142, 167, 0.699);
     display: -webkit-box;
     -webkit-line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;

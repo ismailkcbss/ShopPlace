@@ -243,11 +243,9 @@ export default function ElectronicAddProduct() {
           <span className='FormHeader'>Product Category</span>
           <Radio.Group value={form.productCategory} onChange={(e) => handleTextChange(e.target.value, "productCategory")} style={{ display: "flex", justifyContent: "space-evenly" }}>
             <Radio value="Phone">Phone</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
+            <Radio value="Laptop">Laptop</Radio>
+            <Radio value="Smart Watch">Smart Watch</Radio>
+            <Radio value="Shaver">Shaver</Radio>
           </Radio.Group>
           <span className='FormHeader'>Product Guarantee Period</span>
           <Radio.Group value={form.productGuaranteePeriod} onChange={(e) => handleTextChange(e.target.value, "productGuaranteePeriod")}>

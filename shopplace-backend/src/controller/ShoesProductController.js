@@ -23,13 +23,17 @@ const CreateProduct = async (req, res) => {
         })
         res.status(200).json({
             succeded: true,
+            message:'The product created successfully',
             shoesProduct
         })
     } catch (error) {
+        let errorMessage = error.message.split(':')
+        console.log(errorMessage);
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: errorMessage.slice(2)
         })
+        console.log(error.message);
     }
 }
 
@@ -40,13 +44,14 @@ const GetEveryoneAllProducts = async (req, res) => {
         const count = await ShoesProduct.countDocuments()
         res.status(200).json({
             succeded: true,
+            message:'Successfully',
             allData,
             count
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: 'Products could not be found'
         })
     }
 }
@@ -55,12 +60,13 @@ const GetEveryoneProduct = async (req, res) => {
         const shoesProduct = await ShoesProduct.findById(req.params.id);
         res.status(200).json({
             succeded: true,
+            message:'Successfully',
             shoesProduct
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: 'The product was not found'
         })
     }
 }
@@ -74,13 +80,14 @@ const GetSellerProduct = async (req, res) => {
 
         res.status(200).json({
             succeded: true,
+            message:'Successfully',
             shoesProduct,
             user
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: 'The product was not found'
         })
     }
 }
@@ -108,7 +115,7 @@ const DeleteProduct = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: 'The product could not be deleted'
         })
     }
 }
@@ -119,14 +126,17 @@ const UpdateProduct = async (req, res) => {
 
         res.status(200).json({
             succeded: true,
+            message: "Product updated successfully",
             shoesProduct
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: 'The product could not be updated'
         })
+        console.log(error);
     }
+
 }
 
 

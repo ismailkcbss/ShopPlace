@@ -32,13 +32,13 @@ const ProtectedReturnPage = ({ component: Component, ...rest }) => {
     )
 }
 
-const ProtectedAdminPage = ({ component: Component, ...rest }) => {
-    const adminData = storage.GetCookie("userdt")
-    let data = jwtDecode(adminData);
-    let admin = data.admin;
+const ProtectedSellerPage = ({ component: Component, ...rest }) => {
+    const sellerData = storage.GetCookie("userdt")
+    let data = jwtDecode(sellerData);
+    let seller = data.seller;
     return (
         <Route {...rest}
-            render={(props) => admin ? (
+            render={(props) => seller ? (
                 <Component />
             ) : (
                 <Redirect to="/" />
@@ -48,4 +48,4 @@ const ProtectedAdminPage = ({ component: Component, ...rest }) => {
     )
 }
 
-export { ProtectedPageRoute, ProtectedReturnPage, ProtectedAdminPage }
+export { ProtectedPageRoute, ProtectedReturnPage, ProtectedSellerPage }

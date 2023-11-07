@@ -14,6 +14,7 @@ export default function PersonalCareProductViewer() {
 
     const [productData, setProductData] = useState([])
     const [loading, setLoading] = useState(false)
+    const [isWaitDelClick, setIsWaitDelClick] = useState(false)
 
     const GetProductItem = async () => {
         if (id) {
@@ -32,12 +33,17 @@ export default function PersonalCareProductViewer() {
     }
 
     const handleClickProductDelete = async () => {
+        if (isWaitDelClick) {
+            return;
+        }
+        setIsWaitDelClick(true)
         try {
             const { data } = await axiosInstance.delete(`/Product/Seller/PersonalCare/${productData.personalCareProduct._id}`)
-            alert(data.message)
             history.push('/MyProfile')
         } catch (error) {
             alert(error.response.data.error)
+        } finally {
+            setIsWaitDelClick(false);
         }
     }
 
@@ -61,6 +67,9 @@ export default function PersonalCareProductViewer() {
                             </div>
                             <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Feature:</span>
                             <div className='PersonalCareItemFeature'>
+                                <p className='PersonalCareItemFeatureP'>
+                                    <span>Type:</span> <span>{productData.personalCareProduct.productType.toUpperCase()}</span>
+                                </p>
                                 <p className='PersonalCareItemFeatureP'>
                                     <span>Gender:</span> <span>{productData.personalCareProduct.productGender.toUpperCase()}</span>
                                 </p>
@@ -90,10 +99,19 @@ export default function PersonalCareProductViewer() {
                                     className='PersonalCareItemFeatureButton'
                                     onClick={handleClickProductEdit}
                                 >Edit</button>
-                                <button
-                                    className='PersonalCareItemFeatureButton'
-                                    onClick={handleClickProductDelete}
-                                >Delete</button>
+                                {
+                                    isWaitDelClick ? (
+                                        <button
+                                            className='ProductViewerDisable'
+                                            disabled
+                                        >Waiting...</button>
+                                    ) : (
+                                        <button
+                                            className='ClothesItemFeatureButton'
+                                            onClick={handleClickProductDelete}
+                                        >Delete</button>
+                                    )
+                                }
                             </div>
                         </div>
                     )}

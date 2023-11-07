@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { axiosInstance } from '../axios.util';
 import * as storage from '../storage.helper'
-import { Spin } from 'antd';
+import { Spin, Alert, Space } from 'antd';
 
 
 export default function NewPassword() {
@@ -14,7 +14,8 @@ export default function NewPassword() {
     const history = useHistory();
     const [form, setForm] = useState({ ...initialForm });
     const [isWaitClick, setIsWaitClick] = useState(false);
-
+    const [errorState, setErrorState] = useState('');
+    const [visible, setVisible] = useState(false);
 
     const email = storage.GetCookie('passPres')
 
@@ -28,7 +29,7 @@ export default function NewPassword() {
 
     const ClickNewPassword = async (e) => {
         e.preventDefault();
-       
+
         if (isWaitClick) {
             return;
         }
@@ -47,13 +48,17 @@ export default function NewPassword() {
                 storage.RemoveCookie('passPres')
                 history.push('/Login')
             } catch (error) {
-                alert(error.response.data.error);
-                console.log(error);
+                setErrorState(error.response.data.error);
+                setVisible(true);
             } finally {
                 setIsWaitClick(false);
                 setForm({
                     ...initialForm,
                 });
+                setTimeout(() => {
+                    setVisible(false);
+                    setErrorState('');
+                }, 5000);
             }
         }
     }
@@ -64,6 +69,9 @@ export default function NewPassword() {
             <div className='NewPasswordPage'>
                 <h1 className='PageHeader'>New Password</h1>
                 <form className='NewPasswordForm'>
+                    <Space direction="vertical" style={{ width: '100%', display: visible ? 'block' : 'none' }}>
+                        <Alert message={errorState} type="error" showIcon />
+                    </Space>
                     <span className='FormHeader'>New Password</span>
                     <input
                         type='password'

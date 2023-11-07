@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios.util';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Spin } from 'antd';
+import { Spin, Alert, Space } from 'antd';
 
 export default function Register() {
 
@@ -20,6 +20,9 @@ export default function Register() {
     const [form, setForm] = useState({ ...initialForm });
     const [image, setImage] = useState(null);
     const [isWaitClick, setIsWaitClick] = useState(false);
+    const [errorState, setErrorState] = useState('');
+    const [visible, setVisible] = useState(false);
+
 
     const handleTextChange = (value, key) => {
         setForm({
@@ -61,12 +64,17 @@ export default function Register() {
             })
             history.push('/Login')
         } catch (error) {
-            alert(error.response.data.error)
+            setErrorState(error.response.data.error);
+            setVisible(true);
         } finally {
             setIsWaitClick(false);
             setForm({
                 ...initialForm,
             });
+            setTimeout(() => {
+                setVisible(false);
+                setErrorState('');
+            }, 5000);
         }
     }
 
@@ -75,6 +83,9 @@ export default function Register() {
             <div className='RegisterPage'>
                 <h1 className='PageHeader'>Register</h1>
                 <form className='RegisterForm'>
+                    <Space direction="vertical" style={{ width: '100%', display: visible ? 'block' : 'none' }}>
+                        <Alert message={errorState} type="error" showIcon />
+                    </Space>
                     <span className='FormHeader'>Username</span>
                     <input
                         type='text'

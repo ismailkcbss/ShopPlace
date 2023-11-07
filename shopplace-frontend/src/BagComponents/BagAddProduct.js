@@ -254,41 +254,35 @@ export default function BagAddProduct() {
           </Radio.Group>
           <span className='FormHeader'>Product Category</span>
           <Radio.Group value={form.productCategory} onChange={(e) => handleTextChange(e.target.value, "productCategory")} style={{ display: "flex", justifyContent: "space-evenly" }}>
-            <Radio value="School">School</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
-            <Radio value="-">-</Radio>
+            <Radio value="School">School Bag</Radio>
+            <Radio value="Daily">Daily Bag</Radio>
+            <Radio value="Fanny Pack">Fanny Pack</Radio>
+            <Radio value="Sports">Sports Bag</Radio>
+            <Radio value="Suitcase">Suitcase Bag</Radio>
           </Radio.Group>
           <span className='FormHeader'>Product Bag Pattern</span>
           <Radio.Group value={form.productBagPattern} onChange={(e) => handleTextChange(e.target.value, "productBagPattern")}>
             <Space direction="vertical">
               <Radio value="Flat">Flat</Radio>
-              <Radio value="-">-</Radio>
-              <Radio value="-">-</Radio>
-              <Radio value="-">-</Radio>
-              <Radio value="-">-</Radio>
+              <Radio value="Patterned">Patterned</Radio>
+              <Radio value="Checkered">Checkered</Radio>
             </Space>
           </Radio.Group>
           <span className='FormHeader'>Product Bag Environment</span>
           <Radio.Group value={form.productBagEnvironment} onChange={(e) => handleTextChange(e.target.value, "productBagEnvironment")}>
             <Space direction="vertical">
               <Radio value="Outdoor">Outdoor</Radio>
-              <Radio value="-">-</Radio>
-              <Radio value="-">-</Radio>
-              <Radio value="-">-</Radio>
-              <Radio value="-">-</Radio>
+              <Radio value="School">School</Radio>
+              <Radio value="Sports">Sports</Radio>
+              <Radio value="Daily">Daily</Radio>
             </Space>
           </Radio.Group>
-
           <span className='FormHeader'>Product Bag Size</span>
           <Radio.Group value={form.productBagSize} onChange={(e) => handleTextChange(e.target.value, "productBagSize")} >
             <Space direction="vertical">
+              <Radio value="Big">Big</Radio>
               <Radio value="Middle">Middle</Radio>
-              <Radio value="-">-</Radio>
-              <Radio value="-">-</Radio>
-              <Radio value="-">-</Radio>
+              <Radio value="Small">Small</Radio>
             </Space>
           </Radio.Group>
           <span className='FormHeader'>Product Image</span>

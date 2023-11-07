@@ -13,6 +13,8 @@ export default function ClothesProductViewer() {
 
     const [productData, setProductData] = useState([])
     const [loading, setLoading] = useState(false)
+    const [isWaitDelClick, setIsWaitDelClick] = useState(false)
+
 
     const GetProductItem = async () => {
         if (id) {
@@ -31,12 +33,17 @@ export default function ClothesProductViewer() {
     }
 
     const handleClickProductDelete = async () => {
+        if (isWaitDelClick) {
+            return;
+        }
+        setIsWaitDelClick(true)
         try {
             const { data } = await axiosInstance.delete(`/Product/Seller/Clothes/${productData.clothesProduct._id}`)
-            alert(data.message)
             history.push('/MyProfile')
         } catch (error) {
             alert(error.response.data.error)
+        } finally {
+            setIsWaitDelClick(false);
         }
     }
 
@@ -59,7 +66,10 @@ export default function ClothesProductViewer() {
                             </div>
                             <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Feature:</span>
                             <div className='ClothesItemFeature'>
-                            <p className='ClothesItemFeatureP'>
+                                <p className='ClothesItemFeatureP'>
+                                    <span>Type:</span> <span>{productData.clothesProduct.productType.toUpperCase()}</span>
+                                </p>
+                                <p className='ClothesItemFeatureP'>
                                     <span>Gender:</span> <span>{productData.clothesProduct.productGender.toUpperCase()}</span>
                                 </p>
                                 <p className='ClothesItemFeatureP'>
@@ -89,15 +99,26 @@ export default function ClothesProductViewer() {
                                 <p className='ClothesItemFeatureDesc'>
                                     <span>Product Description:</span> <span>{productData.clothesProduct.productDescription}</span>
                                 </p>
-                            </div><div style={{ display: "flex" }}>
+                            </div>
+                            <div style={{ display: "flex" }}>
                                 <button
                                     className='ClothesItemFeatureButton'
                                     onClick={handleClickProductEdit}
                                 >Edit</button>
-                                <button
-                                    className='ClothesItemFeatureButton'
-                                    onClick={handleClickProductDelete}
-                                >Delete</button>
+                                {
+                                    isWaitDelClick ? (
+                                        <button
+                                            className='ProductViewerDisable'
+                                            disabled
+                                        >Waiting...</button>
+                                    ) : (
+                                        <button
+                                            className='ClothesItemFeatureButton'
+                                            onClick={handleClickProductDelete}
+                                        >Delete</button>
+                                    )
+                                }
+
                             </div>
                         </div>
                     )}

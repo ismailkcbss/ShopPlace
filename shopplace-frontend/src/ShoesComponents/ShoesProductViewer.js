@@ -12,6 +12,7 @@ export default function ShoesProductViewer() {
 
     const [productData, setProductData] = useState([])
     const [loading, setLoading] = useState(false)
+    const [isWaitDelClick, setIsWaitDelClick] = useState(false)
 
 
     const GetShoesProduct = async () => {
@@ -31,12 +32,17 @@ export default function ShoesProductViewer() {
     }
 
     const handleClickProductDelete = async () => {
+        if (isWaitDelClick) {
+            return;
+        }
+        setIsWaitDelClick(true)
         try {
             const { data } = await axiosInstance.delete(`/Product/Seller/Shoes/${productData.shoesProduct._id}`)
-            alert(data.message)
             history.push('/MyProfile')
         } catch (error) {
             alert(error.response.data.error)
+        } finally {
+            setIsWaitDelClick(false);
         }
     }
 
@@ -61,10 +67,13 @@ export default function ShoesProductViewer() {
                             <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Product Feature:</span>
                             <div className='ShoesItemFeature'>
                                 <p className='ShoesItemFeatureP'>
+                                    <span>Type:</span> <span>{productData.shoesProduct.productType}</span>
+                                </p>
+                                <p className='ShoesItemFeatureP'>
                                     <span>Gender:</span> <span>{productData.shoesProduct.productGender}</span>
                                 </p>
                                 <p className='ShoesItemFeatureP'>
-                                    <span>Shoes Category:</span><span>{productData.shoesProduct.produproductCategoryctTypeOf}</span>
+                                    <span>Shoes Category:</span><span>{productData.shoesProduct.productCategory}</span>
                                 </p>
                                 <p className='ShoesItemFeatureP'>
                                     <span>Model:</span> <span>{productData.shoesProduct.productModel}</span>
@@ -90,10 +99,19 @@ export default function ShoesProductViewer() {
                                     className='ShoesItemFeatureButton'
                                     onClick={handleClickProductEdit}
                                 >Edit</button>
-                                <button
-                                    className='ShoesItemFeatureButton'
-                                    onClick={handleClickProductDelete}
-                                >Delete</button>
+                                {
+                                    isWaitDelClick ? (
+                                        <button
+                                            className='ProductViewerDisable'
+                                            disabled
+                                        >Waiting...</button>
+                                    ) : (
+                                        <button
+                                            className='ClothesItemFeatureButton'
+                                            onClick={handleClickProductDelete}
+                                        >Delete</button>
+                                    )
+                                }
                             </div>
                         </div>
                     )}

@@ -22,20 +22,29 @@ const GetHomeAllProducts = async (req, res) => {
         const electronicProduct = await ElectronicProduct.find({ "productName": new RegExp(search, "i") });
         const ElectronicCount = await ElectronicProduct.countDocuments();
 
+        const personalCareProduct = await PersonalCareProduct.find({ "productName": new RegExp(search, "i") });
+        const personalCareCount = await PersonalCareProduct.countDocuments();
 
-        const allProducts = shoesProduct.concat(clothesProduct, electronicProduct);
+        const bagProduct = await BagProduct.find({ "productName": new RegExp(search, "i") });
+        const bagCount = await BagProduct.countDocuments();
+
+
+        const allProducts = shoesProduct.concat(clothesProduct, electronicProduct, personalCareProduct, bagProduct);
 
         res.status(200).json({
             succeded: true,
+            message:'The products were successfully found',
             allProducts,
             clothesCount,
             shoesCount,
-            ElectronicCount
+            ElectronicCount,
+            personalCareCount,
+            bagCount
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: 'The products could not be found'
         })
     }
 }
@@ -74,12 +83,13 @@ const GetSellerAllProducts = async (req, res) => {
 
         res.status(201).json({
             succeded: true,
+            message:'The products were successfully found',
             allProducts
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: "Products could not be brought"
+            error: "The products could not be found"
         })
     }
 }
@@ -284,6 +294,7 @@ const WebsiteSendMail = async (req, res) => {
         });
         res.status(201).json({
             succeded: true,
+            message:"The message was sent successfully"
         });
     } catch (error) {
         res.status(500).json({
@@ -363,15 +374,14 @@ const OrdersReceivedCreate = async (req, res) => {
         })
         res.status(200).json({
             succeded: true,
+            message: 'The order was successfully received',
             ordersReceived,
-            message: 'The order was successfully received'
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: 'The order could not be received'
         })
-        console.log(error);
     }
 }
 
@@ -394,7 +404,9 @@ const GetOrderReceived = async (req, res) => {
             }
         }
         res.status(200).json({
-            product: orderRecProduct
+            succeded:true,
+            message:'Received orders have been processed',
+            product: orderRecProduct,
         });
     } catch (error) {
         res.status(500).json({
@@ -409,7 +421,9 @@ const GetOrderPlaced = async (req, res) => {
         let user = res.locals.user.username;
         const ordersPlaced = await OrdersReceived.find({ customer: user })
         res.status(200).json({
-            ordersPlaced
+            succeded:true,
+            message:'The orders placed have been processed',
+            ordersPlaced,
         })
     } catch (error) {
         res.status(500).json({
@@ -430,7 +444,7 @@ const FavoriteAdd = async (req, res) => {
         if (existingFavorite) {
             res.status(400).json({
                 succeeded: false,
-                message: 'Bu ürün zaten favorilere eklenmiş.'
+                error: 'This product has already been added to the favorites.'
             });
         } else {
             const favoriteProduct = await FavoriteProduct.create({
@@ -440,15 +454,14 @@ const FavoriteAdd = async (req, res) => {
             })
             res.status(200).json({
                 succeded: true,
+                message:'The product has been added successfully',
                 favoriteProduct,
             })
         }
-
-
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error
+            error: 'The product could not be added'
         })
     }
 }
@@ -473,19 +486,19 @@ const GetAllFavoriteProducts = async (req, res) => {
             } else {
                 res.status(404).json({
                     succeded: false,
-                    error: error
+                    error: 'The favorite products could not be found'
                 })
             }
         }
-
         res.status(200).json({
             succeded: true,
+            message:'The favorite products have been successfully found',
             favoriteProducts
         })
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: 'The favorite products could not be found'
         })
     }
 }
@@ -507,15 +520,15 @@ const FavoriteProductsDelete = async (req, res) => {
                 return;
             }
         }
-        res.status(404).json({
-            succeeded: false,
-            message: 'is not found product'
+        res.status(200).json({
+            succeeded: true,
+            message: 'The product has been removed from the favorites'
         });
 
     } catch (error) {
         res.status(500).json({
             succeded: false,
-            error: error.message
+            error: 'The product could not be removed from the favorites'
         })
     }
 }

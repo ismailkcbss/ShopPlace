@@ -25,11 +25,11 @@ const items = [
     key: '2',
   },
   {
-    label: <a href="/">Add Bag product</a>,
+    label: <a href="/BagAddProduct">Add Bag product</a>,
     key: '3',
   },
   {
-    label: <a href="/">Add Personal Care product</a>,
+    label: <a href="/PersonalCareAddProduct">Add Personal Care product</a>,
     key: '4',
   },
 ];

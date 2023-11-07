@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { axiosInstance } from './axios.util';
 import { userActions } from './redux/slice/userSlice';
 import { useEffect } from 'react';
-import { ProtectedReturnPage } from './protected.route';
+import { ProtectedReturnPage, ProtectedPageRoute, ProtectedSellerPage } from './protected.route';
 
 import HomePage from './mainComponents/HomePage';
 import Login from './auth/Login';
@@ -65,15 +65,11 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
+
+
           <Route exact path='/' component={HomePage} />
           <Route exact path='/ContactUs' component={ContactUs} />
           <Route exact path='/CategoryList/:productType' component={CategoryList} />
-
-
-          <Route exact path='/MyProfile' component={MyProfile} />
-          <Route exact path='/MyCart' component={MyCart} />
-          <Route exact path='/MyFavorites' component={MyFavorites} />
-          <Route exact path='/PayPage' component={PayPage} />
 
 
           <Route exact path='/ClothesProductCardItem/:id' component={ClothesProductCardItem} />
@@ -83,37 +79,37 @@ function App() {
           <Route exact path='/BagProductCardItem/:id' component={BagProductCardItem} />
 
 
-
-          <Route exact path='/ClothesProductViewer/:id' component={ClothesProductViewer} />
-          <Route exact path='/ShoesProductViewer/:id' component={ShoesProductViewer} />
-          <Route exact path='/ElectronicProductViewer/:id' component={ElectronicProductViewer} />
-          <Route exact path='/PersonalCareProductViewer/:id' component={PersonalCareProductViewer} />
-          <Route exact path='/BagProductViewer/:id' component={BagProductViewer} />
-
-
-
-          <Route exact path='/ClothesAddProduct' component={ClothesAddProduct} />
-          <Route exact path='/ShoesAddProduct' component={ShoesAddProduct} />
-          <Route exact path='/ElectronicAddProduct' component={ElectronicAddProduct} />
-          <Route exact path='/PersonalCareAddProduct' component={PersonalCareAddProduct} />
-          <Route exact path='/BagAddProduct' component={BagAddProduct} />
-
-
-
-          <Route exact path='/ClothesAddProduct/:id' component={ClothesAddProduct} />
-          <Route exact path='/ShoesAddProduct/:id' component={ShoesAddProduct} />
-          <Route exact path='/ElectronicAddProduct/:id' component={ElectronicAddProduct} />
-          <Route exact path='/PersonalCareAddProduct/:id' component={PersonalCareAddProduct} />
-          <Route exact path='/BagAddProduct/:id' component={BagAddProduct} />
-
-
-
-
           <ProtectedReturnPage exact path='/Login' component={Login} />
           <ProtectedReturnPage exact path='/Register' component={Register} />
           <ProtectedReturnPage exact path='/ForgotPassword' component={ForgotPassword} />
           <ProtectedReturnPage exact path='/NewPassword' component={NewPassword} />
 
+
+          <ProtectedPageRoute exact path='/MyProfile' component={MyProfile} />
+          <ProtectedPageRoute exact path='/MyCart' component={MyCart} />
+          <ProtectedPageRoute exact path='/MyFavorites' component={MyFavorites} />
+          <ProtectedPageRoute exact path='/PayPage' component={PayPage} />
+
+
+          <ProtectedPageRoute exact path='/ClothesAddProduct' component={ClothesAddProduct} />
+          <ProtectedPageRoute exact path='/ShoesAddProduct' component={ShoesAddProduct} />
+          <ProtectedPageRoute exact path='/ElectronicAddProduct' component={ElectronicAddProduct} />
+          <ProtectedPageRoute exact path='/PersonalCareAddProduct' component={PersonalCareAddProduct} />
+          <ProtectedPageRoute exact path='/BagAddProduct' component={BagAddProduct} />
+
+
+          <ProtectedPageRoute exact path='/ClothesAddProduct/:id' component={ClothesAddProduct} />
+          <ProtectedPageRoute exact path='/ShoesAddProduct/:id' component={ShoesAddProduct} />
+          <ProtectedPageRoute exact path='/ElectronicAddProduct/:id' component={ElectronicAddProduct} />
+          <ProtectedPageRoute exact path='/PersonalCareAddProduct/:id' component={PersonalCareAddProduct} />
+          <ProtectedPageRoute exact path='/BagAddProduct/:id' component={BagAddProduct} />
+
+
+          <ProtectedSellerPage exact path='/ClothesProductViewer/:id' component={ClothesProductViewer} />
+          <ProtectedSellerPage exact path='/ShoesProductViewer/:id' component={ShoesProductViewer} />
+          <ProtectedSellerPage exact path='/ElectronicProductViewer/:id' component={ElectronicProductViewer} />
+          <ProtectedSellerPage exact path='/PersonalCareProductViewer/:id' component={PersonalCareProductViewer} />
+          <ProtectedSellerPage exact path='/BagProductViewer/:id' component={BagProductViewer} />
 
 
         </Switch>

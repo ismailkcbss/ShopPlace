@@ -163,6 +163,9 @@ export default function BagProductCardItem() {
               <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem", color: "rgb(78,78,78)" }}>Product Feature:</span>
               <div className='BagProductItemFeature'>
                 <p className='BagItemFeatureP'>
+                  <span>Type:</span> <span>{productData.bagProduct.productType.toUpperCase()}</span>
+                </p>
+                <p className='BagItemFeatureP'>
                   <span>Gender:</span> <span>{productData.bagProduct.productGender.toUpperCase()}</span>
                 </p>
                 <p className='BagItemFeatureP'>

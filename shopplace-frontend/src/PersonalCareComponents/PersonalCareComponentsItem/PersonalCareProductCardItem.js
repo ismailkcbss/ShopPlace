@@ -149,20 +149,23 @@ export default function PersonalCareProductCardItem() {
 
 
   return (
-    <div className='PersonalCareViewerDiv'>
+    <div className='PersonalCareProductViewerDiv'>
       <Navbar />
       {loading ? (
-        <div className='PersonalCareViewerPage'>
-          <div className='PersonalCareViewerPageImage'>
+        <div className='PersonalCareProductViewerPage'>
+          <div className='PersonalCareProductViewerPageImage'>
             <ProductItemPageImageList productData={productData.personalCareProduct} />
           </div>
           {productData && (
-            <div className='PersonalCareViewerPageBody'>
-              <div className='PersonalCareViewerPageBodyHeader'>
-                <span style={{ color: "skyblue", fontSize: "1.7rem" }}>{productData.personalCareProduct.productBrand.toUpperCase()}</span> {productData.personalCare.productName.toUpperCase()}
+            <div className='PersonalCareProductViewerPageBody'>
+              <div className='PersonalCareProductViewerPageBodyHeader'>
+                <span style={{ color: "skyblue", fontSize: "1.7rem" }}>{productData.personalCareProduct.productBrand.toUpperCase()}</span> {productData.personalCareProduct.productName.toUpperCase()}
               </div>
               <span style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem", color: "rgb(78,78,78)" }}>Product Feature:</span>
               <div className='PersonalCareItemFeature'>
+                <p className='PersonalCareItemFeatureP'>
+                  <span>Type:</span> <span>{productData.personalCareProduct.productType.toUpperCase()}</span>
+                </p>
                 <p className='PersonalCareItemFeatureP'>
                   <span>Gender:</span> <span>{productData.personalCareProduct.productGender.toUpperCase()}</span>
                 </p>
