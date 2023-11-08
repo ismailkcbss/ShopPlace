@@ -263,7 +263,7 @@ export default function PersonalCareAddProduct() {
               <Radio value="Black">Black</Radio>
               <Radio value="Red">Red</Radio>
               <Radio value="Blue">Blue</Radio>
-              <Radio value="Brown">Brown</Radio>
+              <Radio value="White">White</Radio>
               <Radio value="Gold">Gold</Radio>
             </Space>
           </Radio.Group>

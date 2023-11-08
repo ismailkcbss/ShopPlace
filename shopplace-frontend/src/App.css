@@ -29,7 +29,9 @@
     rgba(2, 73, 0, 0.871) 100%);
     border-radius: .8rem;
 }
-
+.a{
+    color: rgb(192, 192, 192);
+}
 .custom-success-notification svg {
     color: rgb(0, 87, 0) !important;
     font-size: 2rem;
@@ -38,6 +40,11 @@
 .custom-success-notification .ant-notification-notice-description {
     color: white !important;
 }
+
+.slick-dots li button{ /*Carousel css*/
+    background-color: rgb(128, 128, 128) !important;
+}
+
 /*
 CSS Style
 Login / Register / forgot-password / new-password / Contact-us
@@ -998,9 +1005,11 @@ Components Items Page
 .PersonalCareProductViewerPageImage,
 .BagProductViewerPageImage {
     width: 40%;
-    height: 75rem;
+    height: 60rem;
     object-fit: contain;
-}
+    image-rendering: pixelated !important;
+
+} 
 
 .ClothesProductViewerPageImage img,
 .ShoesProductViewerPageImage img,
@@ -1011,6 +1020,7 @@ Components Items Page
     height: 100%;
     object-fit: cover;
     border-radius: 1rem;
+    image-rendering: pixelated !important;
 }
 
 .ClothesProductViewerPageBody,
@@ -1071,10 +1081,10 @@ Components Items Page
     height: 4rem;
     line-height: 4rem;
     padding: 0 1rem 0 1rem;
-    background-color: rgba(200, 245, 245, 0.173);
+    background-color: rgba(237, 255, 255, 0.173);
     border-radius: .4rem;
-    box-shadow: .1rem .1rem .5rem .1rem rgba(206, 221, 255, 0.589);
-    border: .1rem solid rgba(117, 139, 139, 0.527);
+    box-shadow: .1rem .1rem .5rem .1rem rgba(235, 241, 255, 0.589);
+    border-bottom: .1rem solid rgba(117, 139, 139, 0.527);
 }
 
 .ClothesItemFeatureP span,
@@ -1099,9 +1109,9 @@ Components Items Page
     justify-content: space-between;
     align-items: center;
     border-radius: .4rem;
-    border: .1rem solid rgba(117, 139, 139, 0.527);
-    background-color: rgba(200, 245, 245, 0.173);
-    box-shadow: .1rem .1rem .5rem .1rem rgba(206, 221, 255, 0.589);
+    border-bottom: .1rem solid rgba(117, 139, 139, 0.527);
+    background-color: rgba(237, 255, 255, 0.173);
+    box-shadow: .1rem .1rem .5rem .1rem rgba(235, 241, 255, 0.589);
     margin-bottom: 2rem;
     font-size: 1.6rem;
     padding: 1.3rem;
@@ -1134,6 +1144,7 @@ Components Items Page
     font-weight: bold;
     color: rgba(89, 98, 128, 0.699);
     display: block;
+    cursor: pointer;
 }
 
 .ClothesItemFeatureButton,

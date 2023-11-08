@@ -29,11 +29,11 @@ const GetHomeAllProducts = async (req, res) => {
         const bagCount = await BagProduct.countDocuments();
 
 
-        const allProducts = shoesProduct.concat(clothesProduct, electronicProduct, personalCareProduct, bagProduct);
+        const allProducts = clothesProduct.concat(shoesProduct, electronicProduct, personalCareProduct, bagProduct);
 
         res.status(200).json({
             succeded: true,
-            message:'The products were successfully found',
+            message: 'The products were successfully found',
             allProducts,
             clothesCount,
             shoesCount,
@@ -83,7 +83,7 @@ const GetSellerAllProducts = async (req, res) => {
 
         res.status(201).json({
             succeded: true,
-            message:'The products were successfully found',
+            message: 'The products were successfully found',
             allProducts
         })
     } catch (error) {
@@ -294,7 +294,7 @@ const WebsiteSendMail = async (req, res) => {
         });
         res.status(201).json({
             succeded: true,
-            message:"The message was sent successfully"
+            message: "The message was sent successfully"
         });
     } catch (error) {
         res.status(500).json({
@@ -404,8 +404,8 @@ const GetOrderReceived = async (req, res) => {
             }
         }
         res.status(200).json({
-            succeded:true,
-            message:'Received orders have been processed',
+            succeded: true,
+            message: 'Received orders have been processed',
             product: orderRecProduct,
         });
     } catch (error) {
@@ -421,8 +421,8 @@ const GetOrderPlaced = async (req, res) => {
         let user = res.locals.user.username;
         const ordersPlaced = await OrdersReceived.find({ customer: user })
         res.status(200).json({
-            succeded:true,
-            message:'The orders placed have been processed',
+            succeded: true,
+            message: 'The orders placed have been processed',
             ordersPlaced,
         })
     } catch (error) {
@@ -454,7 +454,7 @@ const FavoriteAdd = async (req, res) => {
             })
             res.status(200).json({
                 succeded: true,
-                message:'The product has been added successfully',
+                message: 'The product has been added successfully',
                 favoriteProduct,
             })
         }
@@ -492,7 +492,7 @@ const GetAllFavoriteProducts = async (req, res) => {
         }
         res.status(200).json({
             succeded: true,
-            message:'The favorite products have been successfully found',
+            message: 'The favorite products have been successfully found',
             favoriteProducts
         })
     } catch (error) {

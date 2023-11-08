@@ -42,7 +42,6 @@ import BagProductCardItem from './BagComponents/BagComponentsItem/BagProductCard
 import { notification } from 'antd';
 
 
-
 function App() {
 
   const user = useSelector((state) => state.user);

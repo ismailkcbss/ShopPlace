@@ -275,7 +275,7 @@ export default function BagAddProduct() {
               <Radio value="Black">Black</Radio>
               <Radio value="Red">Red</Radio>
               <Radio value="Blue">Blue</Radio>
-              <Radio value="Brown">Brown</Radio>
+              <Radio value="Yellow">Yellow</Radio>
               <Radio value="Gold">Gold</Radio>
             </Space>
           </Radio.Group>

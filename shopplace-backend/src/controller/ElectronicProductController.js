@@ -7,6 +7,31 @@ import User from "../models/userModel.js";
 
 const CreateProduct = async (req, res) => {
     try {
+
+        const requiredFields = [
+            'productType',
+            'productGender',
+            'productName',
+            'productBrand',
+            'productPrice',
+            'productPiece',
+            'productDescription',
+            'productColor',
+            'productCategory',
+            'productGuaranteePeriod',
+            'productImage'
+        ];
+
+        for (const field of requiredFields) {
+            if (!req.body[field]) {
+                return res.status(400).json({
+                    succeeded: false,
+                    error: `The ${field} field is missing or empty.`,
+                });
+            }
+        }
+
+
         const electronicProduct = await ElectronicProduct.create({
             productOwner: res.locals.user._id,
             productType: req.body.productType,
@@ -100,13 +125,10 @@ const DeleteProduct = async (req, res) => {
     try {
         const productId = req.params.id;
 
-        const userFavorites = await FavoritesProduct.find({})
+        const usersWithFavorite = await FavoritesProduct.find({ productId: productId });
 
-        for (const favorite of userFavorites) {
-            if (favorite.productId.toString() === productId.toString()) {
-                await FavoritesProduct.findByIdAndRemove(favorite._id)
-                return;
-            }
+        for (const favorite of usersWithFavorite) {
+            await FavoritesProduct.findByIdAndRemove(favorite._id);
         }
 
         await ElectronicProduct.findByIdAndRemove({ _id: productId })

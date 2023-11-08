@@ -35,6 +35,10 @@ const ClothesProductSchema = new Schema({
         type: String,
         required: [true, "You did not enter a product description."],
     },
+    productCategory:{
+        type: String,
+        required: [true, "You did not enter a product category."],
+    },
     productSize: {
         type: String,
         required: [true, "You did not enter a product size."],

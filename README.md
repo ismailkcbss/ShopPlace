@@ -9,7 +9,6 @@
 It is an online shopping application that can be used in everyday life. The project is not yet fully completed and there are improvements to be added. The project includes features such as registration, login, Forgot Decryption, welcome message, product add-edit, product search, sending a message to the page owner, adding to favorites, adding to cart and displaying products purchased by the customer, among others. Many of the features have already been completed and the rest will be completed shortly.
 
 ## Improvements to be added to the project
-- Other Category tabs.
 - There will be more plugins on my profile page.
 - Design beautification.
 - ...
@@ -104,17 +103,50 @@ writing this will assist you in downloading the package.
 
 ## Application images
 
+- Register Page
+
+![Register](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FShopPlaceRegister.png?alt=media&token=d17bb1af-359d-4098-989c-a7e0594f237a)
+
 - Login Page
 
-![Login](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FshopplaceLogin.png?alt=media&token=658be220-ecd7-4439-b178-ad9d942f94f3&_gl=1*1a63xbj*_ga*MTc4OTQzODUwNy4xNjk0Nzk3MzI5*_ga_CW55HF8NVT*MTY5Nzg4NDU4OC4yNS4xLjE2OTc4ODc4NzUuMTguMC4w)
+![Login](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FshopplaceLogin.png?alt=media&token=658be220-ecd7-4439-b178-ad9d942f94f3)
 
-- Dashboard Page
+- Forgot Password Page
 
-![Dashboard](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FshopplaceDashboard.png?alt=media&token=7789526c-3f7a-4bfb-a38f-28c0ce3da704&_gl=1*wd5735*_ga*MTc4OTQzODUwNy4xNjk0Nzk3MzI5*_ga_CW55HF8NVT*MTY5Nzg4NDU4OC4yNS4xLjE2OTc4ODc4NDguNDUuMC4w)
+![ForgotPassword](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FShopPlaceForgotPassword.png?alt=media&token=655f47fb-ac28-44e3-973c-fd4fa47125fa)
 
-- Contact Form
+- ContactUs Page
 
-![Contact](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FshopplaceContact.png?alt=media&token=81a39ab9-d2ce-4c64-bc35-69c688a98d4b&_gl=1*flig6z*_ga*MTc4OTQzODUwNy4xNjk0Nzk3MzI5*_ga_CW55HF8NVT*MTY5Nzg4NDU4OC4yNS4xLjE2OTc4ODc4OTEuMi4wLjA.)
+![Contact](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FShopPlaceContackUs.png?alt=media&token=e51a0471-c5a5-4e70-a7f3-61f6f866ed40)
+
+- Home Page
+
+![Home](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FShopPlaceHome1.png?alt=media&token=a5bfdc36-6825-4b3a-a425-6674ab00f4b1)
+
+- Home Page 2
+
+![Home2](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FShopPlaceHome2.png?alt=media&token=5873e37c-d5a3-4057-a773-9400cdab8683)
+
+- Seller MyProfile Page
+
+![SellerMyProfile](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FShopPlaceMyProfile1.png?alt=media&token=73d85e07-4a0f-4217-ab38-73e800eff5be)
+
+- Seller MyProfile Page 2
+
+![SellerMyProfile2](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FShopPlaceMyProfile2.png?alt=media&token=842746d7-9e1c-4d2b-9226-de7f338cf97a)
+
+- Customer Product view Page
+
+![CustomerProductView](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FShopPlaceCustomerViewer1.png?alt=media&token=7dc31e08-7796-480e-b0cb-ff75ec0aaa54)
+
+- Seller Product view Page
+
+![SellerProductView](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FShopPlaceSellerViewer1.png?alt=media&token=307178c8-080a-42c9-a277-0b905060d210)
+
+- Customer Pay Page 
+
+![PayPage](https://firebasestorage.googleapis.com/v0/b/shopplace-41632.appspot.com/o/Githup%2FShopPlacePayPage1.png?alt=media&token=12c4c239-930c-4679-957a-504ff3ad208f)
+
 
 
 ## Stay in touch

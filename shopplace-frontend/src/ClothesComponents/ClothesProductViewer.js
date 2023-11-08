@@ -48,7 +48,6 @@ export default function ClothesProductViewer() {
             }
         }
     }
-    console.log(productData);
 
     const handleClickProductEdit = () => {
         history.push(`/ClothesAddProduct/${productData.clothesProduct._id}`)
@@ -62,6 +61,7 @@ export default function ClothesProductViewer() {
         try {
             const { data } = await axiosInstance.delete(`/Product/Seller/Clothes/${productData.clothesProduct._id}`)
             history.push('/MyProfile')
+            showNotification('success', data.message)
         } catch (error) {
             showNotification('error', error.response.data.error)
         } finally {

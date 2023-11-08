@@ -1,5 +1,6 @@
 import User from '../models/userModel.js';
 import bcrypt from 'bcrypt';
+import { response } from 'express';
 import jwt from 'jsonwebtoken';
 import nodemailer from "nodemailer";
 
@@ -7,18 +8,20 @@ const CreateUser = async (req, res, next) => {
     try {
         const user = await User.create(req.body);
         next();
-
     } catch (error) {
-        let errors2 = {};
         if (error.code === 11000) {
-            errors2.email = "This email is registered";
-        }
-        if (error.name === "ValidationError") {
-            Object.keys(error.errors).forEach((key) => {
-                errors2[key] = error.errors[key].message;
+            const field = Object.keys(error.keyValue)[0];
+            const errorMessage = `This ${field} is already registered.`;
+            res.status(400).json({
+                succeded: false,
+                error: errorMessage
             });
+        } else {
+            response.status(500).json({
+                succeded: false,
+                error: 'Could not create a register'
+            })
         }
-        res.status(400).json(errors2);
     }
 };
 
@@ -125,7 +128,7 @@ const NewPasswordReset = async (req, res) => {
 
                     res.status(201).json({
                         succeded: true,
-                        message:"The old password was successfully reset"
+                        message: "The old password was successfully reset"
                     });
                 }
             });

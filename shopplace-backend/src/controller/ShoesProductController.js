@@ -6,6 +6,30 @@ import FavoritesProduct from '../models/FavoritesModal.js';
 
 const CreateProduct = async (req, res) => {
     try {
+        const requiredFields = [
+            'productType',
+            'productGender',
+            'productName',
+            'productBrand',
+            'productPrice',
+            'productPiece',
+            'productDescription',
+            'productColor',
+            'productNumber',
+            'productCategory',
+            'productModel',
+            'productImage'
+        ];
+
+        for (const field of requiredFields) {
+            if (!req.body[field]) {
+                return res.status(400).json({
+                    succeeded: false,
+                    error: `The ${field} field is missing or empty.`,
+                });
+            }
+        }
+
         const shoesProduct = await ShoesProduct.create({
             productOwner: res.locals.user._id,
             productType: req.body.productType,
@@ -15,9 +39,9 @@ const CreateProduct = async (req, res) => {
             productPrice: req.body.productPrice,
             productPiece: req.body.productPiece,
             productDescription: req.body.productDescription,
+            productColor: req.body.productColor,
             productNumber: req.body.productNumber,
             productCategory: req.body.productCategory,
-            productColor: req.body.productColor,
             productModel: req.body.productModel,
             productImage: req.body.productImage.split(',')
         })
@@ -27,13 +51,10 @@ const CreateProduct = async (req, res) => {
             shoesProduct
         })
     } catch (error) {
-        let errorMessage = error.message.split(':')
-        console.log(errorMessage);
         res.status(500).json({
             succeded: false,
-            error: errorMessage.slice(2)
+            error: 'The product could not be created'
         })
-        console.log(error.message);
     }
 }
 
@@ -96,13 +117,10 @@ const DeleteProduct = async (req, res) => {
     try {
         const productId = req.params.id;
 
-        const userFavorites = await FavoritesProduct.find({})
+        const usersWithFavorite = await FavoritesProduct.find({ productId: productId });
 
-        for (const favorite of userFavorites) {
-            if (favorite.productId.toString() === productId.toString()) {
-                await FavoritesProduct.findByIdAndRemove(favorite._id)
-                return;
-            }
+        for (const favorite of usersWithFavorite) {
+            await FavoritesProduct.findByIdAndRemove(favorite._id);
         }
 
         await ShoesProduct.findByIdAndRemove({ _id: productId })

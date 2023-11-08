@@ -141,13 +141,20 @@ export default function MyProfile() {
                 <div className='MyProfileSellerMain'>
                   <div>
                     <span style={{ width: "100%", fontSize: "2rem", display: "flex", justifyContent: "center", marginBottom: "2rem" }}>My Products</span>
+                    
+                    {productsData[0]?(
                     <div className='MyProfileSellerMainProduct'>
-                      {
-                        productsData?.map((productItem) => (
-                          <MyProfileProductsItem key={productItem._id} productItem={productItem} />
-                        ))
-                      }
-                    </div>
+                    {
+                      productsData?.map((productItem) => (
+                        <MyProfileProductsItem key={productItem._id} productItem={productItem} />
+                      ))
+                    }
+                  </div>
+                    ):(
+                      <p style={{ width: "100%", fontSize: "1.4rem", display: "flex", justifyContent: "center", alignItems: "center", margin: "10rem 0 10rem 0",color:"rgb(192, 192, 192)" }}>You haven't created a product yet. Click the button and create a product now.</p>
+                    )
+                  }
+
                   </div>
                   <span style={{ width: "100%", fontSize: "2rem", display: "flex", justifyContent: "center", margin: "2rem 0 2rem 0" }}>Orders Received</span>
                   {
@@ -156,7 +163,7 @@ export default function MyProfile() {
                         <MyProfileOrdersTable ordersReceived={ordersReceived} />
                       </div>
                     ) : (
-                      <p style={{ width: "100%", fontSize: "1.4rem", display: "flex", justifyContent: "center", alignItems: "center", margin: "10rem 0 10rem 0" }}>No orders received</p>
+                      <p style={{ width: "100%", fontSize: "1.4rem", display: "flex", justifyContent: "center", alignItems: "center", margin: "10rem 0 10rem 0",color:"rgb(192, 192, 192)" }}>There is no order received yet.</p>
                     )
                   }
                 </div>
@@ -185,7 +192,7 @@ export default function MyProfile() {
                         <MyProfileOrdersPlacedTable ordersPlaced={ordersPlaced} />
                       </div>
                     ) : (
-                      <p style={{ width: "100%", fontSize: "1.4rem", display: "flex", justifyContent: "center", alignItems: "center", margin: "10rem 0 10rem 0" }}>No my order</p>
+                      <p style={{ width: "100%", fontSize: "1.4rem", display: "flex", justifyContent: "center", alignItems: "center", margin: "10rem 0 10rem 0",color:"rgb(192, 192, 192)" }}>You haven't bought a product yet.</p>
                     )
                   }
 

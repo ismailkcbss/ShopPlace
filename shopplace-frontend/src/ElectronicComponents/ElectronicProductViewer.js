@@ -60,6 +60,7 @@ export default function ElectronicProductViewer() {
         try {
             const { data } = await axiosInstance.delete(`/Product/Seller/Electronic/${productData.electronicProduct._id}`)
             history.push('/MyProfile')
+            showNotification('success', data.message)
         } catch (error) {
             showNotification('error', error.response.data.error)
         } finally {

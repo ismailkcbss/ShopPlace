@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios.util';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Radio, Space, Spin,notification } from 'antd';
+import { Radio, Space, Spin, notification } from 'antd';
 
 export default function ClothesAddProduct() {
 
@@ -18,6 +18,7 @@ export default function ClothesAddProduct() {
         productPrice: "",
         productPiece: "",
         productDescription: "",
+        productCategory: "",
         productSize: "",
         productPattern: "",
         productCollerType: "",
@@ -47,7 +48,6 @@ export default function ClothesAddProduct() {
     }
     const saveButtonClick = async (e) => {
         e.preventDefault();
-
         if (isWaitClick) {
             return;
         }
@@ -59,9 +59,7 @@ export default function ClothesAddProduct() {
                 await ClickNewProduct();
             }
         } catch (error) {
-            console.log(error);
             showNotification('error', "Cannot process the product")
-
         } finally {
             setIsWaitClick(false);
         }
@@ -111,6 +109,7 @@ export default function ClothesAddProduct() {
                     productPrice: data.clothesProduct.productPrice,
                     productPiece: data.clothesProduct.productPiece,
                     productDescription: data.clothesProduct.productDescription,
+                    productCategory: data.clothesProduct.productCategory,
                     productSize: data.clothesProduct.productSize,
                     productPattern: data.clothesProduct.productPattern,
                     productCollerType: data.clothesProduct.productCollerType,
@@ -149,6 +148,7 @@ export default function ClothesAddProduct() {
                 productPrice: Number(form.productPrice),
                 productPiece: Number(form.productPiece),
                 productDescription: form.productDescription,
+                productCategory: form.productCategory,
                 productSize: form.productSize,
                 productPattern: form.productPattern,
                 productCollerType: form.productCollerType,
@@ -167,13 +167,13 @@ export default function ClothesAddProduct() {
     }
 
 
-    const ClickNewProduct = async () => {
+    const ClickNewProduct = async (e) => {
         if (form.productName.trim() === ""
             || form.productBrand.trim() === ""
             || form.productPrice.trim() === ""
             || form.productPiece.trim() === ""
             || form.productDescription.trim() === "") {
-                showNotification('error', "Please enter a product information")
+            showNotification('error', "Please enter a product information")
 
             return;
         }
@@ -195,6 +195,7 @@ export default function ClothesAddProduct() {
                 productPrice: Number(form.productPrice),
                 productPiece: Number(form.productPiece),
                 productDescription: form.productDescription,
+                productCategory: form.productCategory,
                 productSize: form.productSize,
                 productPattern: form.productPattern,
                 productCollerType: form.productCollerType,
@@ -235,7 +236,7 @@ export default function ClothesAddProduct() {
                     <span className='FormHeader'>Gender</span>
                     <Radio.Group size='large' className='abc' onChange={(e) => handleTextChange(e.target.value, "productGender")} value={form.productGender}>
                         <Space direction="vertical">
-                            <Radio value="Male">Male </Radio>
+                            <Radio className='abc' value="Male">Male </Radio>
                             <Radio value="Female">Female</Radio>
                             <Radio value="Unisex">Unisex</Radio>
                         </Space>
@@ -275,6 +276,12 @@ export default function ClothesAddProduct() {
                         onChange={(e) => handleTextChange(e.target.value, "productDescription")}
                         required
                     />
+                    <span className='FormHeader'>Category</span>
+                    <Radio.Group value={form.productCategory} onChange={(e) => handleTextChange(e.target.value, "productCategory")} style={{ display: "flex", justifyContent: "space-evenly" }}>
+                        <Radio value="T-shirt">T-shirt</Radio>
+                        <Radio value="Hooded Jacket">Hooded Jacket</Radio>
+                        <Radio value="Sweatshirt">Sweatshirt</Radio>
+                    </Radio.Group>
                     <span className='FormHeader'>Product Size</span>
                     <Radio.Group value={form.productSize} onChange={(e) => handleTextChange(e.target.value, "productSize")} style={{ display: "flex", justifyContent: "space-evenly" }}>
                         <Radio value="XXL">XXL</Radio>
@@ -312,6 +319,7 @@ export default function ClothesAddProduct() {
                             <Radio value="Blue">Blue</Radio>
                             <Radio value="Brown">Brown</Radio>
                             <Radio value="Gold">Gold</Radio>
+                            <Radio value="White">White</Radio>
                         </Space>
                     </Radio.Group>
                     <span className='FormHeader'>Product Material</span>

@@ -64,7 +64,7 @@ export default function MyFavorites() {
                             }
                         </div>
                     ) : (
-                        <p style={{ width: "100%", height: "80vh", fontSize: "2rem", display: "flex", justifyContent: "center", alignItems: "center" }}>You have no favorite products.</p>
+                        <p style={{ width: "100%", height: "80vh", fontSize: "2rem", display: "flex", justifyContent: "center", alignItems: "center",color:"rgb(192, 192, 192)" }}>You have no favorite products.</p>
                     )
                 }
 

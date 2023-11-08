@@ -40,6 +40,7 @@ export default function MyCart() {
                             <div className='MyCartList'>
                                 {cartProducts[0] ? (
                                     <div>
+                                        <p style={{width:"100%",height:"auto",fontSize:"2rem", display:"flex",justifyContent:"center",alignItems:"center",color:"rgb(192, 192, 192)"}}>My Cart Products</p>
                                         {cartProducts?.map((Pitem) => (
                                             <MyCartsItem key={Pitem.product._id} Pitem={Pitem} setCartProduct={setCartProduct} />
                                         ))}
@@ -52,14 +53,14 @@ export default function MyCart() {
                                     </div>
 
                                 ) : (
-                                    <p style={{width:"100%",height:"80vh",fontSize:"2rem", display:"flex",justifyContent:"center",alignItems:"center"}}>The cart is empty</p>
+                                    <p style={{width:"100%",height:"80vh",fontSize:"2rem", display:"flex",justifyContent:"center",alignItems:"center",color:"rgb(192, 192, 192)"}}>The cart is empty</p>
                                 )
                                 }
                             </div>
 
                         </div>
                     ) : (
-                        <p style={{width:"100%",height:"80vh",fontSize:"2rem", display:"flex",justifyContent:"center",alignItems:"center"}}>The cart is empty</p>
+                        <p style={{width:"100%",height:"80vh",fontSize:"2rem", display:"flex",justifyContent:"center",alignItems:"center",color:"rgb(192, 192, 192)"}}>The cart is empty</p>
                     )
                 }
 

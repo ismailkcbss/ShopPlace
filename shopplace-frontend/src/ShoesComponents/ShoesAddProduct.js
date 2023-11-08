@@ -296,9 +296,10 @@ export default function ShoesAddProduct() {
                         <Space direction="vertical">
                             <Radio value="Black">Black</Radio>
                             <Radio value="White">White</Radio>
-                            <Radio value="Grey">Grey</Radio>
-                            <Radio value="Brown">Brown</Radio>
+                            <Radio value="Orange">Orange</Radio>
+                            <Radio value="Blue">Blue</Radio>
                             <Radio value="Red">Red</Radio>
+                            <Radio value="Pink">Pink</Radio>
                         </Space>
                     </Radio.Group>
 
