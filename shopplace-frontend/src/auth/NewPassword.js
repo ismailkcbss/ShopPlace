@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { axiosInstance } from '../axios.util';
 import * as storage from '../storage.helper'
-import { Spin, Alert, Space } from 'antd';
+import { Spin, Alert, Space, notification } from 'antd';
 
 
 export default function NewPassword() {
@@ -25,6 +25,25 @@ export default function NewPassword() {
             [key]: value
         })
     }
+    const showNotification = (icon, message) => {
+        if (icon === 'error') {
+            let notificationClass = 'custom-error-notification';
+            notification.error({
+                message: 'Error',
+                description: message,
+                placement: 'topRight',
+                className: notificationClass,
+            });
+        } else if (icon === 'success') {
+            let notificationClass = 'custom-success-notification';
+            notification.success({
+                message: 'Success',
+                description: `${message}`,
+                placement: 'topRight',
+                className: notificationClass
+            });
+        }
+    };
 
 
     const ClickNewPassword = async (e) => {
@@ -35,7 +54,8 @@ export default function NewPassword() {
         }
 
         if (form.newPassword.trim() === "" || form.newPassword1.trim() === "") {
-            alert("Please enter a new password");
+            setErrorState("Please enter a new password");
+            setVisible(true);
             return;
         }
         setIsWaitClick(true);
@@ -44,9 +64,9 @@ export default function NewPassword() {
                 const { data } = await axiosInstance.post(`/User/NewPasswordReset/${email}`, {
                     newPassword: form.newPassword,
                 })
-                alert('The old password was successfully reset')
                 storage.RemoveCookie('passPres')
                 history.push('/Login')
+                showNotification('success', data.message)
             } catch (error) {
                 setErrorState(error.response.data.error);
                 setVisible(true);

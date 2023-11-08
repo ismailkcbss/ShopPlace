@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { axiosInstance } from '../axios.util'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import { Spin } from 'antd';
+import { Spin, notification } from 'antd';
 
 
 export default function ContactUs() {
@@ -11,11 +11,32 @@ export default function ContactUs() {
         phone: "",
         description: ""
     }
+    const history = useHistory();
 
     const [form, setForm] = useState({ ...initialForm })
     const [isWaitClick, setIsWaitClick] = useState(false);
 
-    const history = useHistory();
+
+    const showNotification = (icon, message) => {
+        if (icon === 'error') {
+            let notificationClass = 'custom-error-notification';
+            notification.error({
+                message: 'Error',
+                description: message,
+                placement: 'topRight',
+                className: notificationClass,
+            });
+        } else if (icon === 'success') {
+            let notificationClass = 'custom-success-notification';
+            notification.success({
+                message: 'Success',
+                description: `${message}`,
+                placement: 'topRight',
+                className: notificationClass
+            });
+        }
+    };
+
 
     const handleTextChange = (value, key) => {
         setForm({
@@ -26,13 +47,13 @@ export default function ContactUs() {
 
     const ClickContactUs = async (e) => {
         e.preventDefault();
-        
+
         if (isWaitClick) {
             return;
         }
 
         if (form.userName.trim() === "" || form.email.trim() === "" || form.phone.trim() === "" || form.description.trim() === "") {
-            alert("Please fill in the form")
+            showNotification('error', "Please fill in the form")
             return;
         }
         setIsWaitClick(true);
@@ -44,8 +65,9 @@ export default function ContactUs() {
                 description: form.description
             })
             history.push('/')
+            showNotification('success', data.message)
         } catch (error) {
-            alert("Try again")
+            showNotification('error', error.response.data.error)
         } finally {
             setIsWaitClick(false);
             setForm({

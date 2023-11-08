@@ -36,7 +36,8 @@ export default function Login() {
             return;
         }
         if (form.email.trim() === "" || form.password.trim() === "") {
-            alert("Please enter your information");
+            setErrorState("Please enter your information");
+            setVisible(true);
             return;
         }
         setIsWaitClick(true);

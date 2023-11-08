@@ -3,12 +3,33 @@ import Navbar from './navbar'
 import MyFavoritesItem from '../mainComponentsItem/MyFavoritesItem'
 import { axiosInstance } from '../axios.util'
 import Loading from '../Loading';
-
+import { notification } from 'antd';
 
 export default function MyFavorites() {
 
     const [favoritesList, setFavoritesList] = useState([]);
     const [loading, setLoading] = useState(false)
+
+
+    const showNotification = (icon, message) => {
+        if (icon === 'error') {
+            let notificationClass = 'custom-error-notification';
+            notification.error({
+                message: 'Error',
+                description: message,
+                placement: 'topRight',
+                className: notificationClass,
+            });
+        } else if (icon === 'success') {
+            let notificationClass = 'custom-success-notification';
+            notification.success({
+                message: 'Success',
+                description: `${message}`,
+                placement: 'topRight',
+                className: notificationClass
+            });
+        }
+    };
 
     const GetAllFavoritesProduct = async () => {
         try {
@@ -16,7 +37,8 @@ export default function MyFavorites() {
             setFavoritesList(data.favoriteProducts);
             setLoading(true);
         } catch (error) {
-            alert(error)
+            showNotification('error', error.response.data.error)
+
         }
     }
 
@@ -42,7 +64,7 @@ export default function MyFavorites() {
                             }
                         </div>
                     ) : (
-                        <p style={{width:"100%",height:"80vh",fontSize:"2rem", display:"flex",justifyContent:"center",alignItems:"center"}}>You have no favorite products.</p>
+                        <p style={{ width: "100%", height: "80vh", fontSize: "2rem", display: "flex", justifyContent: "center", alignItems: "center" }}>You have no favorite products.</p>
                     )
                 }
 

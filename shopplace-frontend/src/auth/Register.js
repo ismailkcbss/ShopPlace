@@ -46,7 +46,8 @@ export default function Register() {
         }
 
         if (form.userName.trim() === "" || form.email.trim() === "" || form.password.trim() === "" || form.phone.trim() === "") {
-            alert("Please enter information")
+            setErrorState("Please enter your information");
+            setVisible(true);
             return;
         }
         setIsWaitClick(true);

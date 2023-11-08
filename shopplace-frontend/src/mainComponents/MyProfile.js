@@ -4,7 +4,7 @@ import Navbar from './navbar';
 import { axiosInstance } from '../axios.util';
 import MyProfileProductsItem from '../mainComponentsItem/MyProfileProductsItem';
 import { DownOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import { Dropdown, Space, notification } from 'antd';
 import MyProfileOrdersTable from '../mainComponentsItem/MyProfileOrdersTable';
 import MyProfileInfoTable from '../mainComponentsItem/MyProfileInfoTable';
 import MyProfileOrdersPlacedTable from '../mainComponentsItem/MyProfileOrdersPlacedTable';
@@ -42,6 +42,28 @@ export default function MyProfile() {
   const [ordersPlaced, setOrdersPlaced] = useState([])
   const [loading, setLoading] = useState(false);
 
+  const showNotification = (icon, message) => {
+    if (icon === 'error') {
+      let notificationClass = 'custom-error-notification';
+      notification.error({
+        message: 'Error',
+        description: message,
+        placement: 'topRight',
+        className: notificationClass,
+      });
+    } else if (icon === 'success') {
+      let notificationClass = 'custom-success-notification';
+      notification.success({
+        message: 'Success',
+        description: `${message}`,
+        placement: 'topRight',
+        className: notificationClass
+      });
+    }
+  };
+
+
+
   const getAllProducts = async () => {
     if (userData.user.seller) {
       try {
@@ -49,7 +71,7 @@ export default function MyProfile() {
         setProductsData(data.allProducts)
         setLoading(true)
       } catch (error) {
-        alert('Not find all products')
+        showNotification('error', error.response.data.error)
       }
     }
   }
@@ -61,7 +83,7 @@ export default function MyProfile() {
         setOrdersReceived(data.product)
         setLoading(true)
       } catch (error) {
-        alert('Not find all orders')
+        showNotification('error', error.response.data.error)
       }
     }
   }
@@ -73,7 +95,7 @@ export default function MyProfile() {
         setOrdersPlaced(data.ordersPlaced)
         setLoading(true)
       } catch (error) {
-        alert('Not find all orders')
+        showNotification('error', error.response.data.error)
       }
     }
   }

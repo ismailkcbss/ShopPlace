@@ -6,7 +6,7 @@ import Loading from '../Loading'
 import PayPageItem from '../mainComponentsItem/PayPageItem';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Navbar from './navbar';
-import { Spin } from 'antd';
+import { Spin ,notification} from 'antd';
 
 export default function PayPage() {
 
@@ -23,6 +23,26 @@ export default function PayPage() {
     const [cartJsonData, setCartJsonData] = useState([])
     const [form, setForm] = useState({ ...initialForm });
     const [isWaitClick, setIsWaitClick] = useState(false);
+
+    const showNotification = (icon, message) => {
+        if (icon === 'error') {
+            let notificationClass = 'custom-error-notification';
+            notification.error({
+                message: 'Error',
+                description: message,
+                placement: 'topRight',
+                className: notificationClass,
+            });
+        } else if (icon === 'success') {
+            let notificationClass = 'custom-success-notification';
+            notification.success({
+                message: 'Success',
+                description: `${message}`,
+                placement: 'topRight',
+                className: notificationClass
+            });
+        }
+    };
 
 
     const handleTextChange = (value, key) => {
@@ -62,7 +82,7 @@ export default function PayPage() {
             history.push('/')
             storage.setKeyWithValue(`${isAuthUser.user.username}cart`, "");
         } catch (error) {
-            alert(error.message);
+            showNotification('error', error.response.data.error)
         } finally {
             setIsWaitClick(false);
             setForm({

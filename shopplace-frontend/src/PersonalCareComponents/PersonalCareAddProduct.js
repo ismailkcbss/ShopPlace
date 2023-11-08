@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios.util';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Radio, Space, Spin } from 'antd';
+import { Radio, Space, Spin, notification } from 'antd';
 
 
 
@@ -59,19 +59,39 @@ export default function PersonalCareAddProduct() {
         await ClickNewProduct();
       }
     } catch (error) {
-      console.log(error);
-      alert("Cannot process the product");
+      showNotification('error', "Cannot process the product")
     } finally {
       setIsWaitClick(false);
     }
   }
+
+
+  const showNotification = (icon, message) => {
+    if (icon === 'error') {
+      let notificationClass = 'custom-error-notification';
+      notification.error({
+        message: 'Error',
+        description: message,
+        placement: 'topRight',
+        className: notificationClass,
+      });
+    } else if (icon === 'success') {
+      let notificationClass = 'custom-success-notification';
+      notification.success({
+        message: 'Success',
+        description: `${message}`,
+        placement: 'topRight',
+        className: notificationClass
+      });
+    }
+  };
 
   const userMe = async () => {
     try {
       const { data } = await axiosInstance.get(`/User/UserMe`)
       setUserData(data.user);
     } catch (error) {
-      alert('User not found');
+      showNotification('error', "Not Found user")
     }
   }
 
@@ -93,8 +113,10 @@ export default function PersonalCareAddProduct() {
           productVolume: (data.personalCareProduct.productVolume).toString(),
         })
         setPrevImage(data.personalCareProduct.productImage)
+        showNotification('success', data.message)
       } catch (error) {
-        alert(error.response.data.error);
+        showNotification('error', error.response.data.error)
+
       }
     }
   }
@@ -128,7 +150,7 @@ export default function PersonalCareAddProduct() {
       })
       history.push('/MyProfile');
     } catch (error) {
-      alert(error.response.data.error);
+      showNotification('error', error.response.data.error)
     }
   }
 
@@ -139,7 +161,7 @@ export default function PersonalCareAddProduct() {
       || form.productPrice.trim() === ""
       || form.productPiece.trim() === ""
       || form.productDescription.trim() === "") {
-      alert("Please enter a product information")
+        showNotification('error', "Please enter a product information")
       return;
     }
     try {
@@ -168,7 +190,7 @@ export default function PersonalCareAddProduct() {
       })
       history.push('/MyProfile');
     } catch (error) {
-      alert(error.response.data.error)
+      showNotification('error', error.response.data.error)
     } finally {
       setForm({ ...initialForm })
     }

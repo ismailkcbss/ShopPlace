@@ -7,7 +7,9 @@ import Loading from '../../Loading';
 import * as storage from '../../storage.helper'
 import { useSelector } from 'react-redux';
 import { PlusCircleOutlined, MinusCircleOutlined, HeartTwoTone } from '@ant-design/icons';
+import { notification } from 'antd';
 import 'antd/dist/reset.css';
+
 
 export default function PersonalCareProductCardItem() {
 
@@ -23,6 +25,26 @@ export default function PersonalCareProductCardItem() {
   const [favoriteButtonCheck, setfavoriteButtonCheck] = useState(false)
   const [favoritesList, setFavoritesList] = useState([]);
 
+  
+  const showNotification = (icon, message) => {
+    if (icon === 'error') {
+        let notificationClass = 'custom-error-notification';
+        notification.error({
+            message: 'Error',
+            description: message,
+            placement: 'topRight',
+            className: notificationClass,
+        });
+    } else if (icon === 'success') {
+        let notificationClass = 'custom-success-notification';
+        notification.success({
+            message: 'Success',
+            description: `${message}`,
+            placement: 'topRight',
+            className: notificationClass
+        });
+    }
+};
 
   const GetProductItem = async () => {
     if (id) {
@@ -31,7 +53,8 @@ export default function PersonalCareProductCardItem() {
         setProductData(data)
         setLoading(true)
       } catch (error) {
-        alert(error.response.data.error)
+        showNotification('error', error.response.data.error)
+
       }
     }
   }
@@ -41,7 +64,8 @@ export default function PersonalCareProductCardItem() {
         const { data } = await axiosInstance.get(`/Main/Favorite/Products`)
         setFavoritesList(data.favoriteProducts);
       } catch (error) {
-        alert(error.response.data.error)
+        showNotification('error', error.response.data.error)
+
       }
     }
   }
@@ -77,7 +101,8 @@ export default function PersonalCareProductCardItem() {
         })
         setfavoriteButtonCheck(true)
       } catch (error) {
-        alert(error.response.data.error)
+        showNotification('error', error.response.data.error)
+
       }
     } else {
       history.push('/Login');
@@ -88,10 +113,10 @@ export default function PersonalCareProductCardItem() {
     if (isAuthUser.isAuth) {
       try {
         const { data } = await axiosInstance.delete(`/Main/Favorite/Products/${id}`)
-        //alert(data.message)
         setfavoriteButtonCheck(false)
       } catch (error) {
-        alert(error.response.data.error)
+        showNotification('error', error.response.data.error)
+
       }
     }
   }

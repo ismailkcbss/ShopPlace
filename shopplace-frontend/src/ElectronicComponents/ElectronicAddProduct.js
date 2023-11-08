@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios.util';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Radio, Space, Spin } from 'antd';
+import { Radio, Space, Spin,notification } from 'antd';
 
 
 export default function ElectronicAddProduct() {
@@ -59,11 +59,34 @@ export default function ElectronicAddProduct() {
       }
     } catch (error) {
       console.log(error);
-      alert("Cannot process the product");
+      showNotification('error', "Cannot process the product")
+
     } finally {
       setIsWaitClick(false);
     }
   }
+
+
+  const showNotification = (icon, message) => {
+    if (icon === 'error') {
+        let notificationClass = 'custom-error-notification';
+        notification.error({
+            message: 'Error',
+            description: message,
+            placement: 'topRight',
+            className: notificationClass,
+        });
+    } else if (icon === 'success') {
+        let notificationClass = 'custom-success-notification';
+        notification.success({
+            message: 'Success',
+            description: `${message}`,
+            placement: 'topRight',
+            className: notificationClass
+        });
+    }
+};
+
 
 
   const userMe = async () => {
@@ -71,7 +94,7 @@ export default function ElectronicAddProduct() {
       const { data } = await axiosInstance.get(`/User/UserMe`)
       setUserData(data.user);
     } catch (error) {
-      alert('User not found');
+      showNotification('error', "Not Found user")
     }
   }
 
@@ -89,11 +112,13 @@ export default function ElectronicAddProduct() {
           productDescription: data.electronicProduct.productDescription,
           productColor: data.electronicProduct.productColor,
           productCategory: data.electronicProduct.productCategory,
-          productGuaranteePeriod: data.electronicProduct.productGuaranteePeriod,
+          productGuaranteePeriod: data.electronicProduct.productGuaranteePeriod.toString(),
         })
         setPrevImage(data.electronicProduct.productImage)
+        showNotification('success', data.message)
+
       } catch (error) {
-        alert(error.response.data.error);
+        showNotification('error', error.response.data.error)
       }
     }
   }
@@ -123,8 +148,10 @@ export default function ElectronicAddProduct() {
         productImage: imageURL.length === 0 ? (prevImage) : (imageURL)
       })
       history.push('/MyProfile');
+      showNotification('success', data.message)
+
     } catch (error) {
-      alert(error.response.data.error);
+      showNotification('error', error.response.data.error)
     }
   }
 
@@ -135,7 +162,7 @@ export default function ElectronicAddProduct() {
       || form.productPrice.trim() === ""
       || form.productPiece.trim() === ""
       || form.productDescription.trim() === "") {
-      alert("Please enter a product information")
+        showNotification('error', "Please enter a product information")
       return;
     }
     try {
@@ -162,8 +189,11 @@ export default function ElectronicAddProduct() {
         productImage: (imageURL).join(',')
       })
       history.push('/MyProfile');
+      showNotification('success', data.message)
+
     } catch (error) {
-      alert(error.response.data.error)
+      showNotification('error', error.response.data.error)
+
     } finally {
       setForm({ ...initialForm })
     }

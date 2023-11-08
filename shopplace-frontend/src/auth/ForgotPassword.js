@@ -30,7 +30,8 @@ export default function ForgotPassword() {
         }
 
         if (form.email.trim() === "") {
-            alert("Please enter your email")
+            setErrorState("Please enter your email");
+            setVisible(true);
             return;
         }
 

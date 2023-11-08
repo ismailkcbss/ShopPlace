@@ -5,6 +5,8 @@ import Loading from '../Loading'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
 import { axiosInstance } from '../axios.util'
 import ProductCard from './ProductCard'
+import { notification } from 'antd';
+
 
 export default function CategoryList() {
 
@@ -13,6 +15,27 @@ export default function CategoryList() {
   const [categoryAllProduct, setCategoryAllProduct] = useState([])
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("")
+
+  const showNotification = (icon, message) => {
+    if (icon === 'error') {
+      let notificationClass = 'custom-error-notification';
+      notification.error({
+        message: 'Error',
+        description: message,
+        placement: 'topRight',
+        className: notificationClass,
+      });
+    } else if (icon === 'success') {
+      let notificationClass = 'custom-success-notification';
+      notification.success({
+        message: 'Success',
+        description: `${message}`,
+        placement: 'topRight',
+        className: notificationClass
+      });
+    }
+  };
+
 
   function handleKeyPress(event) {
     if (event.key === "Enter") {
@@ -27,7 +50,7 @@ export default function CategoryList() {
         setCategoryAllProduct(data.allData)
         setLoading(true);
       } catch (error) {
-        alert('Not found category list')
+        showNotification('error', error.response.data.error)
       }
     }
   }

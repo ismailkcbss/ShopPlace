@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios.util';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Radio, Space, Spin } from 'antd';
+import { Radio, Space, Spin,notification } from 'antd';
 
 export default function ClothesAddProduct() {
 
@@ -60,18 +60,40 @@ export default function ClothesAddProduct() {
             }
         } catch (error) {
             console.log(error);
-            alert("Cannot process the product");
+            showNotification('error', "Cannot process the product")
+
         } finally {
             setIsWaitClick(false);
         }
     }
+
+    const showNotification = (icon, message) => {
+        if (icon === 'error') {
+            let notificationClass = 'custom-error-notification';
+            notification.error({
+                message: 'Error',
+                description: message,
+                placement: 'topRight',
+                className: notificationClass,
+            });
+        } else if (icon === 'success') {
+            let notificationClass = 'custom-success-notification';
+            notification.success({
+                message: 'Success',
+                description: `${message}`,
+                placement: 'topRight',
+                className: notificationClass
+            });
+        }
+    };
+
 
     const userMe = async () => {
         try {
             const { data } = await axiosInstance.get(`/User/UserMe`)
             setUserData(data.user);
         } catch (error) {
-            alert('User not found');
+            showNotification('error', "Not Found user")
         }
     }
 
@@ -97,8 +119,11 @@ export default function ClothesAddProduct() {
                     productHeight: data.clothesProduct.productHeight
                 })
                 setPrevImage(data.clothesProduct.productImage)
+                showNotification('success', data.message)
+
             } catch (error) {
-                alert(error.response.data.error);
+                showNotification('error', error.response.data.error)
+
             }
         }
     }
@@ -133,8 +158,11 @@ export default function ClothesAddProduct() {
                 productImage: imageURL.length === 0 ? (prevImage) : (imageURL)
             })
             history.push('/MyProfile');
+            showNotification('success', data.message)
+
         } catch (error) {
-            alert(error.response.data.error);
+            showNotification('error', error.response.data.error)
+
         }
     }
 
@@ -145,7 +173,8 @@ export default function ClothesAddProduct() {
             || form.productPrice.trim() === ""
             || form.productPiece.trim() === ""
             || form.productDescription.trim() === "") {
-            alert("Please enter a product information")
+                showNotification('error', "Please enter a product information")
+
             return;
         }
         try {
@@ -175,8 +204,11 @@ export default function ClothesAddProduct() {
                 productImage: (imageURL).join(',')
             })
             history.push('/MyProfile');
+            showNotification('success', data.message)
+
         } catch (error) {
-            alert(error.response.data.error)
+            showNotification('error', error.response.data.error)
+
         } finally {
             setForm({ ...initialForm })
         }

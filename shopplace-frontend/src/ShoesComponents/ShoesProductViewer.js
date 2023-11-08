@@ -4,6 +4,8 @@ import Navbar from '../mainComponents/navbar'
 import { axiosInstance } from '../axios.util'
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import ShoesProductItemPageImageList from './ShoesComponentsItem/ShoesProductItemPageImageList';
+import { notification } from 'antd';
+
 
 export default function ShoesProductViewer() {
 
@@ -14,6 +16,26 @@ export default function ShoesProductViewer() {
     const [loading, setLoading] = useState(false)
     const [isWaitDelClick, setIsWaitDelClick] = useState(false)
 
+    const showNotification = (icon, message) => {
+        if (icon === 'error') {
+            let notificationClass = 'custom-error-notification';
+            notification.error({
+                message: 'Error',
+                description: message,
+                placement: 'topRight',
+                className: notificationClass,
+            });
+        } else if (icon === 'success') {
+            let notificationClass = 'custom-success-notification';
+            notification.success({
+                message: 'Success',
+                description: `${message}`,
+                placement: 'topRight',
+                className: notificationClass
+            });
+        }
+    };
+
 
     const GetShoesProduct = async () => {
         if (id) {
@@ -22,7 +44,7 @@ export default function ShoesProductViewer() {
                 setProductData(data)
                 setLoading(true)
             } catch (error) {
-                alert(error.response.data.error)
+                showNotification('error', error.response.data.error)
             }
         }
     }
@@ -40,7 +62,7 @@ export default function ShoesProductViewer() {
             const { data } = await axiosInstance.delete(`/Product/Seller/Shoes/${productData.shoesProduct._id}`)
             history.push('/MyProfile')
         } catch (error) {
-            alert(error.response.data.error)
+            showNotification('error', error.response.data.error)
         } finally {
             setIsWaitDelClick(false);
         }

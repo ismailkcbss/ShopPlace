@@ -80,7 +80,7 @@ const GetSellerProduct = async (req, res) => {
 
         res.status(200).json({
             succeded: true,
-            message:'Successfully',
+            message:'The product information has been successfully retrieved.',
             shoesProduct,
             user
         })

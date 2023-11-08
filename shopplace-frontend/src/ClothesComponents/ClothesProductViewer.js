@@ -4,6 +4,7 @@ import { axiosInstance } from '../axios.util';
 import Navbar from '../mainComponents/navbar';
 import ClothesProductItemPageImageList from './ClothesComponentsItem/ClothesProductItemPageImageList';
 import Loading from '../Loading';
+import { notification } from 'antd';
 
 export default function ClothesProductViewer() {
 
@@ -15,6 +16,26 @@ export default function ClothesProductViewer() {
     const [loading, setLoading] = useState(false)
     const [isWaitDelClick, setIsWaitDelClick] = useState(false)
 
+    const showNotification = (icon, message) => {
+        if (icon === 'error') {
+            let notificationClass = 'custom-error-notification';
+            notification.error({
+                message: 'Error',
+                description: message,
+                placement: 'topRight',
+                className: notificationClass,
+            });
+        } else if (icon === 'success') {
+            let notificationClass = 'custom-success-notification';
+            notification.success({
+                message: 'Success',
+                description: `${message}`,
+                placement: 'topRight',
+                className: notificationClass
+            });
+        }
+    };
+
 
     const GetProductItem = async () => {
         if (id) {
@@ -23,10 +44,11 @@ export default function ClothesProductViewer() {
                 setProductData(data)
                 setLoading(true)
             } catch (error) {
-                alert(error.response.data.error)
+                showNotification('error', error.response.data.error)
             }
         }
     }
+    console.log(productData);
 
     const handleClickProductEdit = () => {
         history.push(`/ClothesAddProduct/${productData.clothesProduct._id}`)
@@ -41,7 +63,7 @@ export default function ClothesProductViewer() {
             const { data } = await axiosInstance.delete(`/Product/Seller/Clothes/${productData.clothesProduct._id}`)
             history.push('/MyProfile')
         } catch (error) {
-            alert(error.response.data.error)
+            showNotification('error', error.response.data.error)
         } finally {
             setIsWaitDelClick(false);
         }

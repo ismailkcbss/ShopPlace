@@ -4,6 +4,8 @@ import { axiosInstance } from '../axios.util';
 import Navbar from '../mainComponents/navbar';
 import BagProductItemPageImageList from './BagComponentsItem/BagProductItemPageImageList';
 import Loading from '../Loading';
+import { notification } from 'antd';
+
 
 export default function BagProductViewer() {
 
@@ -16,6 +18,29 @@ export default function BagProductViewer() {
     const [isWaitDelClick, setIsWaitDelClick] = useState(false)
 
 
+
+    const showNotification = (icon, message) => {
+        if (icon === 'error') {
+            let notificationClass = 'custom-error-notification';
+            notification.error({
+                message: 'Error',
+                description: message,
+                placement: 'topRight',
+                className: notificationClass,
+            });
+        } else if (icon === 'success') {
+            let notificationClass = 'custom-success-notification';
+            notification.success({
+                message: 'Success',
+                description: `${message}`,
+                placement: 'topRight',
+                className: notificationClass
+            });
+        }
+    };
+
+
+
     const GetProductItem = async () => {
         if (id) {
             try {
@@ -23,7 +48,7 @@ export default function BagProductViewer() {
                 setProductData(data)
                 setLoading(true)
             } catch (error) {
-                alert(error.response.data.error)
+                showNotification('error', error.response.data.error)
             }
         }
     }
@@ -40,8 +65,9 @@ export default function BagProductViewer() {
         try {
             const { data } = await axiosInstance.delete(`/Product/Seller/Bag/${productData.bagProduct._id}`)
             history.push('/MyProfile')
+            showNotification('success', data.message)
         } catch (error) {
-            alert(error.response.data.error)
+            showNotification('error', error.response.data.error)
         } finally {
             setIsWaitDelClick(false);
         }

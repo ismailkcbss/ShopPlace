@@ -4,6 +4,8 @@ import CategoryListItem from '../mainComponentsItem/CategoryListItem'
 import ProductCard from './ProductCard'
 import { axiosInstance } from '../axios.util'
 import Loading from '../Loading'
+import { notification } from 'antd';
+
 
 export default function HomePage() {
 
@@ -11,6 +13,26 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false)
   const [search, setSearch] = useState("")
 
+
+  const showNotification = (icon, message) => {
+    if (icon === 'error') {
+        let notificationClass = 'custom-error-notification';
+        notification.error({
+            message: 'Error',
+            description: message,
+            placement: 'topRight',
+            className: notificationClass,
+        });
+    } else if (icon === 'success') {
+        let notificationClass = 'custom-success-notification';
+        notification.success({
+            message: 'Success',
+            description: `${message}`,
+            placement: 'topRight',
+            className: notificationClass
+        });
+    }
+};
 
   function handleKeyPress(event) {
     if (event.key === "Enter") {
@@ -24,7 +46,7 @@ export default function HomePage() {
       setAllProduct(data.allProducts);
       setLoading(true)
     } catch (error) {
-      alert("All product not found")
+      showNotification('error', error.response.data.error)
     }
   }
 

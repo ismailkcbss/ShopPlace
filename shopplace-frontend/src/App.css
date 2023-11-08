@@ -6,6 +6,38 @@
     font-size: 12px;
 }
 
+.custom-error-notification {
+    background: linear-gradient(150deg,
+            rgb(168, 8, 8) 5%,
+            rgba(97, 5, 5, 0.871) 100%);
+    border-radius: .8rem;
+}
+
+.custom-error-notification svg {
+    color: rgb(83, 0, 0) !important;
+    font-size: 2rem;
+}
+
+.custom-error-notification .ant-notification-notice-message,
+.custom-error-notification .ant-notification-notice-description {
+    color: white !important;
+}
+
+.custom-success-notification {
+    background: linear-gradient(150deg,
+    rgb(3, 151, 3) 5%,
+    rgba(2, 73, 0, 0.871) 100%);
+    border-radius: .8rem;
+}
+
+.custom-success-notification svg {
+    color: rgb(0, 87, 0) !important;
+    font-size: 2rem;
+}
+.custom-success-notification .ant-notification-notice-message,
+.custom-success-notification .ant-notification-notice-description {
+    color: white !important;
+}
 /*
 CSS Style
 Login / Register / forgot-password / new-password / Contact-us
@@ -669,26 +701,6 @@ Home-page / Navbar
     background-color: rgb(98, 118, 145);
 }
 
-
-.custom-error-notification {
-    background-color: rgb(255, 152, 152) !important;
-    border-radius: .8rem;
-}
-
-.custom-error-notification svg {
-    color: rgb(97, 0, 0) !important;
-    font-size: 2rem;
-}
-
-.custom-success-notification {
-    background-color: rgb(114, 211, 114) !important;
-    color: white;
-}
-
-.custom-success-notification svg {
-    color: rgb(0, 122, 0) !important;
-    font-size: 2rem;
-}
 
 
 

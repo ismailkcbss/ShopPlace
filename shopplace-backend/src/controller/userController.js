@@ -125,6 +125,7 @@ const NewPasswordReset = async (req, res) => {
 
                     res.status(201).json({
                         succeded: true,
+                        message:"The old password was successfully reset"
                     });
                 }
             });

@@ -4,7 +4,7 @@ import { axiosInstance } from '../axios.util';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Radio, Space, Spin, notification, icon } from 'antd';
+import { Radio, Space, Spin, notification } from 'antd';
 
 export default function ShoesAddProduct() {
 
@@ -59,7 +59,7 @@ export default function ShoesAddProduct() {
                 await ClickNewProduct();
             }
         } catch (error) {
-            alert("Cannot process the product");
+            showNotification('error', "Cannot process the product")
         } finally {
             setIsWaitClick(false);
         }
@@ -72,9 +72,9 @@ export default function ShoesAddProduct() {
             let notificationClass = 'custom-error-notification';
             notification.error({
                 message: 'Error',
-                description: `${message}`,
+                description: message,
                 placement: 'topRight',
-                className: notificationClass
+                className: notificationClass,
             });
         } else if (icon === 'success') {
             let notificationClass = 'custom-success-notification';
@@ -94,7 +94,8 @@ export default function ShoesAddProduct() {
             const { data } = await axiosInstance.get(`/User/UserMe`)
             setUserData(data.user);
         } catch (error) {
-            alert("Not Found user");
+            showNotification('error', "Not Found user")
+
         }
     }
 
@@ -116,8 +117,9 @@ export default function ShoesAddProduct() {
                     productModel: data.shoesProduct.productModel,
                 })
                 setPrevImage(data.shoesProduct.productImage)
+                showNotification('success', data.message)
             } catch (error) {
-                alert("Not Found product");
+                showNotification('error', error.response.data.error)
             }
         }
     }
@@ -148,9 +150,10 @@ export default function ShoesAddProduct() {
                 productImage: imageURL.length === 0 ? (prevImage) : (imageURL)
             })
             history.push('/MyProfile');
+            showNotification('success', data.message)
+
         } catch (error) {
-            showNotification('error', "Please enter a product information")
-            alert("Product is not updated");
+            showNotification('error', error.response.data.error)
         }
     }
 
@@ -160,7 +163,6 @@ export default function ShoesAddProduct() {
             || form.productPrice.trim() === ""
             || form.productPiece.trim() === ""
             || form.productDescription.trim() === "") {
-            // alert("Please enter a product information")
             showNotification('error', "Please enter a product information")
             return;
         }
@@ -190,13 +192,14 @@ export default function ShoesAddProduct() {
                 productImage: (imageURL).join(',')
             })
             history.push('/MyProfile');
+            showNotification('success', data.message)
         } catch (error) {
-            // alert(error.response.data.error)
-            showNotification(error.response.data.error)
+            showNotification('error', error.response.data.error)
+        } finally {
+            setForm({
+                ...initialForm
+            })
         }
-        setForm({
-            ...initialForm
-        })
     }
 
 
@@ -220,9 +223,9 @@ export default function ShoesAddProduct() {
                     <span className='FormHeader'>Gender</span>
                     <Radio.Group onChange={(e) => handleTextChange(e.target.value, "productGender")} value={form.productGender}>
                         <Space direction="vertical">
-                            <Radio value="Male">Male </Radio>
-                            <Radio value="Female">Female</Radio>
-                            <Radio value="Unisex">Unisex</Radio>
+                            <Radio value="male">Male</Radio>
+                            <Radio value="female">Female</Radio>
+                            <Radio value="unisex">Unisex</Radio>
                         </Space>
                     </Radio.Group>
                     <span className='FormHeader'>Shoe Name</span>

@@ -39,10 +39,36 @@ import PersonalCareProductCardItem from './PersonalCareComponents/PersonalCareCo
 import BagProductCardItem from './BagComponents/BagComponentsItem/BagProductCardItem';
 
 
+import { notification } from 'antd';
+
+
+
 function App() {
 
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+
+  const showNotification = (icon, message) => {
+    if (icon === 'error') {
+      let notificationClass = 'custom-error-notification';
+      notification.error({
+        message: 'Error',
+        description: message,
+        placement: 'topRight',
+        className: notificationClass,
+      });
+    } else if (icon === 'success') {
+      let notificationClass = 'custom-success-notification';
+      notification.success({
+        message: 'Success',
+        description: `${message}`,
+        placement: 'topRight',
+        className: notificationClass
+      });
+    }
+  };
+
 
   // Refresh page is not lose data
   const userData = async () => {
@@ -53,7 +79,7 @@ function App() {
         dispatch(userActions.set(data))
       }
     } catch (error) {
-      alert(error);
+      showNotification('error', "Not Found user")
     }
   }
 
