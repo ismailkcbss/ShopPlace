@@ -433,6 +433,52 @@ const GetOrderPlaced = async (req, res) => {
     }
 }
 
+const OrderPlacedDelete = async (req, res) => {
+
+    let { order, item } = req.query;
+
+    try {
+        const foundOrder = await OrdersReceived.findOne({ _id: order });
+
+        if (!foundOrder) {
+            return res.status(404).json({
+                success: false,
+                error: 'Order not found',
+            });
+        }
+        const updatedOrderProducts = foundOrder.orderProducts.filter(
+            (data) => data.product._id.toString() !== item.toString()
+        );
+
+        if (updatedOrderProducts.length > 0) {
+            const updatedOrder = await OrdersReceived.findOneAndUpdate(
+                { _id: order },
+                { orderProducts: updatedOrderProducts },
+                { new: true }
+            );
+            res.status(200).json({
+                success: true,
+                message: 'The product canceled successfully',
+                updatedOrder,
+            });
+        } else {
+            await OrdersReceived.findByIdAndDelete({ _id: order })
+            res.status(200).json({
+                success: true,
+                message: 'The all Orders canceled successfully'
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error: 'The product could not be canceled'
+        })
+        console.error(error);
+    }
+}
+
+
+
 const FavoriteAdd = async (req, res) => {
     try {
         const userId = res.locals.user._id;
@@ -534,4 +580,4 @@ const FavoriteProductsDelete = async (req, res) => {
 }
 
 
-export { GetHomeAllProducts, GetSellerAllProducts, WebsiteSendMail, MyOrderSendMail, OrdersReceivedCreate, GetOrderReceived, GetOrderPlaced, FavoriteAdd, GetAllFavoriteProducts, FavoriteProductsDelete }
+export { GetHomeAllProducts, GetSellerAllProducts, WebsiteSendMail, MyOrderSendMail, OrdersReceivedCreate, GetOrderReceived, GetOrderPlaced, OrderPlacedDelete, FavoriteAdd, GetAllFavoriteProducts, FavoriteProductsDelete }

@@ -189,13 +189,12 @@ export default function MyProfile() {
                   {
                     ordersPlaced.length > 0 ? (
                       <div>
-                        <MyProfileOrdersPlacedTable ordersPlaced={ordersPlaced} />
+                        <MyProfileOrdersPlacedTable ordersPlaced={ordersPlaced} setOrdersPlaced={setOrdersPlaced}/>
                       </div>
                     ) : (
                       <p style={{ width: "100%", fontSize: "1.4rem", display: "flex", justifyContent: "center", alignItems: "center", margin: "10rem 0 10rem 0",color:"rgb(192, 192, 192)" }}>You haven't bought a product yet.</p>
                     )
                   }
-
                 </div>
               ) : (
                 <Loading />

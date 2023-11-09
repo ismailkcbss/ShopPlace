@@ -23,6 +23,7 @@ router.route('/Favorite/Products/:id').delete(MainController.FavoriteProductsDel
 router.route('/MyOrder').post(MainController.MyOrderSendMail, MainController.OrdersReceivedCreate)
 router.route('/MyOrder/Seller').get(MainController.GetOrderReceived);
 router.route('/MyOrder/Customer').get(MainController.GetOrderPlaced);
+router.route('/MyOrder/Delete').delete(MainController.OrderPlacedDelete);
 
 
 

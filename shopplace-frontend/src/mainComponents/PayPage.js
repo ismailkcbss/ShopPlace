@@ -61,7 +61,6 @@ export default function PayPage() {
         }
     }
 
-    console.log(JSON.stringify(cartJsonData));
 
 
     const totalAmount = cartJsonData.reduce((total, cartJsonData) => total + cartJsonData.sumCartPrice, 0); // cart price sum 
